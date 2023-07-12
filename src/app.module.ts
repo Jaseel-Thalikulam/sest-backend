@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
+import { RegisterModule } from './register/register.module';
 
 
 
 @Module({
-  imports: [],
+  imports: [RegisterModule],
  
 })
 export class AppModule {}
