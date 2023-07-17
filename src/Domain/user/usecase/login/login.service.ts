@@ -20,12 +20,14 @@ export class LoginService {
             const Verified = await bcrypt.compare(User.password,data.password)
             
             if (Verified) {
-              
+              return { success:true,messsage:"Verified"};
+            } else {
+              return { success:false,messsage:"Incorrect Password"};
             }
             
           } else {
            
-          
+          return 
             
           }
         

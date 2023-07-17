@@ -12,7 +12,8 @@ export class LoginController {
     @Post()
     async verifyUser(@Body() user: LoginDto) {
    
-        return this.loginService.verifyUser(user)
+        const response = this.loginService.verifyUser(user)
+        console.log(response)
     }
 
 }
