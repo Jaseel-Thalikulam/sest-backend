@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose' 
 import { IUser } from '../../interfaces/user.interface';
 import { Model } from 'mongoose';
-import { LoginDto} from '../../DTO/login.dto';
+import { LoginDto} from '../../dto/login.dto';
 import * as bcrypt from 'bcrypt';
 import { log } from 'console';
 @Injectable()

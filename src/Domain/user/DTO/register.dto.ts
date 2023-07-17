@@ -1,9 +1,9 @@
 export class RegisterDto{
-  
-  readonly   name: String;
-  readonly email: String;
-  readonly  phoneNumber: Number;
+
+  readonly   name: string;
+  readonly email: string;
+  readonly  phoneNumber: number;
   readonly password: string;
-  readonly  isVerified: Boolean;
-  readonly  role: String;
+  readonly  isVerified: boolean;
+  readonly  role: string;
 }

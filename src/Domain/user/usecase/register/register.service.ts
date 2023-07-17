@@ -1,33 +1,31 @@
 
   import { HttpException, Injectable } from '@nestjs/common';
-  import { Model, ObjectId } from 'mongoose';
-  import {InjectModel} from '@nestjs/mongoose' 
-  import { IUser } from '../../interfaces/user.interface';
-  import { RegisterDto } from '../../DTO/register.dto';
-  import * as bcrypt from 'bcrypt';
+  import { RegisterDto } from '../../dto/register.dto';
+import * as bcrypt from 'bcrypt';
+  import { UserGateway } from '../../database/gateway';
 
   @Injectable()
   export class RegisterService {
-    constructor(@InjectModel('User') private readonly userModel: Model<IUser>) { }
+    private readonly _userGateway: UserGateway;
+    constructor(userGateway: UserGateway) {
+      this._userGateway = userGateway;
+  }
       
-      public async postUser(User: RegisterDto) {
+      public async createUser(User: RegisterDto) {
           try {
               
-            const  hashedpassword= await bcrypt.hash(User.password,10)
-              console.log(User)
-              console.log(hashedpassword)
-              let newUser = {
-                name : User.name,
-                email : User.email,
-                  phoneNumber: User.phoneNumber,
-                  role: User.role,
-                  isVerified: User.isVerified,
-                  password:hashedpassword,
-              }
-
-            const user = new this.userModel(newUser)
-            
-              return user.save()
+            const hashedPassword = await bcrypt.hash(User.password, 10);
+          
+            let newUser = {
+              name: User.name,
+              email: User.email,
+              phoneNumber: User.phoneNumber,
+              role: User.role,
+              isVerified: User.isVerified,
+              password: hashedPassword,
+            };
+        
+            return await this._userGateway.create(newUser);
           } catch (err) {
               console.log(err)
           }

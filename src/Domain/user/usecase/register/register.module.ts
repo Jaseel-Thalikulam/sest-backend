@@ -3,7 +3,8 @@ import { RegisterController } from './register.controller';
 import { RegisterService } from './register.service';
 import { MongooseModule} from '@nestjs/mongoose';
 import { UserSchema } from '../../schema/User';
-
+import { UserGateway } from '../../database/gateway';
+import { DataBase } from '../../database/database.handler';
 
 @Module({
   imports: [
@@ -16,6 +17,6 @@ import { UserSchema } from '../../schema/User';
 
   ],
   controllers: [RegisterController],
-  providers: [RegisterService]
+  providers: [RegisterService,UserGateway,DataBase]
 })
 export class  RegisterModule {}
