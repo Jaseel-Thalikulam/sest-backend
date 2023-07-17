@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { RegisterService } from './register.service';
-import { UserDto } from '../DTO/User.dto';
+import { RegisterDto } from '../../DTO/register.dto';
 import {ObjectId} from 'mongoose' 
 import { log } from 'console';
 import { InjectMailer, Mailer, template } from 'nestjs-mailer';
@@ -14,7 +14,7 @@ export class RegisterController {
         private registerService: RegisterService) { }
 
     @Post()
-    async postUser(@Body() user: UserDto) {
+    async postUser(@Body() user: RegisterDto) {
         
         
         return this.registerService.postUser(user)

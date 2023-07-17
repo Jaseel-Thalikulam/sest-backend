@@ -2,15 +2,15 @@
   import { HttpException, Injectable } from '@nestjs/common';
   import { Model, ObjectId } from 'mongoose';
   import {InjectModel} from '@nestjs/mongoose' 
-  import { IUser } from '../interfaces/user.interface';
-  import { UserDto } from '../DTO/User.dto';
+  import { IUser } from '../../interfaces/user.interface';
+  import { RegisterDto } from '../../DTO/register.dto';
   import * as bcrypt from 'bcrypt';
 
   @Injectable()
   export class RegisterService {
     constructor(@InjectModel('User') private readonly userModel: Model<IUser>) { }
       
-      public async postUser(User: UserDto) {
+      public async postUser(User: RegisterDto) {
           try {
               
             const  hashedpassword= await bcrypt.hash(User.password,10)

@@ -1,4 +1,4 @@
-export class UserDto{
+export class RegisterDto{
   
   readonly   name: String;
   readonly email: String;
