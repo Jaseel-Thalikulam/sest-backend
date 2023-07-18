@@ -1,6 +1,6 @@
-import { RegisterDto } from "../dto/register.dto";
 
-export interface IUserGateway {
+
+export interface IRegisterGateway {
    
     create(user: User);
    

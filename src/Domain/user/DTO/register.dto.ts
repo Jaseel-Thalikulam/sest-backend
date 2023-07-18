@@ -1,9 +1,9 @@
-export class RegisterDto{
+export class RegisterDto {
 
-  readonly   name: string;
+  readonly name: string;
   readonly email: string;
-  readonly  phoneNumber: number;
+  readonly phoneNumber: number;
   readonly password: string;
-  readonly  isVerified: boolean;
-  readonly  role: string;
+  readonly isVerified: boolean;
+  readonly role: string;
 }

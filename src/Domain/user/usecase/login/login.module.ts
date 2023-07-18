@@ -3,7 +3,7 @@ import { LoginService } from './login.service';
 import { LoginController } from './login.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from '../../schema/User';
-import { UserGateway } from '../../database/gateway';
+import { loginGateway } from '../../database/gateways/loginGateway';
 import { DataBase } from '../../database/database.handler';
 @Module({
   imports: [
@@ -14,7 +14,7 @@ import { DataBase } from '../../database/database.handler';
     }
     ]),],
   
-  providers: [LoginService,UserGateway,DataBase],
+  providers: [LoginService,loginGateway,DataBase],
   controllers:[LoginController]
 
 })

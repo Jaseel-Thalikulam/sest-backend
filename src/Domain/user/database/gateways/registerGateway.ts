@@ -1,12 +1,12 @@
-import { DataBase } from './database.handler'
-import { IUserGateway } from '../interfaces/gateway.interface';
+import { DataBase } from '../database.handler'
+import { IRegisterGateway } from '../../interfaces/registerGateway.interface';
 import { Injectable } from '@nestjs/common';
-import { RegisterDto } from '../dto/register.dto';
-import { IUser } from '../interfaces/user.interface';
-import { LoginDto } from '../dto/login.dto';
+import { RegisterDto } from '../../dto/register.dto';
+import { IUser } from '../../interfaces/user.interface';
+import { LoginDto } from '../../dto/login.dto';
 
 @Injectable()
-export class UserGateway implements IUserGateway {
+export class registerGateway implements IRegisterGateway {
     private readonly dataBase: DataBase;
 
     constructor(dataBase: DataBase) {
