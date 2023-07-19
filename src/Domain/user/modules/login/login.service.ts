@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { LoginDto} from '../../dto/login.dto';
-import { loginGateway } from '../../database/gateways/loginGateway';
+import { loginGateway } from '../../../../database/gateways/loginGateway';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 

@@ -2,7 +2,7 @@
   import { HttpException, Injectable } from '@nestjs/common';
   import { RegisterDto } from '../../dto/register.dto';
 import * as bcrypt from 'bcrypt';
-  import { registerGateway } from '../../database/gateways/registerGateway';
+  import { registerGateway } from '../../../../database/gateways/registerGateway';
   import * as jwt from 'jsonwebtoken';
   @Injectable()
   export class RegisterService {

@@ -1,9 +1,9 @@
 import { DataBase } from '../database.handler'
-import { IRegisterGateway } from '../../interfaces/registerGateway.interface';
+import { IRegisterGateway } from '../../Domain/user/interfaces/registerGateway.interface';
 import { Injectable } from '@nestjs/common';
-import { RegisterDto } from '../../dto/register.dto';
-import { IUser } from '../../interfaces/user.interface';
-import { LoginDto } from '../../dto/login.dto';
+import { RegisterDto } from '../../Domain/user/dto/register.dto';
+import { IUser } from '../../Domain/user/interfaces/user.interface';
+import { LoginDto } from '../../Domain/user/dto/login.dto';
 
 @Injectable()
 export class registerGateway implements IRegisterGateway {

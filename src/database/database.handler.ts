@@ -1,9 +1,9 @@
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { IUser } from "../interfaces/user.interface";
-import { RegisterDto } from "../dto/register.dto";
-import { IDatabaseGateway } from "../interfaces/database.interface";
-import { LoginDto } from "../dto/login.dto";
+import { IUser } from "../Domain/user/interfaces/user.interface";
+import { RegisterDto } from "../Domain/user/dto/register.dto";
+import { IDatabaseGateway } from "../Domain/user/interfaces/database.interface";
+import { LoginDto } from "../Domain/user/dto/login.dto";
 
 export class DataBase implements IDatabaseGateway {
     constructor(@InjectModel('User') private readonly userModel: Model<IUser>) { }
@@ -18,5 +18,10 @@ export class DataBase implements IDatabaseGateway {
         console.log("Finding")
 
         return this.userModel.findOne({ email: User.email });
+    }
+    public getAllUsers() {
+        console.log("Finding UsersList")
+
+        return this.userModel.find({});
     }
 }

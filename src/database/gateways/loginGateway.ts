@@ -1,8 +1,8 @@
 import { DataBase } from '../database.handler'
-import { ILoginGateway } from '../../interfaces/loginGateway.interface';
+import { ILoginGateway } from '../../Domain/user/interfaces/loginGateway.interface';
 import { Injectable } from '@nestjs/common';
-import { IUser } from '../../interfaces/user.interface';
-import { LoginDto } from '../../dto/login.dto';
+import { IUser } from '../../Domain/user/interfaces/user.interface';
+import { LoginDto } from '../../Domain/user/dto/login.dto';
 
 @Injectable()
 export class loginGateway implements ILoginGateway {
