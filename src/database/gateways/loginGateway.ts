@@ -11,6 +11,7 @@ export class loginGateway implements ILoginGateway {
     constructor(dataBase: DataBase) {
         this.dataBase = dataBase;
     }
+    
 
     async find(User: LoginDto): Promise<IUser>{
         return this.dataBase.findUser(User)

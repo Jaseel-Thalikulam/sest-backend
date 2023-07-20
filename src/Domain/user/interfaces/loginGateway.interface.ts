@@ -3,7 +3,6 @@
 export interface ILoginGateway {
    
     find(user: User);
-   
   
 }
 

@@ -12,9 +12,12 @@ export class userListGateway implements IUserListGateway {
     }
 
     async getAllUsers() {
-        console.log("get all users at gateway")
-        
+     
         return this.dataBase.getAllUsers();
+        
     }
+
+    
+
   
 }

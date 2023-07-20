@@ -14,8 +14,7 @@ export class UserListController {
 
       const response = await this.userlistservice.getAllUsers();
    
-        console.log(response);
-        
+   
     
         return res.json({ success: true,data:response});
 
