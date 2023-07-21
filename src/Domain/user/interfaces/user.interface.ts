@@ -7,5 +7,6 @@
     readonly  phoneNumber: number;
     readonly password: string;
     readonly  isVerified: boolean;
-    readonly  role: string;
+    readonly role: string;
+     isBanned:boolean
   }

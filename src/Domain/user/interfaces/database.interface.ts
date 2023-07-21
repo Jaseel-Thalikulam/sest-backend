@@ -13,4 +13,5 @@ export type User = {
     password: string;
     isVerified: boolean;
     role: string;
+    isBanned: boolean;
 };

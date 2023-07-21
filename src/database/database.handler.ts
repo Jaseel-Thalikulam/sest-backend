@@ -1,5 +1,6 @@
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import { Model, ObjectId } from "mongoose";
+const mongoose = require('mongoose');
 import { IUser } from "../Domain/user/interfaces/user.interface";
 import { RegisterDto } from "../Domain/user/dto/register.dto";
 import { IDatabaseGateway } from "../Domain/user/interfaces/database.interface";
@@ -13,7 +14,7 @@ export class DataBase implements IDatabaseGateway {
         const user = new this.userModel(newUser);
         return user.save();
     }
- 
+
     public findUser(User: LoginDto) {
         console.log("Finding")
 
@@ -24,4 +25,41 @@ export class DataBase implements IDatabaseGateway {
 
         return this.userModel.find({});
     }
+
+    public async changeUserAccess(id: ObjectId) {
+        try {
+
+            const userId = new mongoose.Types.ObjectId(id);
+            let userData = await this.userModel.findById(userId)
+
+            if (userData) {
+
+
+                userData.isBanned = !userData.isBanned;
+
+                return await userData.save();
+            } else {
+                return false
+            }
+
+
+        } catch (err) {
+            console.log(err, "from DB Gatway");
+
+        }
+
+    }
+
+    public async isSuperAdmin(id: ObjectId) {
+        try {
+            let data = await this.userModel.findById(id)
+
+            return data.role == "SuperAdmin" ? true : false
+
+        } catch (err) {
+            console.log(err);
+
+        }
+    }
+
 }

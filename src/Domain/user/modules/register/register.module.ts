@@ -14,7 +14,6 @@ import { DataBase } from '../../../../database/database.handler';
         schema:UserSchema,
     }
   ]),
-
   ],
   controllers: [RegisterController],
   providers: [RegisterService,registerGateway,DataBase]

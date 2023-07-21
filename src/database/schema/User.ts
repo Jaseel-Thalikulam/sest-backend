@@ -8,6 +8,7 @@ export const UserSchema = new mongoose.Schema({
     phoneNumber: Number,
     password: String,
     isVerified: Boolean,
+    isBanned: Boolean,
     role: String,
 
 })

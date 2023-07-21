@@ -26,7 +26,8 @@ import * as bcrypt from 'bcrypt';
               phoneNumber: User.phoneNumber,
               role: User.role,
               isVerified: User.isVerified,
-              password: hashedPassword,
+                password: hashedPassword,
+              isBanned:false
             };
 
               let response = await this._registerGateway.create(newUser);
