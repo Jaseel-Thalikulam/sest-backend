@@ -25,7 +25,7 @@ export class DataBase implements IDatabaseGateway {
 
         return this.userModel.find({});
     }
-
+ 
     public async changeUserAccess(id: ObjectId) {
         try {
 
@@ -60,6 +60,34 @@ export class DataBase implements IDatabaseGateway {
             console.log(err);
 
         }
+    }
+
+    public async addexpiryOTP(id: Object,OTP:number) {
+        
+        const StringifiedId = id.toString()
+       
+        const filter = { _id: StringifiedId };
+        const otpExpiryDate = new Date();
+
+        otpExpiryDate.setMinutes(otpExpiryDate.getMinutes() + 1);
+
+    
+        const update = {
+          $set: {
+            'otp.code': OTP,    
+            'otp.expiresAt': otpExpiryDate
+          }
+        };
+
+        const updatedUser = await this.userModel.findByIdAndUpdate(filter, update, {
+            
+            projection: {
+              otp: 1
+            }
+          });
+        
+        
+        
     }
 
 }

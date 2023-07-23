@@ -19,7 +19,7 @@ export class SuperAdminVerifyMiddleware implements NestMiddleware {
       const decodedToken =  new Promise((resolve, reject) => {
          jwt.verify(token, SECRECT_KEY, (err, decoded) => {
            if (err) {
-             reject(err);
+            res.json({success:false,message:"Authentication Failed"})
            } else {
              resolve(decoded);
              

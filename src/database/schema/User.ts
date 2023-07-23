@@ -10,5 +10,9 @@ export const UserSchema = new mongoose.Schema({
     isVerified: Boolean,
     isBanned: Boolean,
     role: String,
+    otp: {
+        code: String,
+        expiresAt: Date
+    }
 
 })
