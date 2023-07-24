@@ -21,16 +21,23 @@ export class LoginService {
 
         if (Verified) {
 
+          if (data.isVerified) {
+            
+            
+            if (data.isBanned == false) {
+              const token = jwt.sign({ userId: data._id }, SECRECT_KEY);
+              return { success: true, message: "Verified", data, token };
+            } else {
+              
+              return { success: false, message: "Banned By Admin" };
+              
+            }
+          } else { 
 
-          if (data.isBanned == false) {
-            const token = jwt.sign({ userId: data._id },SECRECT_KEY);
-            return { success: true, message: "Verified", data, token };
-          } else {
-
-            return { success: false, message: "Banned By Admin" };
-
+            return { success: false, message: "User Not Exist" };
           }
-        } else {
+            
+          } else {
           return { success: false, message: "Incorrect Password" };
         }
 

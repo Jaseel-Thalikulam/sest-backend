@@ -9,19 +9,21 @@ export class EmailService {
     this._emailGateway = emailGateway;
    }
 
-  public async SendEmailOTP(toemail,Userid,Username) {
-
+  public async SendEmailOTP(toemail,Userid) {
+console.log("otp send")
+console.log(toemail)
+console.log(Userid)
     const OTP = Math.floor(Math.random() * 900000) + 100000;
     
     this._emailGateway.addexpiryOTP(OTP,Userid)
 
-this.mailService.sendMail({
+const response=await this.mailService.sendMail({
   to: toemail,
       from: "sestverify@gmail.com",
       subject: "Verify",
       html: ` <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Hey,${Username},Verify your Email</title>
+        <title>Verify your Email</title>
         <!--[if mso]><style type="text/css">body, table, td, a { font-family: Arial, Helvetica, sans-serif !important; }</style><![endif]-->
       </head>
       
@@ -41,7 +43,7 @@ this.mailService.sendMail({
                         <div style="padding: 20px; background-color: rgb(255, 255, 255);">
                           <div style="color: rgb(0, 0, 0); text-align: left;">
                             <h1 style="margin: 1rem 0">Verification code</h1>
-                            <p style="padding-bottom: 16px">Please use the verification code below to sign up.</p>
+                            <p style="padding-bottom: 16px">Please use the verification code below to verify.</p>
                             <p style="padding-bottom: 16px"><strong style="font-size: 130%">${OTP}</strong></p>
                             <p style="padding-bottom: 16px">If you didn’t request this, you can ignore this email.</p>
                             <p style="padding-bottom: 16px">Thanks,<br>The Sest team</p>
@@ -61,7 +63,8 @@ this.mailService.sendMail({
                         </body>
                         </html>`
                       })
+                      console.log(response,"response send mail");
                       
-                      return OTP
+     
   }
 }

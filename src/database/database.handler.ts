@@ -67,9 +67,7 @@ export class DataBase implements IDatabaseGateway {
         const StringifiedId = id.toString()
        
         const filter = { _id: StringifiedId };
-        const otpExpiryDate = new Date();
-
-        otpExpiryDate.setMinutes(otpExpiryDate.getMinutes() + 1);
+        const otpExpiryDate = Date.now() + 30000;
 
     
         const update = {
@@ -89,5 +87,60 @@ export class DataBase implements IDatabaseGateway {
         
         
     }
+
+
+    public async getUserData(id: string) {
+
+        return  await this.userModel.findById(id)
+     
+    }
+
+    public async SetAsVerified(id: string) {
+        const user = await this.userModel.findById(id);
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        
+        user.isVerified = true;
+
+        user.otp = undefined;
+
+       
+       return await user.save();
+    }
+
+    public async removeUser(id:string) {
+        console.log(id," from db handlerrrr");
+        
+        const result = await this.userModel.deleteOne({ _id: id })
+        
+        console.log(result ,"helooooo ");
+        
+    }
+
+
+    public async findUserData(data) {
+        
+        
+        return await this.userModel.findOne({ email: data.email });
+         
+    }
+
+    public async findUserByEmail(data) {
+        console.log(data, "from db handler change password");
+        return this.userModel.findOne({email:data.email})
+        
+    }
+
+    public async UpdatePassword(userDetails:LoginDto) {
+        const userData =await this.userModel.findOne({ email: userDetails.email })
+        
+        userData.password = userDetails.password
+
+        return userData.save()
+    }
+
 
 }

@@ -9,6 +9,10 @@ import { middlewareGateway } from './database/gateways/middlewareGateway';
 import { DataBase } from './database/database.handler';
 import { UserSchema } from './database/schema/User'; 
 import { MailerModule } from '@nestjs-modules/mailer'
+import * as dotenv from 'dotenv';
+dotenv.config();
+const TWILIO_SECRECT_KEY = process.env.TWILIO_SECRECT_KEY
+const  MONGO_SECRET_KEY = process.env.MONGO_SECRET_KEY
 
 
 @Module({
@@ -20,7 +24,7 @@ import { MailerModule } from '@nestjs-modules/mailer'
         secure:true,
         auth: {
           user: "apikey",
-          pass:"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",
+          pass:TWILIO_SECRECT_KEY
         }
       }
     })  ,
@@ -28,7 +32,7 @@ import { MailerModule } from '@nestjs-modules/mailer'
       isGlobal: true,
     }),
     RegisterModule,
-    MongooseModule.forRoot('mongodb+srv://jaseelta111:mvW6wA1yX7WhnhPY@cluster0.swxijv6.mongodb.net/sest'),
+    MongooseModule.forRoot(MONGO_SECRET_KEY),
     LoginModule,
     UserListModule,
     MongooseModule.forFeature([
