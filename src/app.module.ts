@@ -1,15 +1,16 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { RegisterModule } from './Domain/user/modules/register/register.module';
+import { RegisterModule } from './infrastructure/core/user/modules/register/register.module';
 import {MongooseModule} from '@nestjs/mongoose';
-import { LoginModule } from './Domain/user/modules/login/login.module';
-import { UserListModule } from './Domain/admin/modules/usersList/usersList.module';
+import { LoginModule } from './infrastructure/core/user/modules/login/login.module';
+import { UserListModule } from './infrastructure/core/admin/modules/usersList/usersList.module';
 import { ConfigModule } from '@nestjs/config';
-import { SuperAdminVerifyMiddleware } from './Domain/admin/middlewares/Superadmin.middleware';
-import { middlewareGateway } from './database/gateways/middlewareGateway';
-import { DataBase } from './database/database.handler';
-import { UserSchema } from './database/schema/User'; 
+import { SuperAdminVerifyMiddleware } from './infrastructure/core/admin/middlewares/Superadmin.middleware';
+import { UserSchema } from './infrastructure/database/schema/User';
 import { MailerModule } from '@nestjs-modules/mailer'
 import * as dotenv from 'dotenv';
+import { mongooseUserRepository } from './infrastructure/database/repositories/mongooseUserRepository';
+import { mongooseAdminRepository } from './infrastructure/database/repositories/mongooseAdminRepository';
+import { mongooseMiddlewareRepository } from './infrastructure/database/repositories/mongooseMiddlewareRepository';
 dotenv.config();
 const TWILIO_SECRECT_KEY = process.env.TWILIO_SECRECT_KEY
 const  MONGO_SECRET_KEY = process.env.MONGO_SECRET_KEY
@@ -41,7 +42,14 @@ const  MONGO_SECRET_KEY = process.env.MONGO_SECRET_KEY
         schema:UserSchema,
     }
   ]),
-  ],providers:[middlewareGateway,DataBase]
+  ], providers: [
+    mongooseUserRepository,
+    mongooseMiddlewareRepository
+     // This registers the repository as a provider
+    
+  ],
+ 
+
  
 })
 export class AppModule implements NestModule {
