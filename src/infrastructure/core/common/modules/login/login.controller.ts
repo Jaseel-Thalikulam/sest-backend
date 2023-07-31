@@ -17,7 +17,7 @@ export class LoginController {
     async verifyUser(@Body() user: LoginDto,@Res() res: Response) {
    
         const response = await this.loginService.verifyUser(user)
-        console.log(response)   
+        console.log(response,"from login serviceeeee alaaaa controllerr")   
         if (response.success) {
             const data = response.data;
           
@@ -35,7 +35,7 @@ export class LoginController {
                     sameSite: "none",
                     secure: true, 
                 });
-            } else if (data.role == 'Admin') {
+            } else if (data.role == 'Admin') {  
                 res.cookie("jwt-admin", response.token, {
                     httpOnly: true,
                     maxAge: 24 * 60 * 60 * 1000,

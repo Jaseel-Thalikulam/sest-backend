@@ -1,7 +1,7 @@
 
 import { ObjectId } from 'mongoose';
 import User from '../entity/user.entity';
-import { LoginDto } from 'src/infrastructure/core/user/DTO/login.dto';
+import { LoginDto } from 'src/infrastructure/core/common/DTO/login.dto';
 interface UserRepository {
     createUser(user: User): Promise<User>
     findUserByEmail(email: string): Promise<User | null>

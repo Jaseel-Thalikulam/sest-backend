@@ -1,7 +1,7 @@
 import UserRepository from "../interfaces/user.repository"
 import * as jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
-import { VerifyDto } from "src/infrastructure/core/user/DTO/verifyotpdto";
+import { VerifyDto } from "src/infrastructure/core/common/DTO/verifyotpdto";
 dotenv.config();
 const SECRECT_KEY = process.env.SECRECT_KEY
 

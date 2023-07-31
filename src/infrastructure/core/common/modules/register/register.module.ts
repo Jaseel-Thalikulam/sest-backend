@@ -8,7 +8,7 @@ import { EmailService } from 'src/infrastructure/services/email/email.service';
 import createUserUseCase from 'src/Domain/usecase/createUser';
 import verifyUserUseCase from 'src/Domain/usecase/verifyUser';
 import updateUserPasswordUseCase from 'src/Domain/usecase/updateUserPassword';
-import emailServiceUseCase from 'src/Domain/services/email/emailservice';
+  
 @Module({
   imports: [
     MongooseModule.forFeature([

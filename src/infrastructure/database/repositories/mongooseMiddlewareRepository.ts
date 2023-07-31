@@ -20,5 +20,17 @@ export class mongooseMiddlewareRepository implements MiddlewareRepository {
 
         }
     }
+    async isTutor(id: ObjectId) { 
+        try {
+            let data = await this.userModel.findById(id)
+
+            return data.role == "Lead" ? true : false
+
+        } catch (err) {
+            console.log(err);
+
+        }
+    
+    }
 
 }

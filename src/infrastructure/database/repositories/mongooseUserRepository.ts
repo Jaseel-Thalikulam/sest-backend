@@ -2,9 +2,7 @@
     import { Model, ObjectId } from "mongoose";
     import  User  from "src/Domain/entity/user.entity";
     import UserRepository from "src/Domain/interfaces/user.repository";
-    import { LoginDto } from "src/infrastructure/core/user/DTO/login.dto";
-
-
+    import { LoginDto } from "src/infrastructure/core/common/DTO/login.dto";
 
     export class mongooseUserRepository implements UserRepository {
         constructor(@InjectModel('User') private readonly userModel: Model<User>) { }
@@ -18,7 +16,7 @@
 
       async findUserByEmail(email: string): Promise<User | null> {
             console.log("helo finduserby email")
-            const foundUser = await this.userModel.findOne({ email }).exec();
+          const foundUser = await this.userModel.findOne({ email });
             return foundUser ? foundUser.toObject() : null;
         }
 

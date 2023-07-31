@@ -2,7 +2,7 @@ import { mongooseUserRepository } from 'src/infrastructure/database/repositories
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import * as dotenv from 'dotenv';
-import { LoginDto } from "src/infrastructure/core/user/DTO/login.dto";
+import { LoginDto } from "src/infrastructure/core/common/DTO/login.dto";
 import { Injectable } from '@nestjs/common';
 dotenv.config();
 const SECRECT_KEY = process.env.SECRECT_KEY
