@@ -1,4 +1,3 @@
 export class ForgetPasswordDto {
-    readonly email: string;
-  
+  readonly email: string;
 }

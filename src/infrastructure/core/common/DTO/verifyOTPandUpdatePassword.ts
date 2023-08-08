@@ -1,5 +1,5 @@
 export class verifyOTPandUpdateDTO {
-    readonly email: string;
-    readonly password: string;
-    readonly OTP: string;
+  readonly email: string;
+  readonly password: string;
+  readonly OTP: string;
 }

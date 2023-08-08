@@ -2,11 +2,11 @@ import { ObjectId } from 'mongoose';
 
 class User {
   public _id!: ObjectId;
-  private name: string;
+  public name: string;
   public email: string;
   public password: string;
   public role: string;
-  public isVerified!: boolean;
+  public isVerified: boolean;
   public isBanned!: boolean;
   public phoneNumber?: string;
   public about?: string;
@@ -21,19 +21,20 @@ class User {
     pinterest?: string;
     twitter?: string;
   };
-  public tags: string[]; // Array of tags
+  public tags: string[];
 
   constructor(
     name: string,
     email: string,
     password: string,
     role: string,
+    isVerified: boolean,
+    tags: string[] = [], // Default empty array for tags
     phoneNumber?: string,
     about?: string,
     otp?: { code: string; expiresAt: Date },
     URLs?: { github?: string; linkedin?: string; pinterest?: string },
     DOB?: Date,
-    tags: string[] = [] // Default empty array for tags
   ) {
     this.name = name;
     this.email = email;
@@ -45,11 +46,9 @@ class User {
     this.URLs = URLs;
     this.DOB = DOB;
     this.isBanned = false;
-    this.isVerified = false;
+    this.isVerified = isVerified;
     this.tags = tags;
   }
-
-  // ... (rest of the methods)
 
   getTags(): string[] {
     return this.tags;
