@@ -1,7 +1,7 @@
 import { CategoryDto } from '../DTO/category.dto';
-import { CategoryService } from '../../../services/category/category.service';
+import { CategoryService } from '../../common/category/category.service';
 import { UserListService } from './services/userList/usersList.service';
-import { Body, Controller, Get, Post, Res, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { Response, Request } from 'express';
 
 @Controller('/Superadmin')
@@ -21,15 +21,31 @@ export default class UserListController {
   @Post('/blockuser')
   async userAccess(
     @Body() id: string,
-    @Req() req: Request,
     @Res() res: Response,
-  ) {
+  ){
     const response = await this.userlistservice.userAccess(id);
 
     if (response.success) {
       return res.json({
         success: true,
         Userdata: response.data,
+        message: response.message,
+      });
+    } else {
+      return res.json({ success: false, message: response.message });
+    }
+  }
+  @Post('/unlistCategory')
+  async unlistCategory(
+    @Body() id: string,
+    @Res() res: Response,
+  ){
+    const response = await this.categoryservice.unlistCategory(id);
+
+    if (response.success) {
+      return res.json({
+        success: true,
+        categorydata: response.data,
         message: response.message,
       });
     } else {

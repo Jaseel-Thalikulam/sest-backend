@@ -5,7 +5,7 @@ import edit_Tutor_Profile from 'src/Domain/usecase/tutor/editTutorProfile';
 import { mongooseTutorRepository } from 'src/infrastructure/database/repositories/tutor/mongoosetutorRepository';
 import { Edit_tutorController } from './tutor.controller';
 import { Edit_tutorService } from './services/edit_tutor.service';
-import { CategoryService } from 'src/infrastructure/services/category/category.service';
+import { CategoryService } from 'src/infrastructure/core/common/category/category.service';
 import { mongooseCategoryRepository } from 'src/infrastructure/database/repositories/category/mongooseCategoryRepository';
 import add_Category_UseCase from 'src/Domain/usecase/superadmin/addCategoryuseCase';
 import { categorySchema } from 'src/infrastructure/database/schema/Category';

@@ -20,5 +20,6 @@ export const UserSchema = new mongoose.Schema({
     pinterest: String,
     twitter: String,
   },
-  tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }]
+  tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
+  avatarUrl: String,
 });
