@@ -1,5 +1,5 @@
 import { mongooseCategoryRepository } from 'src/infrastructure/database/repositories/category/mongooseCategoryRepository';
-import { CategoryDto } from '../../core/superAdmin/DTO/Category.dto';
+import { CategoryDto } from '../../superAdmin/DTO/Category.dto';
 import { Injectable } from '@nestjs/common';
 import add_Category_UseCase from 'src/Domain/usecase/superadmin/addCategoryuseCase';
 
@@ -44,6 +44,17 @@ export class CategoryService {
       return { success: true, message: 'Successfully Added' };
     } else {
       return { success: false, message: 'Category Already Exist' };
+    }
+  }
+
+  async unlistCategory(id:string) {
+    try {
+      const data = await this._CategoryRepository.unlistCategory(id);
+      return { success: true, message: 'Success', data };
+    } catch (err) {
+      console.log(err, 'from userlist');
+
+      return { success: false, message: 'Unauthorized' };
     }
   }
 }

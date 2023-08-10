@@ -21,4 +21,5 @@ export const UserSchema = new mongoose.Schema({
     twitter: String,
   },
   tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
+  avatarUrl: String,
 });
