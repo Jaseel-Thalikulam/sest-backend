@@ -24,7 +24,9 @@ export class StudentVerifyMiddleware implements NestMiddleware {
         } else {
           resolve(decoded);
 
-          const authorized = this._MiddlewareRepository.isStudent(decoded.userId);
+          const authorized = this._MiddlewareRepository.isStudent(
+            decoded.userId,
+          );
 
           if (authorized) {
             console.log('heloooo Student auth completed ');

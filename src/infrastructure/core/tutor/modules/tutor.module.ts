@@ -19,14 +19,25 @@ import removeTutorCategoryuseCase from 'src/Domain/usecase/tutor/removeCategoryu
         name: 'User',
         schema: UserSchema,
       },
-    ]), MongooseModule.forFeature([
+    ]),
+    MongooseModule.forFeature([
       {
         name: 'Category',
         schema: categorySchema,
       },
-    ])
+    ]),
   ],
   controllers: [Edit_tutorController],
-  providers: [Edit_tutorService, mongooseTutorRepository, edit_Tutor_Profile,CategoryService,mongooseCategoryRepository,add_Category_UseCase,tutor_CategoryService,insertTutorCategoryuseCase,removeTutorCategoryuseCase],
+  providers: [
+    Edit_tutorService,
+    mongooseTutorRepository,
+    edit_Tutor_Profile,
+    CategoryService,
+    mongooseCategoryRepository,
+    add_Category_UseCase,
+    tutor_CategoryService,
+    insertTutorCategoryuseCase,
+    removeTutorCategoryuseCase,
+  ],
 })
 export class tutorModule {}

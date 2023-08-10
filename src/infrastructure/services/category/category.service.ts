@@ -5,27 +5,19 @@ import add_Category_UseCase from 'src/Domain/usecase/superadmin/addCategoryuseCa
 
 @Injectable()
 export class CategoryService {
-
-
   private readonly _CategoryRepository: mongooseCategoryRepository;
-  private readonly _addCategoryUseCase: add_Category_UseCase
-
-
+  private readonly _addCategoryUseCase: add_Category_UseCase;
 
   constructor(
     CategoryRepository: mongooseCategoryRepository,
-   addCategoryUseCase:add_Category_UseCase
+    addCategoryUseCase: add_Category_UseCase,
   ) {
     this._CategoryRepository = CategoryRepository;
     this._addCategoryUseCase = addCategoryUseCase;
   }
 
-
-
-
   public async getAllCategory() {
     try {
-
       const categoryArray = await this._CategoryRepository.getAllCategory();
 
       return { success: true, data: categoryArray };
@@ -34,7 +26,6 @@ export class CategoryService {
     }
   }
 
-  
   public async RemoveCategory(id: string) {
     try {
       return { success: true, message: 'Success' };
@@ -44,17 +35,15 @@ export class CategoryService {
   }
 
   public async addCategory(category: CategoryDto) {
-
-
-    const isCategoryExist = await this._CategoryRepository.getCategory(category.Name)
+    const isCategoryExist = await this._CategoryRepository.getCategory(
+      category.Name,
+    );
     if (!isCategoryExist) {
-     await this._addCategoryUseCase.execute(category)
+      await this._addCategoryUseCase.execute(category);
 
-      return {success: true,message: "Successfully Added"}
-
+      return { success: true, message: 'Successfully Added' };
     } else {
-      return { success: false, message: "Category Already Exist" }
-
+      return { success: false, message: 'Category Already Exist' };
     }
   }
 }

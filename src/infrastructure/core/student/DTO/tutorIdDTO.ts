@@ -1,5 +1,3 @@
 export class TutorIdDto {
-    readonly tutorId: string;
- 
-  }
-  
+  readonly tutorId: string;
+}

@@ -10,22 +10,19 @@ export class mongooseCategoryRepository implements ICategoryRepository {
   ) {}
 
   public async createCategory(category: CategoryDto) {
-
-    
     const newCategory = new this.CategoryModel(category);
 
     return await newCategory.save();
-
   }
 
   public async getCategory(Name: string) {
-    const response =await this.CategoryModel.findOne({ Name: Name })
-    console.log(response,"from categoryy reposeeeee")
+    const response = await this.CategoryModel.findOne({ Name: Name });
+    console.log(response, 'from categoryy reposeeeee');
     return response !== null;
   }
 
   // public async updateCategory(id: ObjectId) {
-  //   return 
+  //   return
   // }
 
   public async unlistCategory(id: ObjectId) {}

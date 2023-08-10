@@ -58,6 +58,6 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(SuperAdminVerifyMiddleware).forRoutes('Superadmin');
     consumer.apply(TutorVerifyMiddleware).forRoutes('lead');
-    consumer.apply(StudentVerifyMiddleware).forRoutes('learn')
+    consumer.apply(StudentVerifyMiddleware).forRoutes('learn');
   }
 }

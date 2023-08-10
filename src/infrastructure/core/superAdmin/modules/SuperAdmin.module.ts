@@ -30,7 +30,7 @@ import add_Category_UseCase from 'src/Domain/usecase/superadmin/addCategoryuseCa
     CategoryService,
     mongooseSuperAdminRepository,
     mongooseCategoryRepository,
-    add_Category_UseCase
+    add_Category_UseCase,
   ],
 })
 export class SuperAdminModule {}

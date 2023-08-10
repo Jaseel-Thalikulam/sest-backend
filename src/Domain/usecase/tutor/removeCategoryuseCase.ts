@@ -9,8 +9,8 @@ class removeTutorCategoryuseCase {
     this.tutorRepository = tutorRepository;
   }
 
-  async execute(deletionData:TutorCategoryDTO) {
-      return await this.tutorRepository.removeCategory(deletionData)
+  async execute(deletionData: TutorCategoryDTO) {
+    return await this.tutorRepository.removeCategory(deletionData);
   }
 }
 

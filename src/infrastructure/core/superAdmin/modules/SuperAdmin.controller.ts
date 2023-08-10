@@ -9,11 +9,10 @@ export default class UserListController {
   constructor(
     private userlistservice: UserListService,
     private categoryservice: CategoryService,
-  ) { }
+  ) {}
 
   @Get('/userslist')
   async getAllUser(@Res() res: Response) {
-
     const response = await this.userlistservice.getAllUsers();
     return res.json({ success: true, data: response });
   }
@@ -39,18 +38,15 @@ export default class UserListController {
 
   @Get('/Categories')
   async getAllCategory(@Res() res: Response) {
-
     const response = await this.categoryservice.getAllCategory();
     return res.json({ success: response.success, data: response.data });
   }
 
-  @Post("/addCategory")
+  @Post('/addCategory')
   async addCategory(@Body() Category: CategoryDto, @Res() res: Response) {
+    const response = await this.categoryservice.addCategory(Category);
+    console.log(response, 'from add category controller');
 
-    const response =await this.categoryservice.addCategory(Category)
-    console.log(response,"from add category controller")
- 
-    return res.json ({success:response.success,message:response.message})
-
+    return res.json({ success: response.success, message: response.message });
   }
 }

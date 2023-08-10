@@ -4,7 +4,7 @@ import { mongooseCategoryRepository } from 'src/infrastructure/database/reposito
 
 @Injectable()
 class add_Category_UseCase {
-    private readonly _CategoryRepository: mongooseCategoryRepository;
+  private readonly _CategoryRepository: mongooseCategoryRepository;
   constructor(CategoryRepository: mongooseCategoryRepository) {
     this._CategoryRepository = CategoryRepository;
   }

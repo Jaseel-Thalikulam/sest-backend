@@ -4,9 +4,9 @@ class Category {
   public _id!: ObjectId;
   public Name: string;
   public Description: string;
-  public IsListed :boolean
+  public IsListed: boolean;
 
-  constructor(Name: string,Description:string) {
+  constructor(Name: string, Description: string) {
     this.Name = Name;
     this.Description = Description;
     this.IsListed = true;
