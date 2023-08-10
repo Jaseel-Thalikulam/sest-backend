@@ -48,6 +48,4 @@ export class mongooseCategoryRepository implements ICategoryRepository {
   public getAllCategory() {
     return this.CategoryModel.find({});
   }
-
-  
 }
