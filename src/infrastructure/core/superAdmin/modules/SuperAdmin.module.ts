@@ -1,7 +1,7 @@
 import { mongooseCategoryRepository } from '../../../database/repositories/category/mongooseCategoryRepository';
 import { mongooseSuperAdminRepository } from '../../../database/repositories/superadmin/mongooseAdminRepository';
 import { UserListService } from './services/userList/usersList.service';
-import { CategoryService } from '../../../services/category/category.service';
+import { CategoryService } from '../../common/category/category.service';
 import { categorySchema } from '../../../database/schema/Category';
 import UserListController from './SuperAdmin.controller';
 import { UserSchema } from '../../../database/schema/User';
@@ -30,7 +30,7 @@ import add_Category_UseCase from 'src/Domain/usecase/superadmin/addCategoryuseCa
     CategoryService,
     mongooseSuperAdminRepository,
     mongooseCategoryRepository,
-    add_Category_UseCase
+    add_Category_UseCase,
   ],
 })
 export class SuperAdminModule {}

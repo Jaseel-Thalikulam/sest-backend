@@ -9,8 +9,8 @@ class insertTutorCategoryuseCase {
     this.tutorRepository = tutorRepository;
   }
 
-  async execute(insertionData:TutorCategoryDTO) {
-    return await this.tutorRepository.addCategory(insertionData)
+  async execute(insertionData: TutorCategoryDTO) {
+    return await this.tutorRepository.addCategory(insertionData);
   }
 }
 

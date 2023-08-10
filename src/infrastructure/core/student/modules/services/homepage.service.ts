@@ -1,4 +1,3 @@
-import { mongooseSuperAdminRepository } from 'src/infrastructure/database/repositories/superadmin/mongooseAdminRepository';
 import { Injectable } from '@nestjs/common';
 import { mongooseStudentRepository } from 'src/infrastructure/database/repositories/student/mongooseStudentRepository';
 import { TutorIdDto } from '../../DTO/tutorIdDTO';
@@ -9,22 +8,17 @@ export class StudentHomePageService {
     this._studentRepository = StudentRepository;
   }
   public async getAllTutors() {
-      try {
-   
+    try {
       return await this._studentRepository.getAlltutors();
-    
     } catch (err) {
       console.log(err);
     }
-    }
-  public async getTutor(TutorId:TutorIdDto) {
-      try {
-      
+  }
+  public async getTutor(TutorId: TutorIdDto) {
+    try {
       return await this._studentRepository.getTutor(TutorId);
-  
     } catch (err) {
       console.log(err);
     }
-    }
-    
+  }
 }

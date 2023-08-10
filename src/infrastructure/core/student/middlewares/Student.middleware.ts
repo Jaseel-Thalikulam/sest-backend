@@ -17,14 +17,16 @@ export class StudentVerifyMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     const token = req.headers['token'];
 
-    const decodedToken = new Promise((resolve, reject) => {
+    new Promise((resolve) => {
       jwt.verify(token, SECRECT_KEY, (err, decoded) => {
         if (err) {
           res.json({ success: false, message: 'Authentication Failed' });
         } else {
           resolve(decoded);
 
-          const authorized = this._MiddlewareRepository.isStudent(decoded.userId);
+          const authorized = this._MiddlewareRepository.isStudent(
+            decoded.userId,
+          );
 
           if (authorized) {
             console.log('heloooo Student auth completed ');

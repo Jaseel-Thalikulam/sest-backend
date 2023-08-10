@@ -1,7 +1,6 @@
-
-interface IinsertCategory  {
-    categoryId: string;
-    userId: string;
+interface IinsertCategory {
+  categoryId: string;
+  userId: string;
 }
 
-export default IinsertCategory ;
+export default IinsertCategory;

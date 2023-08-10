@@ -14,7 +14,11 @@ import { ConfigModule } from '@nestjs/config';
 import * as dotenv from 'dotenv';
 import { StudentVerifyMiddleware } from './infrastructure/core/student/middlewares/Student.middleware';
 import { studentModule } from './infrastructure/core/student/modules/student.module';
-
+import { uploadModule } from './infrastructure/core/upload/upload.module';
+import { v2 as cloudinary } from 'cloudinary';
+cloudinary.config({
+  secure: true,
+});
 dotenv.config();
 const TWILIO_SECRECT_KEY = process.env.TWILIO_SECRECT_KEY;
 const MONGO_SECRET_KEY = process.env.MONGO_SECRET_KEY;
@@ -39,6 +43,7 @@ const MONGO_SECRET_KEY = process.env.MONGO_SECRET_KEY;
     tutorModule,
     MongooseModule.forRoot(MONGO_SECRET_KEY),
     LoginModule,
+    uploadModule,
     SuperAdminModule,
     studentModule,
     MongooseModule.forFeature([
@@ -58,6 +63,6 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(SuperAdminVerifyMiddleware).forRoutes('Superadmin');
     consumer.apply(TutorVerifyMiddleware).forRoutes('lead');
-    consumer.apply(StudentVerifyMiddleware).forRoutes('learn')
+    consumer.apply(StudentVerifyMiddleware).forRoutes('learn');
   }
 }
