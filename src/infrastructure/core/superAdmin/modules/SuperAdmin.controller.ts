@@ -2,7 +2,7 @@ import { CategoryDto } from '../DTO/category.dto';
 import { CategoryService } from '../../common/category/category.service';
 import { UserListService } from './services/userList/usersList.service';
 import { Body, Controller, Get, Post, Res } from '@nestjs/common';
-import { Response, Request } from 'express';
+import { Response } from 'express';
 
 @Controller('/Superadmin')
 export default class UserListController {
@@ -18,10 +18,7 @@ export default class UserListController {
   }
 
   @Post('/blockuser')
-  async userAccess(
-    @Body() id: string,
-    @Res() res: Response,
-  ){
+  async userAccess(@Body() id: string, @Res() res: Response) {
     const response = await this.userlistservice.userAccess(id);
 
     if (response.success) {
@@ -35,10 +32,7 @@ export default class UserListController {
     }
   }
   @Post('/unlistCategory')
-  async unlistCategory(
-    @Body() id: string,
-    @Res() res: Response,
-  ){
+  async unlistCategory(@Body() id: string, @Res() res: Response) {
     const response = await this.categoryservice.unlistCategory(id);
 
     if (response.success) {
@@ -55,7 +49,7 @@ export default class UserListController {
   @Get('/Categories')
   async getAllCategory(@Res() res: Response) {
     const response = await this.categoryservice.getAllCategory();
-    return res.json({ success: response.success, data: response.data });
+    return res.json({ success: response.success, categorydata: response.data });
   }
 
   @Post('/addCategory')

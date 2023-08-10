@@ -1,5 +1,4 @@
 import { VerifyDto } from '../../../infrastructure/core/common/DTO/verifyotpdto';
-import UserRepository from '../../interfaces/user.interface';
 import { mongooseUserRepository } from 'src/infrastructure/database/repositories/common/mongooseUserRepository';
 import * as jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';

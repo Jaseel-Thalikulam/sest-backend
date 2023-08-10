@@ -30,7 +30,7 @@ class User {
     password: string,
     role: string,
     isVerified: boolean,
-    tags: string[] = [], 
+    tags: string[] = [],
     phoneNumber?: string,
     avatarUrl?: string,
     about?: string,

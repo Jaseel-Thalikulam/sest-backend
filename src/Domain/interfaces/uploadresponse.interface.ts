@@ -1,6 +1,5 @@
 export interface IUploadResponse {
-    success: boolean;
-    URL?: string;
-    message?: string;
-  }
-  
+  success: boolean;
+  URL?: string;
+  message?: string;
+}

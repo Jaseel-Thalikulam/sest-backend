@@ -17,7 +17,7 @@ export class SuperAdminVerifyMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     console.log('heloooo SU ');
     const token = req.headers['token'];
-    new Promise((resolve, reject) => {
+    new Promise((resolve) => {
       jwt.verify(token, SECRECT_KEY, (err, decoded) => {
         if (err) {
           res.json({ success: false, message: 'Authentication Failed' });

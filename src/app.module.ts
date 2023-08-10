@@ -15,10 +15,10 @@ import * as dotenv from 'dotenv';
 import { StudentVerifyMiddleware } from './infrastructure/core/student/middlewares/Student.middleware';
 import { studentModule } from './infrastructure/core/student/modules/student.module';
 import { uploadModule } from './infrastructure/core/upload/upload.module';
-const cloudinary = require('cloudinary').v2;
+import { v2 as cloudinary } from 'cloudinary';
 cloudinary.config({
-    secure: true
-  });
+  secure: true,
+});
 dotenv.config();
 const TWILIO_SECRECT_KEY = process.env.TWILIO_SECRECT_KEY;
 const MONGO_SECRET_KEY = process.env.MONGO_SECRET_KEY;

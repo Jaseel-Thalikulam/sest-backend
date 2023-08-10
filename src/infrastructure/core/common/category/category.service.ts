@@ -26,14 +26,6 @@ export class CategoryService {
     }
   }
 
-  public async RemoveCategory(id: string) {
-    try {
-      return { success: true, message: 'Success' };
-    } catch (err) {
-      console.log(err, 'from category service');
-    }
-  }
-
   public async addCategory(category: CategoryDto) {
     const isCategoryExist = await this._CategoryRepository.getCategory(
       category.Name,
@@ -47,7 +39,7 @@ export class CategoryService {
     }
   }
 
-  async unlistCategory(id:string) {
+  async unlistCategory(id: string) {
     try {
       const data = await this._CategoryRepository.unlistCategory(id);
       return { success: true, message: 'Success', data };

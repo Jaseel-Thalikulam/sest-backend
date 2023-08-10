@@ -29,7 +29,7 @@ export class Edit_tutorController {
   async getCategories(@Res() res: Response) {
     const response = await this.categoryService.getAllCategory();
 
-    return res.json({ success: true, data: response });
+    return res.json({ success: response.success, categorydata: response.data });
   }
 
   @Post('/insertCategory')

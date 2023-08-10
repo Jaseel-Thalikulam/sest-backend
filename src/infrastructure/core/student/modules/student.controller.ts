@@ -9,10 +9,10 @@ export default class StudentController {
 
   @Get('/tutorlist')
   async getAllTutor(@Res() res: Response) {
-    console.log('heloooooo called');
-
     const response = await this.studentHomePageService.getAllTutors();
-    return res.json({ success: true, data: response });
+
+    console.log(response);
+    return res.json({ success: true, Tutorsdata: response });
   }
   @Post('/tutordata')
   async getTutor(@Body() tutorId: TutorIdDto, @Res() res: Response) {

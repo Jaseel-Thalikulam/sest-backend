@@ -13,9 +13,13 @@ import { mongooseUploadRepository } from 'src/infrastructure/database/repositori
         name: 'User',
         schema: UserSchema,
       },
-    ]), 
+    ]),
   ],
   controllers: [upload_Controller],
-  providers: [upload_Service,cloudinaryUploaduseCase,mongooseUploadRepository],
+  providers: [
+    upload_Service,
+    cloudinaryUploaduseCase,
+    mongooseUploadRepository,
+  ],
 })
 export class uploadModule {}

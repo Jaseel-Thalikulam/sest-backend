@@ -3,7 +3,7 @@ import { CategoryDto } from '../../../core/superAdmin/DTO/Category.dto';
 import Category from '../../../../Domain/entity/category.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const ObjectId = mongoose.Types.ObjectId;
 
 export class mongooseCategoryRepository implements ICategoryRepository {
@@ -28,14 +28,18 @@ export class mongooseCategoryRepository implements ICategoryRepository {
   // }
 
   public async unlistCategory(id: string) {
-    const categoryObjectId = new ObjectId(id); 
-    const categorydata = await this.CategoryModel.findById(categoryObjectId)
-    console.log(categorydata)
+    const categoryObjectId = new ObjectId(id);
+    const categorydata = await this.CategoryModel.findById(categoryObjectId);
+    console.log(categorydata);
 
     if (categorydata) {
       categorydata.IsListed = !categorydata.IsListed;
 
-      return await categorydata.save();
+      const Catdata = await categorydata.save();
+
+      const Arr = [Catdata];
+
+      return Arr;
     } else {
       return false;
     }

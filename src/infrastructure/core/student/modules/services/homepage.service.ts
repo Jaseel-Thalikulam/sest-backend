@@ -1,4 +1,3 @@
-import { mongooseSuperAdminRepository } from 'src/infrastructure/database/repositories/superadmin/mongooseAdminRepository';
 import { Injectable } from '@nestjs/common';
 import { mongooseStudentRepository } from 'src/infrastructure/database/repositories/student/mongooseStudentRepository';
 import { TutorIdDto } from '../../DTO/tutorIdDTO';
