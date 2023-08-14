@@ -16,6 +16,8 @@ import { StudentVerifyMiddleware } from './infrastructure/core/student/middlewar
 import { studentModule } from './infrastructure/core/student/modules/student.module';
 import { uploadModule } from './infrastructure/core/upload/upload.module';
 import { v2 as cloudinary } from 'cloudinary';
+import { chatSchema } from './infrastructure/database/schema/Chat';
+import { messageSchema } from './infrastructure/database/schema/Message';
 cloudinary.config({
   secure: true,
 });
@@ -50,6 +52,19 @@ const MONGO_SECRET_KEY = process.env.MONGO_SECRET_KEY;
       {
         name: 'User',
         schema: UserSchema,
+      },
+    ]),
+    
+    MongooseModule.forFeature([
+      {
+        name: 'Chat',
+        schema: chatSchema,
+      },
+    ]),
+    MongooseModule.forFeature([
+      {
+        name: 'Message',
+        schema: messageSchema,
       },
     ]),
   ],

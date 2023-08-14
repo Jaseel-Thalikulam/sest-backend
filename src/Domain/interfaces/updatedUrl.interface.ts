@@ -10,6 +10,7 @@ interface IUserSlice {
   URLs: URLs;
   role?: string;
   name: string;
+  username:string,
   email?: string;
   DOB?: null | Date;
   _id?: ObjectId;

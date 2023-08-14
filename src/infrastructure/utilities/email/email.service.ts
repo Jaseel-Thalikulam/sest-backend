@@ -14,9 +14,7 @@ export class EmailService implements IemailService {
   }
 
   public async SendEmailOTP(toemail, Userid) {
-    console.log('otp send');
-    console.log(toemail);
-    console.log(Userid);
+   
     const OTP = Math.floor(Math.random() * 900000) + 100000;
 
     this._UserRepository.addExpiryOTP(Userid, OTP);

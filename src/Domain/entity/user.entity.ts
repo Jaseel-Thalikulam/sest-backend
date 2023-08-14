@@ -3,6 +3,7 @@ import { ObjectId } from 'mongoose';
 class User {
   public _id!: ObjectId;
   public name: string;
+  public username: string;
   public email: string;
   public password: string;
   public role: string;
@@ -26,6 +27,7 @@ class User {
 
   constructor(
     name: string,
+    username:string,
     email: string,
     password: string,
     role: string,
@@ -40,6 +42,7 @@ class User {
   ) {
     this.name = name;
     this.email = email;
+    this.username = username;
     this.password = password;
     this.role = role;
     this.phoneNumber = phoneNumber;

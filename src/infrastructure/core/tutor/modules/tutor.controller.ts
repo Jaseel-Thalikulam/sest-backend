@@ -1,23 +1,25 @@
 import { Body, Controller, Get, Post, Res } from '@nestjs/common';
-import { TutorProfileDto } from '../dto/tutorProfileDTO';
-import { Edit_tutorService } from './services/edit_tutor.service';
+import { ProfileDto } from '../../common/DTO/tutorProfileDTO';
+// import { Edit_tutorService } from './services/edit_tutor.service';
+import { Edit_ProfileService } from '../../common/services/profile/profile.service';
 import { Response } from 'express';
-import { CategoryService } from 'src/infrastructure/core/common/category/category.service';
+import { CategoryService } from 'src/infrastructure/core/common/services/category/category.service';
 import { TutorCategoryDTO } from '../dto/insertCategoryDTO';
 import { tutor_CategoryService } from './services/tutor_Category.service';
 
 @Controller('/lead')
 export class Edit_tutorController {
   constructor(
-    private editTutorPriofileService: Edit_tutorService,
+    private editTutorPriofileService: Edit_ProfileService,
     private tutorCategoryService: tutor_CategoryService,
     private categoryService: CategoryService,
   ) {}
 
   @Post('/editprofile')
-  async postUser(@Body() user: TutorProfileDto, @Res() res: Response) {
-    const response = await this.editTutorPriofileService.editTutorProfile(user);
+  async postUser(@Body() user: ProfileDto, @Res() res: Response) {
+    const response = await this.editTutorPriofileService.editProfile(user);
 
+    console.log(response)
     return res.json({
       success: response.success,
       message: response.message,

@@ -1,7 +1,7 @@
 import { mongooseCategoryRepository } from '../../../database/repositories/category/mongooseCategoryRepository';
 import { mongooseSuperAdminRepository } from '../../../database/repositories/superadmin/mongooseAdminRepository';
 import { UserListService } from './services/userList/usersList.service';
-import { CategoryService } from '../../common/category/category.service';
+import { CategoryService } from '../../common/services/category/category.service';
 import { categorySchema } from '../../../database/schema/Category';
 import UserListController from './SuperAdmin.controller';
 import { UserSchema } from '../../../database/schema/User';

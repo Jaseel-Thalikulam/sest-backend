@@ -23,14 +23,14 @@ export class StudentVerifyMiddleware implements NestMiddleware {
           res.json({ success: false, message: 'Authentication Failed' });
         } else {
           resolve(decoded);
-
           const authorized = this._MiddlewareRepository.isStudent(
             decoded.userId,
           );
 
           if (authorized) {
-            console.log('heloooo Student auth completed ');
+      
             next();
+
           } else {
             res.json({ success: false, message: 'Authorization Failed' });
           }

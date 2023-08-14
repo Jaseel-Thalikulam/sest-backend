@@ -1,7 +1,3 @@
-import { TutorProfileDto } from 'src/infrastructure/core/tutor/dto/tutorProfileDTO';
-
-interface ITutorRepository {
-  UpdateProfile(data: TutorProfileDto);
-}
+interface ITutorRepository {}
 
 export default ITutorRepository;

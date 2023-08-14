@@ -1,5 +1,5 @@
 import { mongooseCategoryRepository } from 'src/infrastructure/database/repositories/category/mongooseCategoryRepository';
-import { CategoryDto } from '../../superAdmin/DTO/Category.dto';
+import { CategoryDto } from '../../../superAdmin/DTO/Category.dto';
 import { Injectable } from '@nestjs/common';
 import add_Category_UseCase from 'src/Domain/usecase/superadmin/addCategoryuseCase';
 

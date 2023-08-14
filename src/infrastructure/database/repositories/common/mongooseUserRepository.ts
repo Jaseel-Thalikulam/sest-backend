@@ -3,6 +3,7 @@ import { LoginDto } from '../../../core/common/DTO/login.dto';
 import User from '../../../../Domain/entity/user.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
+import { ProfileDto } from 'src/infrastructure/core/common/DTO/tutorProfileDTO';
 
 export class mongooseUserRepository implements IUserRepository {
   constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
@@ -12,9 +13,17 @@ export class mongooseUserRepository implements IUserRepository {
     return createdUser.toObject();
   }
 
+  async getUserByUsername(username: string): Promise<boolean>{
+    const data = await this.userModel.findOne({ username: username })
+    console.log(data,"username")
+    return data?true:false
+  }
   async findUserByEmail(email: string): Promise<User | null> {
-    console.log('helo finduserby email');
-    const foundUser = await this.userModel.findOne({ email });
+   
+    const foundUser = await this.userModel.findOne({ email }).populate({
+      path: 'tags',
+      model: 'Category',
+    });;
     return foundUser ? foundUser.toObject() : null;
   }
 
@@ -70,5 +79,81 @@ export class mongooseUserRepository implements IUserRepository {
     userData.password = userDetails.password;
 
     return userData.save();
+  }
+
+  async UpdateProfile(userdata: ProfileDto) {
+    console.log(userdata, 'from repository');
+
+    try {
+      const userDetails = await this.userModel.findById(userdata._id);
+
+      if (userDetails) {
+        if (userdata.Number !== '') {
+          userDetails.phoneNumber = userdata.Number;
+        }
+
+        if (userdata.About !== '') {
+          userDetails.about = userdata.About;
+        }
+
+        if (userdata.DOB) {
+          userDetails.DOB = userdata.DOB;
+        }
+
+        if (userdata.githuburl) {
+          const update = {
+            $set: {
+              'URLs.github': userdata.githuburl,
+            },
+          };
+
+          await this.userModel.findByIdAndUpdate(userdata._id, update, {
+            projection: {
+              URLs: 1,
+            },
+          });
+        }
+
+        if (userdata.linkedinurl) {
+          const update = {
+            $set: {
+              'URLs.linkedin': userdata.linkedinurl,
+            },
+          };
+
+          await this.userModel.findByIdAndUpdate(userdata._id, update, {
+            projection: {
+              URLs: 1,
+            },
+          });
+        }
+        if (userdata.pinteresturl) {
+          const update = {
+            $set: {
+              'URLs.pinterest': userdata.pinteresturl,
+            },
+          };
+
+          await this.userModel.findByIdAndUpdate(userdata._id, update, {
+            projection: {
+              URLs: 1,
+            },
+          });
+        }
+
+         await userDetails.save();
+
+         const userData = await this.userModel.findById(userdata._id).populate({
+          path: 'tags',
+          model: 'Category',
+        });;
+        
+        return { success: true, message: 'Successfully Updated!', userData };
+      } else {
+        return { success: false, message: 'User not found' };
+      }
+    } catch (err) {
+      return { success: false, message: 'Server Error' };
+    }
   }
 }

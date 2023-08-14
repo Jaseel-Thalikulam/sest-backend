@@ -36,6 +36,7 @@ export class RegisterService {
     try {
       const userData = await this._UserRepository.findUserByEmail(User.email);
 
+      console.log(userData,"dataaaaa from service")
       if (!userData || userData.isVerified === false) {
         if (userData && userData.isVerified === false) {
           this._UserRepository.removeUser(userData._id);

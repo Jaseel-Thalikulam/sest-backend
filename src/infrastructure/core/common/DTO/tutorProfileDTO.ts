@@ -1,4 +1,4 @@
-export class TutorProfileDto {
+export class ProfileDto {
   readonly Number: string;
   readonly About: string;
   readonly githuburl: string;

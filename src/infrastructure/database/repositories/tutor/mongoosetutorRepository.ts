@@ -1,4 +1,4 @@
-import { TutorProfileDto } from '../../../core/tutor/dto/tutorProfileDTO';
+
 import { TutorCategoryDTO } from 'src/infrastructure/core/tutor/dto/insertCategoryDTO';
 import ITutorRepository from '../../../../Domain/interfaces/tutor.interface';
 import User from '../../../../Domain/entity/user.entity';
@@ -11,76 +11,6 @@ export class mongooseTutorRepository implements ITutorRepository {
     @InjectModel('User') private readonly userModel: Model<User>,
     @InjectModel('Category') private readonly categoryModel: Model<Category>,
   ) {}
-
-  async UpdateProfile(userdata: TutorProfileDto) {
-    console.log(userdata, 'from repository');
-
-    try {
-      const userDetails = await this.userModel.findById(userdata._id);
-
-      if (userDetails) {
-        if (userdata.Number !== '') {
-          userDetails.phoneNumber = userdata.Number;
-        }
-
-        if (userdata.About !== '') {
-          userDetails.about = userdata.About;
-        }
-
-        if (userdata.DOB) {
-          userDetails.DOB = userdata.DOB;
-        }
-
-        if (userdata.githuburl) {
-          const update = {
-            $set: {
-              'URLs.github': userdata.githuburl,
-            },
-          };
-
-          await this.userModel.findByIdAndUpdate(userdata._id, update, {
-            projection: {
-              URLs: 1,
-            },
-          });
-        }
-
-        if (userdata.linkedinurl) {
-          const update = {
-            $set: {
-              'URLs.linkedin': userdata.linkedinurl,
-            },
-          };
-
-          await this.userModel.findByIdAndUpdate(userdata._id, update, {
-            projection: {
-              URLs: 1,
-            },
-          });
-        }
-        if (userdata.pinteresturl) {
-          const update = {
-            $set: {
-              'URLs.pinterest': userdata.pinteresturl,
-            },
-          };
-
-          await this.userModel.findByIdAndUpdate(userdata._id, update, {
-            projection: {
-              URLs: 1,
-            },
-          });
-        }
-
-        const userData = await userDetails.save();
-        return { success: true, message: 'Successfully Updated!', userData };
-      } else {
-        return { success: false, message: 'User not found' };
-      }
-    } catch (err) {
-      return { success: false, message: 'Server Error' };
-    }
-  }
 
   async addCategory(category: TutorCategoryDTO) {
     const userdetail = await this.userModel.findById(category.userId);
