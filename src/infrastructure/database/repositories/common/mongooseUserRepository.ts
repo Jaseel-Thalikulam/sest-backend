@@ -13,17 +13,16 @@ export class mongooseUserRepository implements IUserRepository {
     return createdUser.toObject();
   }
 
-  async getUserByUsername(username: string): Promise<boolean>{
-    const data = await this.userModel.findOne({ username: username })
-    console.log(data,"username")
-    return data?true:false
+  async getUserByUsername(username: string): Promise<boolean> {
+    const data = await this.userModel.findOne({ username: username });
+    
+    return data ? true : false;
   }
   async findUserByEmail(email: string): Promise<User | null> {
-   
     const foundUser = await this.userModel.findOne({ email }).populate({
       path: 'tags',
       model: 'Category',
-    });;
+    });
     return foundUser ? foundUser.toObject() : null;
   }
 
@@ -82,7 +81,7 @@ export class mongooseUserRepository implements IUserRepository {
   }
 
   async UpdateProfile(userdata: ProfileDto) {
-    console.log(userdata, 'from repository');
+  
 
     try {
       const userDetails = await this.userModel.findById(userdata._id);
@@ -141,13 +140,13 @@ export class mongooseUserRepository implements IUserRepository {
           });
         }
 
-         await userDetails.save();
+        await userDetails.save();
 
-         const userData = await this.userModel.findById(userdata._id).populate({
+        const userData = await this.userModel.findById(userdata._id).populate({
           path: 'tags',
           model: 'Category',
-        });;
-        
+        });
+
         return { success: true, message: 'Successfully Updated!', userData };
       } else {
         return { success: false, message: 'User not found' };

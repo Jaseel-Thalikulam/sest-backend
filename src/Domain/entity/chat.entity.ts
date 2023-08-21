@@ -1,17 +1,18 @@
 import { ObjectId } from 'mongoose';
+import User from './user.entity';
 
 class Chat {
   public _id!: ObjectId;
   public Name: string;
   public isGroupChat: boolean;
-  public users: ObjectId[];
+  public users: User[];
   public latestMessage: ObjectId;
   public groupAdmin: ObjectId;
 
   constructor(
     Name: string,
     isGroupChat: boolean,
-    users: ObjectId[],
+    users: User[],
     latestMessage: ObjectId,
     groupAdmin: ObjectId,
   ) {

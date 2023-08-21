@@ -7,6 +7,13 @@ import { Edit_ProfileService } from '../../common/services/profile/profile.servi
 import { mongooseStudentRepository } from 'src/infrastructure/database/repositories/student/mongooseStudentRepository';
 import { mongooseUserRepository } from 'src/infrastructure/database/repositories/common/mongooseUserRepository';
 import edit_Profile_useCase from 'src/Domain/usecase/common/editProfile';
+import { ChatService } from '../../common/services/chat/chat.service';
+import { mongooseChatRepository } from 'src/infrastructure/database/repositories/chat/mongooseChatRepository';
+import createChatuseCase from 'src/Domain/usecase/common/chat/createChatuseCase';
+import { chatSchema } from 'src/infrastructure/database/schema/Chat';
+import sendMessageuseCase from 'src/Domain/usecase/common/chat/sendMessageuseCase';
+import { mongooseMessageRepository } from 'src/infrastructure/database/repositories/messages/mongooseMessageRespository';
+import { messageSchema } from 'src/infrastructure/database/schema/Message';
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -15,14 +22,31 @@ import edit_Profile_useCase from 'src/Domain/usecase/common/editProfile';
         schema: UserSchema,
       },
     ]),
+    MongooseModule.forFeature([
+      {
+        name: 'Chat',
+        schema: chatSchema,
+      },
+    ]),
+    MongooseModule.forFeature([
+      {
+        name: 'Message',
+        schema: messageSchema,
+      },
+    ]),
   ],
   controllers: [StudentController],
   providers: [
+    ChatService,
+    mongooseChatRepository,
     StudentHomePageService,
     Edit_ProfileService,
     mongooseStudentRepository,
+    mongooseMessageRepository,
     edit_Profile_useCase,
     mongooseUserRepository,
+    createChatuseCase,
+    sendMessageuseCase,
   ],
 })
 export class studentModule {}

@@ -27,7 +27,7 @@ class User {
 
   constructor(
     name: string,
-    username:string,
+    username: string,
     email: string,
     password: string,
     role: string,

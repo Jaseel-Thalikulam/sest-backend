@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 
 export const UserSchema = new mongoose.Schema({
   name: String,
-  username:String,
+  username: String,
   email: String,
   phoneNumber: Number,
   password: String,
@@ -22,5 +22,10 @@ export const UserSchema = new mongoose.Schema({
     twitter: String,
   },
   tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
-  avatarUrl: String,
-});
+  avatarUrl: {
+    type: String,
+    default: 'https://res.cloudinary.com/dan9hatpk/image/upload/v1691999680/defaultavatar.png.png',
+  },
+},{
+  timestamps: true,
+},);

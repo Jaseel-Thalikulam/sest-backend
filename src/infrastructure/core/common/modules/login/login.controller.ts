@@ -10,7 +10,7 @@ export class LoginController {
   @Post()
   async verifyUser(@Body() user: LoginDto, @Res() res: Response) {
     const response = await this.loginService.verifyUser(user);
-    console.log(response, 'from login serviceeeee alaaaa controllerr');
+   
     if (response.success) {
       const data = response.data;
 
@@ -43,7 +43,7 @@ export class LoginController {
           secure: true,
         });
       }
-      console.log('login response :' + response.message);
+    
 
       return res.json({
         success: response.success,

@@ -24,10 +24,10 @@ export class TutorVerifyMiddleware implements NestMiddleware {
         } else {
           resolve(decoded);
 
-          const authorized = this._MiddlewareRepository.isTutor(decoded.userId);
+          const Isauthorized = this._MiddlewareRepository.isTutor(decoded.userId);
 
-          if (authorized) {
-            console.log('heloooo tutor auth completed ');
+          if (Isauthorized) {
+           
             next();
           } else {
             res.json({ success: false, message: 'Authorization Failed' });

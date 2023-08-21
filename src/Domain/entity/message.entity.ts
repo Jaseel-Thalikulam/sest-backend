@@ -1,16 +1,18 @@
 import { ObjectId } from 'mongoose';
+import User from './user.entity';
+import Chat from './chat.entity';
 
-class Chat {
+class Message {
   public _id!: ObjectId;
-  public chat: ObjectId;
+  public chat: Chat | ObjectId;
   public content: string;
-  public sender: ObjectId;
+  public sender: User | ObjectId;
 
-  constructor(chat: ObjectId, content: string, sender: ObjectId) {
+  constructor(chat: Chat| ObjectId, content: string, sender: User| ObjectId) {
     this.chat = chat;
     this.sender = sender;
     this.content = content;
   }
 }
 
-export default Chat;
+export default Message;

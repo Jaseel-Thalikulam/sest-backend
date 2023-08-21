@@ -28,14 +28,16 @@ class createUserUseCase {
     const baseUsername = user.name.toLowerCase().replace(/\s+/g, ''); // Convert name to lowercase and remove spaces
     let username = baseUsername;
     let usernameSuffix = 1;
-  
+
     while (true) {
-      const existingUser = await this.userRepository.getUserByUsername(username);
-      console.log(existingUser,"existinfg userr")
+      const existingUser = await this.userRepository.getUserByUsername(
+        username,
+      );
+      console.log(existingUser, 'existinfg userr');
       if (!existingUser) {
         break; // Unique username found, exit loop
       }
-  
+
       // Username already exists, append a suffix and check again
       username = `${baseUsername}${usernameSuffix}`;
       usernameSuffix++;

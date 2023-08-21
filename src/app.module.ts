@@ -18,6 +18,7 @@ import { uploadModule } from './infrastructure/core/upload/upload.module';
 import { v2 as cloudinary } from 'cloudinary';
 import { chatSchema } from './infrastructure/database/schema/Chat';
 import { messageSchema } from './infrastructure/database/schema/Message';
+
 cloudinary.config({
   secure: true,
 });
@@ -54,7 +55,7 @@ const MONGO_SECRET_KEY = process.env.MONGO_SECRET_KEY;
         schema: UserSchema,
       },
     ]),
-    
+
     MongooseModule.forFeature([
       {
         name: 'Chat',
@@ -71,7 +72,6 @@ const MONGO_SECRET_KEY = process.env.MONGO_SECRET_KEY;
   providers: [
     mongooseUserRepository,
     mongooseMiddlewareRepository,
-    // This registers the repository as a provider
   ],
 })
 export class AppModule implements NestModule {

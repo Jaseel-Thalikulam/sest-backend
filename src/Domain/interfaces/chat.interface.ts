@@ -1,8 +1,8 @@
-import { createChatDto } from 'src/infrastructure/core/common/DTO/creatChatDTO';
-
+import { accessChatDto } from 'src/infrastructure/core/common/DTO/chat/creatChatDTO';
+import ICreateChat from './creacteChat.interface';
 
 interface IChatRepository {
-  createChat(data:createChatDto):Promise<boolean>
+  createChat(data: accessChatDto): Promise<ICreateChat>;
 }
 
 export default IChatRepository;

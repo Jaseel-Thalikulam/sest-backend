@@ -1,6 +1,7 @@
-
 import { TutorCategoryDTO } from 'src/infrastructure/core/tutor/dto/insertCategoryDTO';
-import ITutorRepository from '../../../../Domain/interfaces/tutor.interface';
+import ITutorRepository, {
+  IResponseaddCategory,
+} from '../../../../Domain/interfaces/tutor.interface';
 import User from '../../../../Domain/entity/user.entity';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -12,7 +13,7 @@ export class mongooseTutorRepository implements ITutorRepository {
     @InjectModel('Category') private readonly categoryModel: Model<Category>,
   ) {}
 
-  async addCategory(category: TutorCategoryDTO) {
+  async addCategory(category: TutorCategoryDTO): Promise<IResponseaddCategory> {
     const userdetail = await this.userModel.findById(category.userId);
 
     const categoryDoc = await this.categoryModel.findById(category.categoryId);
