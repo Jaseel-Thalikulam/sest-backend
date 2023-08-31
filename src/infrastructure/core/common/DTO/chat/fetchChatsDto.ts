@@ -1,3 +1,3 @@
-export class fetchChatsDto{
-    userId:string
+export class fetchChatsDto {
+  userId: string;
 }

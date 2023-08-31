@@ -1,9 +1,9 @@
-import { IChat } from "./Ichat";
+import { IChat } from './Ichat';
 
 interface ICreateChat {
-    success: boolean,
-    message: string,
-    Chat?:IChat
+  success: boolean;
+  message: string;
+  Chat?: IChat;
 }
 
 export default ICreateChat;

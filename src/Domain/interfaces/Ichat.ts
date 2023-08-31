@@ -1,11 +1,10 @@
-import { ObjectId } from "mongoose"
-import User from "../entity/user.entity"
-
+import { ObjectId } from 'mongoose';
+import User from '../entity/user.entity';
 
 export interface IChat {
-    Name: String,
-    isGroupChat: Boolean,
-    users: User[],
-    // latestMessage:
-    groupAdmin:ObjectId
- }
+  Name: string;
+  isGroupChat: boolean;
+  users: User[];
+  // latestMessage:
+  groupAdmin: ObjectId;
+}

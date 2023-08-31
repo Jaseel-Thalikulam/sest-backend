@@ -33,4 +33,10 @@ export class mongooseMiddlewareRepository implements IMiddlewareRepository {
       console.log(err);
     }
   }
+
+  async isBanned(id: string) {
+    const data = await this.userModel.findById(id);
+
+    return data.isBanned == true ? true : false;
+  }
 }

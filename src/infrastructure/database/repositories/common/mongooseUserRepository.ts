@@ -15,7 +15,7 @@ export class mongooseUserRepository implements IUserRepository {
 
   async getUserByUsername(username: string): Promise<boolean> {
     const data = await this.userModel.findOne({ username: username });
-    
+
     return data ? true : false;
   }
   async findUserByEmail(email: string): Promise<User | null> {
@@ -81,8 +81,6 @@ export class mongooseUserRepository implements IUserRepository {
   }
 
   async UpdateProfile(userdata: ProfileDto) {
-  
-
     try {
       const userDetails = await this.userModel.findById(userdata._id);
 

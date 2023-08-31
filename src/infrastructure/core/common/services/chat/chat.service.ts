@@ -23,58 +23,56 @@ export class ChatService {
     this._createChatuseCase = createChatuseCase;
     this._sendMessageuseCase = sendMessageuseCase;
     this._mongooseChatRepository = mongooseChatRepository;
-    this._mongooseMessageRepository = mongooseMessageRepository
+    this._mongooseMessageRepository = mongooseMessageRepository;
   }
   public async accessChat(data: accessChatDto) {
     try {
-      const Chat = await this._mongooseChatRepository.findChat(data)
+      const Chat = await this._mongooseChatRepository.findChat(data);
       if (Chat) {
-        
-        return { success: true, message: "Chat exist", Chat }
-        
+        return { success: true, message: 'Chat exist', Chat };
       } else {
-        
         const response = await this._createChatuseCase.execute(data);
-        
-          
-          return { success: response.success, message: response.message, Chat:response.Chat }
-      
-          
-      }
 
-     
+        return {
+          success: response.success,
+          message: response.message,
+          Chat: response.Chat,
+        };
+      }
     } catch (err) {
       console.log(err);
-      return { success: false, message: "Server Error"}
+      return { success: false, message: 'Server Error' };
     }
   }
 
   public async fetchChats(data: fetchChatsDto) {
     try {
-      
-      return await this._mongooseChatRepository.fetchAllChats(data)
-
+      return await this._mongooseChatRepository.fetchAllChats(data);
     } catch (err) {
-      return {success:false,message:"internal error occured"}
+      return { success: false, message: 'internal error occured' };
     }
   }
 
   public async sendMessage(data: SendMessageDTO) {
     if (!data.ChatId || !data.Content || !data.SenderId) {
-      return {success:false,message:"Cannot fullfill the request"}
+      return {
+        success: false,
+        message: 'Cannot fullfill the request',
+        Chat: null,
+        sender: null,
+      };
     } else {
-      const isSenderExistinChat = await this._mongooseChatRepository.isSenderExist(data)
+      const isSenderExistinChat =
+        await this._mongooseChatRepository.isSenderExist(data);
       if (isSenderExistinChat) {
-        
-         return await this._sendMessageuseCase.execute(data)
+        return await this._sendMessageuseCase.execute(data);
       } else {
-        return {success:false,message:"Invalid SenderId"}
+        return { success: false, message: 'Invalid SenderId' };
       }
     }
   }
 
   public async fetchMessages(ChatId: string) {
-    return this._mongooseMessageRepository.fetchallMessages(ChatId)
+    return this._mongooseMessageRepository.fetchallMessages(ChatId);
   }
-
 }

@@ -1,5 +1,6 @@
 import { mongooseMiddlewareRepository } from '../../../database/repositories/middleware/mongooseMiddlewareRepository';
 import { Injectable, NestMiddleware } from '@nestjs/common';
+import { mongooseUserRepository } from 'src/infrastructure/database/repositories/common/mongooseUserRepository';
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
@@ -11,29 +12,40 @@ const SECRECT_KEY = process.env.SECRECT_KEY;
 @Injectable()
 export class StudentVerifyMiddleware implements NestMiddleware {
   private readonly _MiddlewareRepository: mongooseMiddlewareRepository;
-  constructor(middlewareRepository: mongooseMiddlewareRepository) {
+  private readonly _UserRepository: mongooseUserRepository;
+
+  constructor(
+    middlewareRepository: mongooseMiddlewareRepository,
+    UserRepository: mongooseUserRepository,
+  ) {
     this._MiddlewareRepository = middlewareRepository;
   }
-  use(req: Request, res: Response, next: NextFunction) {
+
+  async use(req: Request, res: Response, next: NextFunction) {
     const token = req.headers['token'];
 
-    new Promise((resolve) => {
-      jwt.verify(token, SECRECT_KEY, (err, decoded) => {
-        if (err) {
-          res.json({ success: false, message: 'Authentication Failed' });
-        } else {
-          resolve(decoded);
-          const Isauthorized = this._MiddlewareRepository.isStudent(
-            decoded.userId,
-          );
+    try {
+      const decoded = jwt.verify(token, SECRECT_KEY);
 
-          if (Isauthorized) {
-            next();
-          } else {
-            res.json({ success: false, message: 'Authorization Failed' });
-          }
+      const isAuthorized = await this._MiddlewareRepository.isStudent(
+        decoded.userId,
+      );
+      const isBanned = await this._MiddlewareRepository.isBanned(
+        decoded.userId,
+      );
+
+      if (isAuthorized) {
+        if (isBanned) {
+          res.json({ success: false, message: 'You Have Been Banned' });
+        } else {
+          console.log(isBanned);
+          next();
         }
-      });
-    });
+      } else {
+        res.json({ success: false, message: 'Authorization Failed' });
+      }
+    } catch (err) {
+      res.json({ success: false, message: 'Authentication Failed' });
+    }
   }
 }

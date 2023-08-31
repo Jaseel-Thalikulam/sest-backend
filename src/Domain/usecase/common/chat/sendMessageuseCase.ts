@@ -18,15 +18,16 @@ class sendMessageuseCase {
   async execute(data: SendMessageDTO) {
     try {
       const response = await this._messageRepository.sendMessage(data);
-      await this._mongooseChatRepository.UpdateLatestMessage(response._id,data.ChatId) 
-      //   return {
-      //     success: response.success,
-      //     message: response.message,
-      //     Chat: response.Chat,
-      //   };
-
-      return response
-
+      await this._mongooseChatRepository.UpdateLatestMessage(
+        response._id,
+        data.ChatId,
+      );
+      return {
+        success: true,
+        message: 'succefully send',
+        // sender: response.sender[0]._id,
+        // Chat: response.chat,
+      };
     } catch (err) {
       return { success: false, message: 'Server Error' };
     }

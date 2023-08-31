@@ -10,7 +10,7 @@ export class LoginController {
   @Post()
   async verifyUser(@Body() user: LoginDto, @Res() res: Response) {
     const response = await this.loginService.verifyUser(user);
-   
+
     if (response.success) {
       const data = response.data;
 
@@ -43,7 +43,6 @@ export class LoginController {
           secure: true,
         });
       }
-    
 
       return res.json({
         success: response.success,

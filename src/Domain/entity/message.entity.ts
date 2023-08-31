@@ -7,11 +7,18 @@ class Message {
   public chat: Chat | ObjectId;
   public content: string;
   public sender: User | ObjectId;
+  public timeStamp: string;
 
-  constructor(chat: Chat| ObjectId, content: string, sender: User| ObjectId) {
+  constructor(
+    chat: Chat | ObjectId,
+    content: string,
+    sender: User | ObjectId,
+    timeStamp: string,
+  ) {
     this.chat = chat;
     this.sender = sender;
     this.content = content;
+    this.timeStamp = timeStamp;
   }
 }
 

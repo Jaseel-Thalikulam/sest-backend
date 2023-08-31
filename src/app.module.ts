@@ -18,6 +18,9 @@ import { uploadModule } from './infrastructure/core/upload/upload.module';
 import { v2 as cloudinary } from 'cloudinary';
 import { chatSchema } from './infrastructure/database/schema/Chat';
 import { messageSchema } from './infrastructure/database/schema/Message';
+import { ChatGateway } from './Domain/utilities/chat/gateway/chat.gateway';
+import { ChatService } from './infrastructure/core/common/services/chat/chat.service';
+import { ChatModule } from './Domain/utilities/chat/chat.module';
 
 cloudinary.config({
   secure: true,
@@ -49,6 +52,7 @@ const MONGO_SECRET_KEY = process.env.MONGO_SECRET_KEY;
     uploadModule,
     SuperAdminModule,
     studentModule,
+    ChatModule,
     MongooseModule.forFeature([
       {
         name: 'User',
@@ -69,10 +73,7 @@ const MONGO_SECRET_KEY = process.env.MONGO_SECRET_KEY;
       },
     ]),
   ],
-  providers: [
-    mongooseUserRepository,
-    mongooseMiddlewareRepository,
-  ],
+  providers: [mongooseUserRepository, mongooseMiddlewareRepository],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

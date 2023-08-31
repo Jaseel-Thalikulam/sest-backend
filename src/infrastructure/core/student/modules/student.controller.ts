@@ -15,7 +15,7 @@ export default class StudentController {
   constructor(
     private chatService: ChatService,
     private studentHomePageService: StudentHomePageService,
-  
+
     private _Edit_ProfileService: Edit_ProfileService,
   ) {}
 
@@ -56,7 +56,6 @@ export default class StudentController {
   @Post('/chat/fetchallchats')
   async fetchChats(@Body() data: fetchChatsDto, @Res() res: Response) {
     try {
-      console.log(data,"from std")
       const response = await this.chatService.fetchChats(data);
 
       res.json({
@@ -69,27 +68,11 @@ export default class StudentController {
     }
   }
 
-  @Post('/chat/sendmessage')
-  async sendMessage(@Body() Data:SendMessageDTO, @Res() res: Response) {
-    try {
-      
-
-const response = await this.chatService.sendMessage(Data)
-res.json({response})
-    } catch (err) {
-
-      res.json({ success: false, message: 'Server Error' });
-
-    }
-  }
-
-
   @Get('/chat/fetchAllMessage')
-async fetchAllMessage(@Query('ChatId') chatId: string,@Res() res: Response) {
-  console.log("called", chatId);
-  const response = await this.chatService.fetchMessages(chatId);
-  console.log(response);
-  res.json({success:true,message:"helo",data:response});
-}
-
+  async fetchAllMessage(@Query('ChatId') chatId: string, @Res() res: Response) {
+    console.log('called', chatId);
+    const response = await this.chatService.fetchMessages(chatId);
+    console.log(response);
+    res.json({ success: true, message: 'helo', data: response });
+  }
 }

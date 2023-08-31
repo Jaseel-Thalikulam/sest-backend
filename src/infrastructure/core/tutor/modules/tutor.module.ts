@@ -34,7 +34,8 @@ import { messageSchema } from 'src/infrastructure/database/schema/Message';
         name: 'Category',
         schema: categorySchema,
       },
-    ]), MongooseModule.forFeature([
+    ]),
+    MongooseModule.forFeature([
       {
         name: 'Chat',
         schema: chatSchema,
@@ -63,8 +64,7 @@ import { messageSchema } from 'src/infrastructure/database/schema/Message';
     createChatuseCase,
     sendMessageuseCase,
     mongooseChatRepository,
-    mongooseMessageRepository
-    
+    mongooseMessageRepository,
   ],
 })
 export class tutorModule {}

@@ -15,7 +15,6 @@ export class SuperAdminVerifyMiddleware implements NestMiddleware {
     this._MiddlewareRepository = middlewareRepository;
   }
   use(req: Request, res: Response, next: NextFunction) {
-   
     const token = req.headers['token'];
     new Promise((resolve) => {
       jwt.verify(token, SECRECT_KEY, (err, decoded) => {

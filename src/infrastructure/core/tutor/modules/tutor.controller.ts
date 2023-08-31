@@ -81,7 +81,6 @@ export class TutorController {
   @Post('/chat/fetchallchats')
   async fetchChats(@Body() data: fetchChatsDto, @Res() res: Response) {
     try {
-    
       const response = await this.chatService.fetchChats(data);
 
       res.json({
@@ -94,24 +93,17 @@ export class TutorController {
     }
   }
 
-  @Post('/chat/sendmessage')
-  async sendMessage(@Body() Data:SendMessageDTO, @Res() res: Response) {
-    try {
-
-const response = await this.chatService.sendMessage(Data)
-res.json({response})
-    } catch (err) {
-
-      res.json({ success: false, message: 'Server Error' });
-
-    }
-  }
-
   @Get('/chat/fetchAllMessage')
-  async fetchAllMessage(@Query('ChatId') chatId: string,@Res() res: Response) {
- 
+  async fetchAllMessage(@Query('ChatId') chatId: string, @Res() res: Response) {
     const response = await this.chatService.fetchMessages(chatId);
-
-    res.json({success:true,message:"helo",data:response});
+    try {
+      res.json({
+        success: true,
+        message: 'Fetched All Message',
+        data: response,
+      });
+    } catch (err) {
+      res.json({ success: false, message: 'Failed to Fetched All Message' });
+    }
   }
 }
