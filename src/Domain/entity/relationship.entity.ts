@@ -3,15 +3,10 @@ import User from './user.entity';
 import Chat from './chat.entity';
 
 class Relationship {
-  public _id!: ObjectId;
-  public source:ObjectId
-  public target:  ObjectId;
+  public source: string;
+  public target: string;
 
-
-  constructor(
-     source:ObjectId,
-     target:  ObjectId
-  ) {
+  constructor(source: string, target: string) {
     this.source = source;
     this.target = target;
   }

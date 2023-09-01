@@ -14,6 +14,11 @@ import { chatSchema } from 'src/infrastructure/database/schema/Chat';
 import sendMessageuseCase from 'src/Domain/usecase/common/chat/sendMessageuseCase';
 import { mongooseMessageRepository } from 'src/infrastructure/database/repositories/messages/mongooseMessageRespository';
 import { messageSchema } from 'src/infrastructure/database/schema/Message';
+import { relationship_Service } from '../../common/services/relationship/relationship.service';
+import followUser_UseCase from 'src/Domain/usecase/common/relationship/followUser';
+import { mongooseRelationshipRepository } from 'src/infrastructure/database/repositories/relationship/mongooseRelationshipRepository';
+import { relationshipSchema } from 'src/infrastructure/database/schema/Relationship';
+import unFollowUser_UseCase from 'src/Domain/usecase/common/relationship/unfollowUser';
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -34,12 +39,20 @@ import { messageSchema } from 'src/infrastructure/database/schema/Message';
         schema: messageSchema,
       },
     ]),
+    MongooseModule.forFeature([
+      {
+        name: 'RelationShip',
+        schema: relationshipSchema,
+      },
+    ]),
   ],
   controllers: [StudentController],
   providers: [
     ChatService,
     mongooseChatRepository,
+    mongooseRelationshipRepository,
     StudentHomePageService,
+    relationship_Service,
     Edit_ProfileService,
     mongooseStudentRepository,
     mongooseMessageRepository,
@@ -47,6 +60,8 @@ import { messageSchema } from 'src/infrastructure/database/schema/Message';
     mongooseUserRepository,
     createChatuseCase,
     sendMessageuseCase,
+    followUser_UseCase,
+    unFollowUser_UseCase,
   ],
 })
 export class studentModule {}

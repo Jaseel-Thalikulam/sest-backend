@@ -7,15 +7,16 @@ import { Edit_ProfileService } from '../../common/services/profile/profile.servi
 import { accessChatDto } from '../../common/DTO/chat/creatChatDTO';
 import { ChatService } from '../../common/services/chat/chat.service';
 import { fetchChatsDto } from '../../common/DTO/chat/fetchChatsDto';
-import { SendMessageDTO } from '../DTO/sendMessageDTO';
-import { FetchAllMessageDTO } from '../DTO/FetchAllMessageDTO';
+import { FollowDTO } from '../DTO/UserIdDTO';
+import { relationship_Service } from '../../common/services/relationship/relationship.service';
+import { categorySchema } from 'src/infrastructure/database/schema/Category';
 
 @Controller('learn')
 export default class StudentController {
   constructor(
     private chatService: ChatService,
+    private relationShipService: relationship_Service,
     private studentHomePageService: StudentHomePageService,
-
     private _Edit_ProfileService: Edit_ProfileService,
   ) {}
 
@@ -73,6 +74,44 @@ export default class StudentController {
     console.log('called', chatId);
     const response = await this.chatService.fetchMessages(chatId);
     console.log(response);
-    res.json({ success: true, message: 'helo', data: response });
+    res.json({
+      success: true,
+      message: 'Successfully Fetched',
+      data: response,
+    });
+  }
+
+  @Post('/follow')
+  async handleFollow(@Body() UsersId: FollowDTO, @Res() res: Response) {
+    try {
+      this.relationShipService.handlefollow(UsersId);
+
+      res.json({ success: true, message: 'Successfully completed' });
+    } catch (err) {
+      res.json({
+        success: false,
+        message: 'Server Error Unable to Complete the Functionality',
+      });
+    }
+  }
+
+  @Get('/followindicator')
+  async handleFollowIndicator(
+    @Query('followedBy') followedBy: string,
+    @Query('following') following: string,
+    @Res() res: Response,
+  ) {
+    try {
+      const UsersId: FollowDTO = {
+        followedBy,
+        following,
+      };
+
+      const isFollowing = await this.relationShipService.isfollowed(UsersId);
+
+      res.json({ success: true, message: 'Success', isFollowing });
+    } catch (err) {
+      res.json({ success: false, message: 'Server Error' });
+    }
   }
 }

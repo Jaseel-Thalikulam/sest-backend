@@ -1,7 +1,7 @@
-import User from '../entity/user.entity';
+// import User from '../entity/user.entity';
 
-interface IRelationshipRepository {
-  
-}
+// interface IRelationshipRepository {
 
-export default IRelationshipRepository;
+// }
+
+// export default IRelationshipRepository;
