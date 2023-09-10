@@ -35,4 +35,11 @@ export class relationship_Service {
   public async isfollowed(UsersId: FollowDTO) {
     return await this._relationshipRepository.isFollowed(UsersId);
   }
+
+  public async fetchAllFollowingUsers(UserId: string) {
+    return await this._relationshipRepository.fetchAllFollowingUsers(UserId);
+  }
+  public async fetchAllFollowers(UserId: string) {
+    return await this._relationshipRepository.fetchAllFollowers(UserId);
+  }
 }

@@ -2,6 +2,7 @@ import { mongooseCategoryRepository } from 'src/infrastructure/database/reposito
 import { CategoryDto } from '../../../superAdmin/DTO/Category.dto';
 import { Injectable } from '@nestjs/common';
 import add_Category_UseCase from 'src/Domain/usecase/superadmin/addCategoryuseCase';
+import { EditCategoryDto } from 'src/infrastructure/core/Superadmin/DTO/EditCategoryDto';
 
 @Injectable()
 export class CategoryService {
@@ -36,6 +37,16 @@ export class CategoryService {
       return { success: true, message: 'Successfully Added' };
     } else {
       return { success: false, message: 'Category Already Exist' };
+    }
+  }
+  public async updateCategory(category: EditCategoryDto) {
+    const isCategoryExist = await this._CategoryRepository.getCategory(
+      category.Name,
+    );
+    if (!isCategoryExist) {
+      return { success: false, message: 'Category Not Exist', data: null };
+    } else {
+      return await this._CategoryRepository.updateCategory(category);
     }
   }
 

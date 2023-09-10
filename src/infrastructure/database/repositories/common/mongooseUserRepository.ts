@@ -4,6 +4,7 @@ import User from '../../../../Domain/entity/user.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
 import { ProfileDto } from 'src/infrastructure/core/common/DTO/tutorProfileDTO';
+import { searchQueryDTO } from 'src/infrastructure/core/common/DTO/search/searchQuerydto';
 
 export class mongooseUserRepository implements IUserRepository {
   constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
@@ -152,5 +153,28 @@ export class mongooseUserRepository implements IUserRepository {
     } catch (err) {
       return { success: false, message: 'Server Error' };
     }
+  }
+
+  async findTutorsByUserId(data: searchQueryDTO) {
+    const { searchInput } = data;
+
+    const searchInputLowercase = searchInput.toLocaleLowerCase();
+
+    return await this.userModel.find({
+      username: { $regex: new RegExp(searchInputLowercase, 'i') },
+      role: 'Lead', // Set the role to 'Learn'
+    });
+  }
+  async findStudentsByUserId(data: searchQueryDTO) {
+    const { searchInput } = data;
+
+    const searchInputLowercase = searchInput.toLocaleLowerCase();
+
+    return await this.userModel.find({
+      username: { $regex: new RegExp(searchInputLowercase, 'i') },
+      role: 'Learn',
+      isBanned: false,
+      isVerified: true,
+    });
   }
 }

@@ -14,9 +14,9 @@ export class StudentHomePageService {
       console.log(err);
     }
   }
-  public async getTutor(TutorId: TutorIdDto) {
+  public async getTutor(userId: TutorIdDto) {
     try {
-      return await this._studentRepository.getTutor(TutorId);
+      return await this._studentRepository.getTutor(userId);
     } catch (err) {
       console.log(err);
     }

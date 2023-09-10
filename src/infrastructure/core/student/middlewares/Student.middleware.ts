@@ -38,7 +38,6 @@ export class StudentVerifyMiddleware implements NestMiddleware {
         if (isBanned) {
           res.json({ success: false, message: 'You Have Been Banned' });
         } else {
-          console.log(isBanned);
           next();
         }
       } else {

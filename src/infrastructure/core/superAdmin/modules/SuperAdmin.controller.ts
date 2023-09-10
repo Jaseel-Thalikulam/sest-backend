@@ -3,6 +3,7 @@ import { CategoryService } from '../../common/services/category/category.service
 import { UserListService } from './services/userList/usersList.service';
 import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { Response } from 'express';
+import { EditCategoryDto } from '../DTO/EditCategoryDto';
 
 @Controller('/Superadmin')
 export default class UserListController {
@@ -58,5 +59,18 @@ export default class UserListController {
     console.log(response, 'from add category controller');
 
     return res.json({ success: response.success, message: response.message });
+  }
+  @Post('/updateCategory')
+  async updateCategory(
+    @Body() Category: EditCategoryDto,
+    @Res() res: Response,
+  ) {
+    const response = await this.categoryservice.updateCategory(Category);
+
+    return res.json({
+      success: response.success,
+      message: response.message,
+      data: response.data,
+    });
   }
 }

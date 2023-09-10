@@ -19,6 +19,12 @@ import followUser_UseCase from 'src/Domain/usecase/common/relationship/followUse
 import { mongooseRelationshipRepository } from 'src/infrastructure/database/repositories/relationship/mongooseRelationshipRepository';
 import { relationshipSchema } from 'src/infrastructure/database/schema/Relationship';
 import unFollowUser_UseCase from 'src/Domain/usecase/common/relationship/unfollowUser';
+import { PostService } from '../../common/services/post/post.service';
+import cloudinaryUploaduseCase from 'src/Domain/usecase/upload/cloudinary.uploaduseCase';
+import { mongoosePostRepository } from 'src/infrastructure/database/repositories/post/mongoosePostRepository';
+import { PostSchema } from 'src/infrastructure/database/schema/Post';
+import { search_Service } from '../../common/services/search/search.service';
+import search_Query_useCase from 'src/Domain/usecase/common/search/searchUser';
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -45,23 +51,34 @@ import unFollowUser_UseCase from 'src/Domain/usecase/common/relationship/unfollo
         schema: relationshipSchema,
       },
     ]),
+    MongooseModule.forFeature([
+      {
+        name: 'Post',
+        schema: PostSchema,
+      },
+    ]),
   ],
   controllers: [StudentController],
   providers: [
     ChatService,
+    PostService,
     mongooseChatRepository,
     mongooseRelationshipRepository,
     StudentHomePageService,
     relationship_Service,
     Edit_ProfileService,
+    search_Service,
     mongooseStudentRepository,
+    mongoosePostRepository,
     mongooseMessageRepository,
     edit_Profile_useCase,
     mongooseUserRepository,
     createChatuseCase,
+    cloudinaryUploaduseCase,
     sendMessageuseCase,
     followUser_UseCase,
     unFollowUser_UseCase,
+    search_Query_useCase,
   ],
 })
 export class studentModule {}

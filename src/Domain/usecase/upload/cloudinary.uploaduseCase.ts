@@ -15,7 +15,6 @@ cloudinary.config({
 @Injectable()
 class cloudinaryUploaduseCase {
   async execute(imageData: Express.Multer.File): Promise<string> {
-    console.log(imageData, 'imageee from usecase');
     const imageBuffer = imageData.buffer;
 
     return new Promise<string>((resolve, reject) => {

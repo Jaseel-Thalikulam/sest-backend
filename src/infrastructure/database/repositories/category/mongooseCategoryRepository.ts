@@ -4,6 +4,7 @@ import Category from '../../../../Domain/entity/category.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
 import mongoose from 'mongoose';
+import { EditCategoryDto } from 'src/infrastructure/core/Superadmin/DTO/EditCategoryDto';
 const ObjectId = mongoose.Types.ObjectId;
 
 export class mongooseCategoryRepository implements ICategoryRepository {
@@ -15,6 +16,25 @@ export class mongooseCategoryRepository implements ICategoryRepository {
     const newCategory = new this.CategoryModel(category);
 
     return await newCategory.save();
+  }
+
+  public async updateCategory(category: EditCategoryDto) {
+    const { Name, Description, categoryId } = category;
+    console.log(categoryId, 'catid');
+    const existingCategory = await this.CategoryModel.findById(categoryId);
+    console.log(existingCategory);
+    if (!existingCategory) {
+      return { success: false, message: 'category not exist' };
+    }
+
+    // Update the category fields
+    existingCategory.Name = Name;
+    existingCategory.Description = Description;
+
+    // Save the updated category
+    const data = await existingCategory.save();
+
+    return { success: true, data };
   }
 
   public async getCategory(Name: string) {

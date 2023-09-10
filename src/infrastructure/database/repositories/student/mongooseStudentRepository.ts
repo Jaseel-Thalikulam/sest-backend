@@ -18,8 +18,10 @@ export class mongooseStudentRepository implements IStudentRepository {
       });
   }
 
-  async getTutor(tutordata: TutorIdDto) {
-    return await this.userModel.findById(tutordata.tutorId).populate({
+  async getTutor(userId: TutorIdDto) {
+
+   
+    return await this.userModel.findById(userId.userId).populate({
       path: 'tags',
       model: 'Category',
     });

@@ -20,6 +20,19 @@ import { mongooseChatRepository } from 'src/infrastructure/database/repositories
 import { mongooseMessageRepository } from 'src/infrastructure/database/repositories/messages/mongooseMessageRespository';
 import { chatSchema } from 'src/infrastructure/database/schema/Chat';
 import { messageSchema } from 'src/infrastructure/database/schema/Message';
+import { PostService } from '../../common/services/post/post.service';
+import cloudinaryUploaduseCase from 'src/Domain/usecase/upload/cloudinary.uploaduseCase';
+import { mongoosePostRepository } from 'src/infrastructure/database/repositories/post/mongoosePostRepository';
+import { PostSchema } from 'src/infrastructure/database/schema/Post';
+import { relationship_Service } from '../../common/services/relationship/relationship.service';
+import followUser_UseCase from 'src/Domain/usecase/common/relationship/followUser';
+import unFollowUser_UseCase from 'src/Domain/usecase/common/relationship/unfollowUser';
+import { mongooseRelationshipRepository } from 'src/infrastructure/database/repositories/relationship/mongooseRelationshipRepository';
+import { relationshipSchema } from 'src/infrastructure/database/schema/Relationship';
+import { StudentHomePageService } from '../../student/modules/services/homepage.service';
+import { mongooseStudentRepository } from 'src/infrastructure/database/repositories/student/mongooseStudentRepository';
+import search_Query_useCase from 'src/Domain/usecase/common/search/searchUser';
+import { search_Service } from '../../common/services/search/search.service';
 
 @Module({
   imports: [
@@ -47,24 +60,48 @@ import { messageSchema } from 'src/infrastructure/database/schema/Message';
         schema: messageSchema,
       },
     ]),
+    MongooseModule.forFeature([
+      {
+        name: 'Post',
+        schema: PostSchema,
+      },
+    ]),
+    MongooseModule.forFeature([
+      {
+        name: 'RelationShip',
+        schema: relationshipSchema,
+      },
+    ]),
   ],
   controllers: [TutorController],
   providers: [
     mongooseTutorRepository,
+    StudentHomePageService,
+    search_Service,
+    mongooseStudentRepository,
     edit_Profile_useCase,
     CategoryService,
+    relationship_Service,
+    followUser_UseCase,
+    unFollowUser_UseCase,
+    mongoosePostRepository,
+    mongooseRelationshipRepository,
+    PostService,
     mongooseCategoryRepository,
     add_Category_UseCase,
     tutor_CategoryService,
     Edit_ProfileService,
     insertTutorCategoryuseCase,
     removeTutorCategoryuseCase,
+    cloudinaryUploaduseCase,
     mongooseUserRepository,
     ChatService,
     createChatuseCase,
     sendMessageuseCase,
+    search_Query_useCase,
     mongooseChatRepository,
     mongooseMessageRepository,
+    mongoosePostRepository,
   ],
 })
 export class tutorModule {}
