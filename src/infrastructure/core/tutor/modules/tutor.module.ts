@@ -33,6 +33,11 @@ import { StudentHomePageService } from '../../student/modules/services/homepage.
 import { mongooseStudentRepository } from 'src/infrastructure/database/repositories/student/mongooseStudentRepository';
 import search_Query_useCase from 'src/Domain/usecase/common/search/searchUser';
 import { search_Service } from '../../common/services/search/search.service';
+import { MeetService } from '../../common/services/meet/meet.service';
+import createJitsiMeetToken from 'src/Domain/usecase/common/meet/createJitsiMeetToken';
+import { S3Service } from './services/S3.service';
+import S3useCase from 'src/Domain/usecase/tutor/S3UploaduseCase';
+import S3GenerateSignedURLuseCase from 'src/Domain/usecase/tutor/S3GenerateSignedUrluseCase';
 
 @Module({
   imports: [
@@ -75,6 +80,11 @@ import { search_Service } from '../../common/services/search/search.service';
   ],
   controllers: [TutorController],
   providers: [
+    S3Service,
+    S3GenerateSignedURLuseCase,
+    S3useCase,
+    createJitsiMeetToken,
+    MeetService,
     mongooseTutorRepository,
     StudentHomePageService,
     search_Service,

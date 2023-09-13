@@ -19,8 +19,6 @@ export class mongooseStudentRepository implements IStudentRepository {
   }
 
   async getTutor(userId: TutorIdDto) {
-
-   
     return await this.userModel.findById(userId.userId).populate({
       path: 'tags',
       model: 'Category',

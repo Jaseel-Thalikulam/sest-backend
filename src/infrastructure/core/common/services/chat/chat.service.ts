@@ -5,7 +5,6 @@ import { mongooseChatRepository } from 'src/infrastructure/database/repositories
 import { fetchChatsDto } from '../../DTO/chat/fetchChatsDto';
 import { SendMessageDTO } from 'src/infrastructure/core/student/DTO/sendMessageDTO';
 import sendMessageuseCase from 'src/Domain/usecase/common/chat/sendMessageuseCase';
-import { FetchAllMessageDTO } from 'src/infrastructure/core/student/DTO/FetchAllMessageDTO';
 import { mongooseMessageRepository } from 'src/infrastructure/database/repositories/messages/mongooseMessageRespository';
 @Injectable()
 export class ChatService {

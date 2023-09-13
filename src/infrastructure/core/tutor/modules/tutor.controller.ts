@@ -11,10 +11,12 @@ import {
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
+import AWS from 'aws-sdk';
 import { ProfileDto } from '../../common/DTO/tutorProfileDTO';
+import Busboy from 'busboy';
 import { search_Service } from '../../common/services/search/search.service';
 import { Edit_ProfileService } from '../../common/services/profile/profile.service';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { CategoryService } from 'src/infrastructure/core/common/services/category/category.service';
 import { TutorCategoryDTO } from '../dto/insertCategoryDTO';
 import { tutor_CategoryService } from './services/tutor_Category.service';
@@ -36,10 +38,15 @@ import { LikePostDTO } from '../../common/DTO/post/likePostDto';
 import CommentDataDTO from '../../common/DTO/post/commentDataDto';
 import DeleteCommentDto from '../../common/DTO/post/deleteCommentDto';
 import { searchQueryDTO } from '../../common/DTO/search/searchQuerydto';
-
+import { JitsiMeetDataDTO } from '../../common/DTO/meet/JistimeetDTO';
+import { MeetService } from '../../common/services/meet/meet.service';
+import { S3Service } from './services/S3.service';
 @Controller('/lead')
 export class TutorController {
+  private readonly s3: AWS.S3;
   constructor(
+    private s3Service: S3Service,
+    private meetService: MeetService,
     private chatService: ChatService,
     private relationShipService: relationship_Service,
     private editTutorPriofileService: Edit_ProfileService,
@@ -49,7 +56,6 @@ export class TutorController {
     private studentHomePageService: StudentHomePageService,
     private _Search_Services: search_Service,
   ) {}
-
 
   @Post('/editprofile')
   async postUser(@Body() user: ProfileDto, @Res() res: Response) {
@@ -165,6 +171,23 @@ export class TutorController {
     }
   }
 
+  @Post('/upload/course')
+  @UseInterceptors(FileInterceptor('file'))
+  async UploadCourse(
+    @UploadedFile() file: Express.Multer.File,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    try {
+      const URL = await this.s3Service.upload(file.originalname, file.buffer);
+      // this.s3Service.getSignedUrl()
+      res.json({ success: true, URL });
+    } catch (err) {
+      console.log(err);
+      res.json({ success: false, message: 'Server Error' });
+    }
+  }
+
   @Post('/post/poll')
   async UploadPoll(@Body() pollData: PollDataDto, @Res() res: Response) {
     try {
@@ -230,14 +253,13 @@ export class TutorController {
   async getAllTutor(@Res() res: Response) {
     const response = await this.studentHomePageService.getAllTutors();
 
-     res.json({ success: true, Tutorsdata: response });
+    res.json({ success: true, Tutorsdata: response });
   }
 
   @Post('/userdata')
   async getUser(@Body() userId: TutorIdDto, @Res() res: Response) {
-  
     const response = await this.studentHomePageService.getTutor(userId);
-     res.json({ success: true, Tutorsdata: response });
+    res.json({ success: true, Tutorsdata: response });
   }
 
   @Post('/follow')
@@ -302,11 +324,6 @@ export class TutorController {
       res.json({ success: false, messsage: 'Server Error' });
     }
   }
-
-  // @Post('/post/editarticle')
-  // async editArticle(@Body() ArticleData: ArticleUpdateDataDto, @Res() res: Response) {
-
-  // }
 
   @Post('/post/like')
   async likePost(@Body() Postlikedata: LikePostDTO, @Res() res: Response) {
@@ -408,6 +425,21 @@ export class TutorController {
       res.json({ success: true, data: response });
     } catch (err) {
       res.json({ success: false, message: 'Internal Error' });
+    }
+  }
+
+  @Get('/meet/token')
+  async getMeetToken(
+    @Query('meetData') meetData: JitsiMeetDataDTO,
+    @Res() res: Response,
+  ) {
+    try {
+      const response = await this.meetService.generateToken(meetData);
+
+      res.json({ success: true, token: response });
+    } catch (err) {
+      console.log(err);
+      res.json({ success: false, message: 'Server Error' });
     }
   }
 }

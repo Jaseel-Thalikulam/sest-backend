@@ -25,6 +25,8 @@ import { mongoosePostRepository } from 'src/infrastructure/database/repositories
 import { PostSchema } from 'src/infrastructure/database/schema/Post';
 import { search_Service } from '../../common/services/search/search.service';
 import search_Query_useCase from 'src/Domain/usecase/common/search/searchUser';
+import { MeetService } from '../../common/services/meet/meet.service';
+import createJitsiMeetToken from 'src/Domain/usecase/common/meet/createJitsiMeetToken';
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -65,6 +67,7 @@ import search_Query_useCase from 'src/Domain/usecase/common/search/searchUser';
     mongooseChatRepository,
     mongooseRelationshipRepository,
     StudentHomePageService,
+    MeetService,
     relationship_Service,
     Edit_ProfileService,
     search_Service,
@@ -76,6 +79,7 @@ import search_Query_useCase from 'src/Domain/usecase/common/search/searchUser';
     createChatuseCase,
     cloudinaryUploaduseCase,
     sendMessageuseCase,
+    createJitsiMeetToken,
     followUser_UseCase,
     unFollowUser_UseCase,
     search_Query_useCase,

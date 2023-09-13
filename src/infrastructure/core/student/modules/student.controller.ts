@@ -29,11 +29,13 @@ import { LikePostDTO } from '../../common/DTO/post/likePostDto';
 import CommentDataDTO from '../../common/DTO/post/commentDataDto';
 import DeleteCommentDto from '../../common/DTO/post/deleteCommentDto';
 import { searchQueryDTO } from '../../common/DTO/search/searchQuerydto';
-
+import { MeetService } from '../../common/services/meet/meet.service';
+import { JitsiMeetDataDTO } from '../../common/DTO/meet/JistimeetDTO';
 @Controller('learn')
 export default class StudentController {
   constructor(
     private chatService: ChatService,
+    private meetService: MeetService,
     private relationShipService: relationship_Service,
     private studentHomePageService: StudentHomePageService,
     private _Edit_ProfileService: Edit_ProfileService,
@@ -49,10 +51,8 @@ export default class StudentController {
   }
   @Post('/userdata')
   async getUser(@Body() userId: TutorIdDto, @Res() res: Response) {
-   
     const response = await this.studentHomePageService.getTutor(userId);
     res.json({ success: true, Tutorsdata: response });
-
   }
 
   @Post('/editprofile')
@@ -275,6 +275,20 @@ export default class StudentController {
 
       res.json({ success: true, followers, follwingUsers });
     } catch (err) {
+      res.json({ success: false, message: 'Server Error' });
+    }
+  }
+  @Get('/meet/token')
+  async getMeetToken(
+    @Query('meetData') meetData: JitsiMeetDataDTO,
+    @Res() res: Response,
+  ) {
+    try {
+      const response = await this.meetService.generateToken(meetData);
+
+      res.json({ success: true, token: response });
+    } catch (err) {
+      console.log(err);
       res.json({ success: false, message: 'Server Error' });
     }
   }
