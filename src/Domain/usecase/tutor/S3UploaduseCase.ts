@@ -9,6 +9,7 @@ class S3UploaduseCase {
   constructor(private readonly configService: ConfigService) {}
 
   async execute(fileName: string, file: Buffer) {
+    console.log(file, 'helo files');
     const uniqueKey = (await this.generateRandomString(16)) + fileName;
     const response = await this.s3Client.send(
       new PutObjectCommand({
@@ -17,7 +18,9 @@ class S3UploaduseCase {
         Body: file,
       }),
     );
-    const URL = (await this.configService.getOrThrow('AWS_CLOUD_FRONT')) + uniqueKey;
+
+    const URL =
+      (await this.configService.getOrThrow('AWS_CLOUD_FRONT')) + uniqueKey;
     return URL;
   }
 

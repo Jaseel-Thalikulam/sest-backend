@@ -12,6 +12,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import AWS from 'aws-sdk';
+import * as sharp from 'sharp';
 import { ProfileDto } from '../../common/DTO/tutorProfileDTO';
 import Busboy from 'busboy';
 import { search_Service } from '../../common/services/search/search.service';
@@ -23,7 +24,10 @@ import { tutor_CategoryService } from './services/tutor_Category.service';
 import { fetchChatsDto } from '../../common/DTO/chat/fetchChatsDto';
 import { accessChatDto } from '../../common/DTO/chat/creatChatDTO';
 import { ChatService } from '../../common/services/chat/chat.service';
-import { FileInterceptor } from '@nestjs/platform-express';
+import {
+  FileFieldsInterceptor,
+  FileInterceptor,
+} from '@nestjs/platform-express';
 import { PostService } from '../../common/services/post/post.service';
 import { ArticleDataDto } from '../../common/DTO/post/articleDataDto';
 import { relationship_Service } from '../../common/services/relationship/relationship.service';
@@ -41,10 +45,17 @@ import { searchQueryDTO } from '../../common/DTO/search/searchQuerydto';
 import { JitsiMeetDataDTO } from '../../common/DTO/meet/JistimeetDTO';
 import { MeetService } from '../../common/services/meet/meet.service';
 import { S3Service } from './services/S3.service';
+import { CourseService } from '../../common/services/course/course.service';
+import { createCourseDTO } from '../../common/DTO/course/createCourseDTO';
+import { stringList } from 'aws-sdk/clients/datapipeline';
+import { uploadVideoDTO } from '../../common/DTO/video/uploadvideoDTO';
+import { upload_Service } from '../../upload/upload.service';
 @Controller('/lead')
 export class TutorController {
   private readonly s3: AWS.S3;
   constructor(
+    private uploadService: upload_Service,
+    private courseService: CourseService,
     private s3Service: S3Service,
     private meetService: MeetService,
     private chatService: ChatService,
@@ -61,7 +72,6 @@ export class TutorController {
   async postUser(@Body() user: ProfileDto, @Res() res: Response) {
     const response = await this.editTutorPriofileService.editProfile(user);
 
-    console.log(response);
     return res.json({
       success: response.success,
       message: response.message,
@@ -170,18 +180,71 @@ export class TutorController {
       res.json({ success: false });
     }
   }
+  @Post('/create/course')
+  @UseInterceptors(FileInterceptor('coverImage'))
+  async CreateCourse(
+    @UploadedFile() coverImage: Express.Multer.File,
+    @Body('tutorId') tutorId: string,
+    @Body('title') title: string,
+    @Body('description') description: string,
+    @Res() res: Response,
+  ) {
+    try {
+      const CourseData: createCourseDTO = {
+        coverImage,
+        tutorId,
+        title,
+        description,
+      };
 
-  @Post('/upload/course')
-  @UseInterceptors(FileInterceptor('file'))
+      const response = await this.courseService.createCourse(CourseData);
+      res.json({ success: true, data: response });
+    } catch (err) {
+      res.json({ success: false, message: 'Server Error' });
+    }
+  }
+
+  @Post('/upload/video')
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'video', maxCount: 1 },
+      { name: 'thumbnail', maxCount: 1 },
+    ]),
+  )
   async UploadCourse(
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFiles()
+    files: { video?: Express.Multer.File[]; thumbnail?: Express.Multer.File[] },
+    @Body('title') title: string,
+    @Body('courseId') courseId: string,
+    @Body('userId') userId: string,
     @Req() req: Request,
     @Res() res: Response,
   ) {
     try {
-      const URL = await this.s3Service.upload(file.originalname, file.buffer);
-      // this.s3Service.getSignedUrl()
-      res.json({ success: true, URL });
+      // console.log(files.thumbnail)
+      const { ThumbnailURL } = await this.uploadService.uploadThumbnail(
+        files.thumbnail[0],
+      );
+
+      const URL = await this.s3Service.upload(
+        files.video[0].originalname,
+        files.video[0].buffer,
+      );
+
+      const VideoData: uploadVideoDTO = {
+        title,
+        courseId,
+        userId,
+        URL,
+        ThumbnailURL,
+      };
+      const response = await this.courseService.addVideo(VideoData);
+
+      res.json({
+        success: response.success,
+        message: response.message,
+        videoData: response.videoDBdata,
+      });
     } catch (err) {
       console.log(err);
       res.json({ success: false, message: 'Server Error' });
@@ -238,6 +301,40 @@ export class TutorController {
       res.json({ success: false, message: 'Server Error' });
     }
   }
+  @Get('/getvideoData')
+  async getvideoData(@Query('videoId') videoId: string, @Res() res: Response) {
+    try {
+      const response = await this.courseService.getVideodata(videoId);
+
+      response.URL = await this.s3Service.getSignedUrl(response.URL);
+      console.clear()
+console.log(response.URL)
+      res.json({
+        success: true,
+        message: 'SuccessFullty Fetched',
+        videoData: response,
+      });
+    } catch (err) {
+      res.json({ success: false, message: 'Server Error' });
+    }
+  }
+
+  @Get('/gettutorcourses')
+  async fetchTutorCourses(
+    @Query('tutorId') tutorId: string,
+    @Res() res: Response,
+  ) {
+    try {
+      const response = await this.courseService.findCourseByPublisherId(
+        tutorId,
+      );
+      res.json({ success: true, Corusedata: response });
+    } catch (err) {
+      console.log(err);
+      res.json({ success: false, message: 'Server Error' });
+    }
+  }
+
   @Get('/userPost')
   async fetchUserPost(@Query('userId') userId: string, @Res() res: Response) {
     try {
@@ -424,6 +521,23 @@ export class TutorController {
 
       res.json({ success: true, data: response });
     } catch (err) {
+      res.json({ success: false, message: 'Internal Error' });
+    }
+  }
+
+  @Get('/getCourseDetail')
+  async getcourseDetail(
+    @Query('CourseId') CourseId: string,
+    @Res() res: Response,
+  ) {
+    try {
+      console.clear();
+      console.log(CourseId, 'id');
+      const CourseData = await this.courseService.findCourseById(CourseId);
+      res.json({ success: true, CourseData });
+      console.log(CourseData);
+    } catch (err) {
+      console.log(err);
       res.json({ success: false, message: 'Internal Error' });
     }
   }

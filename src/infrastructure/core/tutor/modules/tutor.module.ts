@@ -38,6 +38,14 @@ import createJitsiMeetToken from 'src/Domain/usecase/common/meet/createJitsiMeet
 import { S3Service } from './services/S3.service';
 import S3useCase from 'src/Domain/usecase/tutor/S3UploaduseCase';
 import S3GenerateSignedURLuseCase from 'src/Domain/usecase/tutor/S3GenerateSignedUrluseCase';
+import { CourseService } from '../../common/services/course/course.service';
+import { courseSchema } from 'src/infrastructure/database/schema/Course';
+import createCourseUseCase from 'src/Domain/usecase/common/course/createCourseuseCase';
+import { mongooseCourseRepository } from 'src/infrastructure/database/repositories/course/mongoosecourserepository';
+import { mongoosevideoRepository } from 'src/infrastructure/database/repositories/video/mongoosevideorepository';
+import { videoSchema } from 'src/infrastructure/database/schema/Video';
+import { upload_Service } from '../../upload/upload.service';
+import { mongooseUploadRepository } from 'src/infrastructure/database/repositories/upload/mongooseUploadRepository';
 
 @Module({
   imports: [
@@ -77,9 +85,23 @@ import S3GenerateSignedURLuseCase from 'src/Domain/usecase/tutor/S3GenerateSigne
         schema: relationshipSchema,
       },
     ]),
+    MongooseModule.forFeature([
+      {
+        name: 'Video',
+        schema: videoSchema,
+      },
+    ]),
+    MongooseModule.forFeature([{ name: 'Course', schema: courseSchema }]),
   ],
   controllers: [TutorController],
   providers: [
+    upload_Service,
+    cloudinaryUploaduseCase,
+    mongooseUploadRepository,
+    mongoosevideoRepository,
+    createCourseUseCase,
+    mongooseCourseRepository,
+    CourseService,
     S3Service,
     S3GenerateSignedURLuseCase,
     S3useCase,

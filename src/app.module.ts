@@ -45,9 +45,9 @@ const MONGO_SECRET_KEY = process.env.MONGO_SECRET_KEY;
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    MongooseModule.forRoot(MONGO_SECRET_KEY),
     RegisterModule,
     tutorModule,
-    MongooseModule.forRoot(MONGO_SECRET_KEY),
     LoginModule,
     uploadModule,
     SuperAdminModule,

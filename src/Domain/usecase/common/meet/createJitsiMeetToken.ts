@@ -36,14 +36,11 @@ class createJitsiMeetToken {
       exp: parseInt(meetData.exp),
     };
 
-
-
     const token = await jwt.sign(
       payload,
       this.configService.getOrThrow('JITSI_PRIVATE_KEY'),
       options,
     );
-
 
     return token;
   }

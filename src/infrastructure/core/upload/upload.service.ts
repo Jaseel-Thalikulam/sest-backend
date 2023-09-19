@@ -34,4 +34,19 @@ export class upload_Service {
       return { success: false, message: response.message };
     }
   }
+
+  public async uploadThumbnail(imageData: Express.Multer.File) {
+    return await this._cloudinaryUploaduseCase
+      .execute(imageData)
+      .then((ThumbnailURL) => {
+        return { success: true, ThumbnailURL };
+      })
+      .catch(() => {
+        return {
+          success: false,
+          ThumbnailURL: '',
+          message: 'Something went wrong',
+        };
+      });
+  }
 }

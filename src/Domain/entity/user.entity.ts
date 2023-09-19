@@ -24,6 +24,7 @@ class User {
     twitter?: string;
   };
   public tags: string[];
+  public subscription: string[];
 
   constructor(
     name: string,
@@ -33,6 +34,7 @@ class User {
     role: string,
     isVerified: boolean,
     tags: string[] = [],
+    subscription: string[] = [],
     phoneNumber?: string,
     avatarUrl?: string,
     about?: string,
@@ -54,6 +56,7 @@ class User {
     this.isBanned = false;
     this.isVerified = isVerified;
     this.tags = tags;
+    this.subscription = subscription;
   }
 
   getTags(): string[] {
