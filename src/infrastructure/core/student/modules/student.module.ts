@@ -27,6 +27,20 @@ import { search_Service } from '../../common/services/search/search.service';
 import search_Query_useCase from 'src/Domain/usecase/common/search/searchUser';
 import { MeetService } from '../../common/services/meet/meet.service';
 import createJitsiMeetToken from 'src/Domain/usecase/common/meet/createJitsiMeetToken';
+import { CourseService } from '../../common/services/course/course.service';
+import createCourseUseCase from 'src/Domain/usecase/common/course/createCourseuseCase';
+import { mongoosevideoRepository } from 'src/infrastructure/database/repositories/video/mongoosevideorepository';
+import { mongooseCourseRepository } from 'src/infrastructure/database/repositories/course/mongoosecourserepository';
+import { videoSchema } from 'src/infrastructure/database/schema/Video';
+import { courseSchema } from 'src/infrastructure/database/schema/Course';
+import { subscriptionSchema } from 'src/infrastructure/database/schema/Subscription';
+import { Subscription_service } from '../../common/services/subscription/subscription.service';
+import { mongooseSubscriptionRepository } from 'src/infrastructure/database/repositories/subscription/mongooseSubscriptionRepository';
+import createSubscription_useCase from 'src/Domain/usecase/common/subscription/createSubscriptionuseCase';
+import { PaymentService } from '../../common/services/paymnet/payment.service';
+import { S3Service } from '../../tutor/modules/services/S3.service';
+import S3UploaduseCase from 'src/Domain/usecase/tutor/S3UploaduseCase';
+import S3GenerateSignedURLuseCase from 'src/Domain/usecase/tutor/S3GenerateSignedUrluseCase';
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -58,10 +72,28 @@ import createJitsiMeetToken from 'src/Domain/usecase/common/meet/createJitsiMeet
         name: 'Post',
         schema: PostSchema,
       },
+    ]),MongooseModule.forFeature([
+      {
+        name: 'Video',
+        schema: videoSchema,
+      },
     ]),
+    MongooseModule.forFeature([{ name: 'Course', schema: courseSchema }]),
+    MongooseModule.forFeature([{ name: 'Subscription', schema: subscriptionSchema }]),
   ],
   controllers: [StudentController],
   providers: [
+    CourseService,
+    S3Service,
+    S3UploaduseCase,
+    S3GenerateSignedURLuseCase,
+    Subscription_service,
+    mongooseSubscriptionRepository,
+    createSubscription_useCase,
+    createCourseUseCase,
+    PaymentService,
+    mongoosevideoRepository,
+    mongooseCourseRepository,
     ChatService,
     PostService,
     mongooseChatRepository,

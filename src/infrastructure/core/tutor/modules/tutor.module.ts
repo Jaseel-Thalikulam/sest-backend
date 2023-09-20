@@ -46,6 +46,11 @@ import { mongoosevideoRepository } from 'src/infrastructure/database/repositorie
 import { videoSchema } from 'src/infrastructure/database/schema/Video';
 import { upload_Service } from '../../upload/upload.service';
 import { mongooseUploadRepository } from 'src/infrastructure/database/repositories/upload/mongooseUploadRepository';
+import { PaymentService } from '../../common/services/paymnet/payment.service';
+import { Subscription_service } from '../../common/services/subscription/subscription.service';
+import createSubscription_useCase from 'src/Domain/usecase/common/subscription/createSubscriptionuseCase';
+import { mongooseSubscriptionRepository } from 'src/infrastructure/database/repositories/subscription/mongooseSubscriptionRepository';
+import { subscriptionSchema } from 'src/infrastructure/database/schema/Subscription';
 
 @Module({
   imports: [
@@ -92,9 +97,14 @@ import { mongooseUploadRepository } from 'src/infrastructure/database/repositori
       },
     ]),
     MongooseModule.forFeature([{ name: 'Course', schema: courseSchema }]),
+    MongooseModule.forFeature([{ name: 'Subscription', schema: subscriptionSchema }]),
   ],
   controllers: [TutorController],
   providers: [
+    Subscription_service,
+    mongooseSubscriptionRepository,
+    createSubscription_useCase,
+    PaymentService,
     upload_Service,
     cloudinaryUploaduseCase,
     mongooseUploadRepository,

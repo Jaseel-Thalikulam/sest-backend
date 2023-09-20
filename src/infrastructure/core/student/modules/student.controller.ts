@@ -31,9 +31,19 @@ import DeleteCommentDto from '../../common/DTO/post/deleteCommentDto';
 import { searchQueryDTO } from '../../common/DTO/search/searchQuerydto';
 import { MeetService } from '../../common/services/meet/meet.service';
 import { JitsiMeetDataDTO } from '../../common/DTO/meet/JistimeetDTO';
+import { CourseService } from '../../common/services/course/course.service';
+import { getSubscriptionDetailDTO } from '../../common/DTO/subscription/getSubscriptionDetailDTO';
+import { Subscription_service } from '../../common/services/subscription/subscription.service';
+import { PaymentDTO } from '../../common/DTO/payment/paymentDTO';
+import { PaymentService } from '../../common/services/paymnet/payment.service';
+import { SubscriptionDTO } from '../../common/DTO/subscription/subscriptionDto';
+import { S3Service } from '../../tutor/modules/services/S3.service';
 @Controller('learn')
 export default class StudentController {
   constructor(
+    private s3Service: S3Service,
+    private subscriptionService:Subscription_service,
+    private courseService: CourseService,
     private chatService: ChatService,
     private meetService: MeetService,
     private relationShipService: relationship_Service,
@@ -41,7 +51,80 @@ export default class StudentController {
     private _Edit_ProfileService: Edit_ProfileService,
     private _Post_Services: PostService,
     private _Search_Services: search_Service,
+    private paymentService:PaymentService,
   ) {}
+
+
+  @Post('/Subscription/Payment')
+  async SubscriptionPayment(@Body() PaymentDetails: PaymentDTO, @Res() res: Response) {
+    try {
+
+      const isAlreadySubscribed = await this.subscriptionService.isAlreadySubscribed(PaymentDetails)
+      if (!isAlreadySubscribed) {
+        
+        const response = await this.paymentService.executepayment(PaymentDetails)
+        res.json({ success: response.success, client_secret: response.client_secret });
+      } else {
+        
+        res.json({ success: false, message: 'Already Subscribed' });
+      }
+      
+      
+    } catch (err) {
+      console.log(err)
+      res.json({ success: false, message: 'Server Error' });
+      
+    }
+  }
+
+  @Post('/addSubscription')
+  async AddSubscription(@Body() SubscriptionDetails: SubscriptionDTO, @Res() res: Response) {
+    try {
+     
+      
+     const  response = await this.subscriptionService.createSubscription(SubscriptionDetails)
+      
+      res.json({success:response.success})
+      
+    } catch (err) {
+      console.log(err)
+      res.json({ success: false, message: 'Server Error' });
+      
+    }
+  }
+
+  @Get('/getvideoData')
+  async getvideoData(@Query('videoId') videoId: string, @Res() res: Response) {
+    try {
+      const response = await this.courseService.getVideodata(videoId);
+
+      response.URL = await this.s3Service.getSignedUrl(response.URL);
+
+      res.json({
+        success: true,
+        message: 'SuccessFullty Fetched',
+        videoData: response,
+      });
+    } catch (err) {
+      res.json({ success: false, message: 'Server Error' });
+    }
+  }
+
+  @Get('/getCourseDetail')
+  async getcourseDetail(
+    @Query('CourseId') CourseId: string,
+    @Res() res: Response,
+  ) {
+    try {
+
+      const CourseData = await this.courseService.findCourseById(CourseId);
+      res.json({ success: true, CourseData });
+     
+    } catch (err) {
+      console.log(err);
+      res.json({ success: false, message: 'Internal Error' });
+    }
+  }
 
   @Get('/tutorlist')
   async getAllTutor(@Res() res: Response) {
@@ -66,6 +149,46 @@ export default class StudentController {
         userData: response.userData,
       });
     } catch (err) {}
+  }
+
+  @Get('/gettutorcourses')
+  async fetchTutorCourses(
+    @Query('tutorId') tutorId: string,
+    @Res() res: Response,
+  ) {
+    try {
+      const response = await this.courseService.findCourseByPublisherId(
+        tutorId,
+      );
+      res.json({ success: true, Corusedata: response });
+    } catch (err) {
+      console.log(err);
+      res.json({ success: false, message: 'Server Error' });
+    }
+  }
+
+  @Get('/getSubscriptionDetails')
+  async getSubscriptionDetails(
+    @Query('TutorId') TutorId: string,
+    @Query('StudentId') StudentId: string,
+    @Res() res: Response,
+  ) {
+    try {
+      const SubscriptionDetail: getSubscriptionDetailDTO = {
+        TutorId,
+        StudentId,
+      };
+
+
+     const response= await this.subscriptionService.getSubscriptionDetail(SubscriptionDetail)
+
+      res.json({ success: response.success, plan: response.plan });
+
+    } catch (err) {
+
+      console.log(err,"error from sub")
+      res.json({ success: false, message: 'Server Error' });
+    }
   }
 
   @Post('/chat/access')

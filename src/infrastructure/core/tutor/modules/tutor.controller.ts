@@ -24,6 +24,7 @@ import { tutor_CategoryService } from './services/tutor_Category.service';
 import { fetchChatsDto } from '../../common/DTO/chat/fetchChatsDto';
 import { accessChatDto } from '../../common/DTO/chat/creatChatDTO';
 import { ChatService } from '../../common/services/chat/chat.service';
+import { PaymentService } from '../../common/services/paymnet/payment.service';
 import {
   FileFieldsInterceptor,
   FileInterceptor,
@@ -50,10 +51,16 @@ import { createCourseDTO } from '../../common/DTO/course/createCourseDTO';
 import { stringList } from 'aws-sdk/clients/datapipeline';
 import { uploadVideoDTO } from '../../common/DTO/video/uploadvideoDTO';
 import { upload_Service } from '../../upload/upload.service';
+import { PaymentDTO } from '../../common/DTO/payment/paymentDTO';
+import { SubscriptionDTO } from '../../common/DTO/subscription/subscriptionDto';
+import { Subscription_service } from '../../common/services/subscription/subscription.service';
+import { getSubscriptionDetailDTO } from '../../common/DTO/subscription/getSubscriptionDetailDTO';
 @Controller('/lead')
 export class TutorController {
   private readonly s3: AWS.S3;
   constructor(
+    private subscriptionService:Subscription_service,
+    private paymentService:PaymentService,
     private uploadService: upload_Service,
     private courseService: CourseService,
     private s3Service: S3Service,
@@ -221,7 +228,7 @@ export class TutorController {
     @Res() res: Response,
   ) {
     try {
-      // console.log(files.thumbnail)
+    
       const { ThumbnailURL } = await this.uploadService.uploadThumbnail(
         files.thumbnail[0],
       );
@@ -307,8 +314,7 @@ export class TutorController {
       const response = await this.courseService.getVideodata(videoId);
 
       response.URL = await this.s3Service.getSignedUrl(response.URL);
-      console.clear()
-console.log(response.URL)
+
       res.json({
         success: true,
         message: 'SuccessFullty Fetched',
@@ -352,12 +358,49 @@ console.log(response.URL)
 
     res.json({ success: true, Tutorsdata: response });
   }
-
+  
   @Post('/userdata')
   async getUser(@Body() userId: TutorIdDto, @Res() res: Response) {
     const response = await this.studentHomePageService.getTutor(userId);
     res.json({ success: true, Tutorsdata: response });
   }
+  @Post('/Subscription/Payment')
+  async SubscriptionPayment(@Body() PaymentDetails: PaymentDTO, @Res() res: Response) {
+    try {
+
+      const isAlreadySubscribed = await this.subscriptionService.isAlreadySubscribed(PaymentDetails)
+      if (!isAlreadySubscribed) {
+        
+        const response = await this.paymentService.executepayment(PaymentDetails)
+        res.json({ success: response.success, client_secret: response.client_secret });
+      } else {
+        
+        res.json({ success: false, message: 'Already Subscribed' });
+      }
+      
+      
+    } catch (err) {
+      console.log(err)
+      res.json({ success: false, message: 'Server Error' });
+      
+    }
+  }
+  @Post('/addSubscription')
+  async AddSubscription(@Body() SubscriptionDetails: SubscriptionDTO, @Res() res: Response) {
+    try {
+     
+     const  response = await this.subscriptionService.createSubscription(SubscriptionDetails)
+      
+      
+      res.json({success:response.success})
+      
+    } catch (err) {
+      console.log(err)
+      res.json({ success: false, message: 'Server Error' });
+      
+    }
+  }
+
 
   @Post('/follow')
   async handleFollow(@Body() UsersId: FollowDTO, @Res() res: Response) {
@@ -388,6 +431,27 @@ console.log(response.URL)
       const isFollowing = await this.relationShipService.isfollowed(UsersId);
 
       res.json({ success: true, message: 'Success', isFollowing });
+    } catch (err) {
+      res.json({ success: false, message: 'Server Error' });
+    }
+  }
+  @Get('/getSubscriptionDetails')
+  async getSubscriptionDetails(
+    @Query('TutorId') TutorId: string,
+    @Query('StudentId') StudentId: string,
+    @Res() res: Response,
+  ) {
+    try {
+      const SubscriptionDetail: getSubscriptionDetailDTO = {
+        TutorId,
+        StudentId,
+      };
+      console.log(SubscriptionDetail,"subb tutor" )
+
+     const response= await this.subscriptionService.getSubscriptionDetail(SubscriptionDetail)
+
+      res.json({ success: response.success, plan: response.plan });
+
     } catch (err) {
       res.json({ success: false, message: 'Server Error' });
     }
@@ -531,11 +595,9 @@ console.log(response.URL)
     @Res() res: Response,
   ) {
     try {
-      console.clear();
-      console.log(CourseId, 'id');
       const CourseData = await this.courseService.findCourseById(CourseId);
       res.json({ success: true, CourseData });
-      console.log(CourseData);
+      
     } catch (err) {
       console.log(err);
       res.json({ success: false, message: 'Internal Error' });
