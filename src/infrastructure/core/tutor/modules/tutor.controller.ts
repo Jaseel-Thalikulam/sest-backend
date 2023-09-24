@@ -41,7 +41,7 @@ import IDeletePostDto from '../../common/DTO/post/deletePostDto';
 import { ArticleUpdateDataDto } from '../../common/DTO/post/articleupdatedataDto';
 import { LikePostDTO } from '../../common/DTO/post/likePostDto';
 import CommentDataDTO from '../../common/DTO/post/commentDataDto';
-import DeleteCommentDto from '../../common/DTO/post/deleteCommentDto';
+import CommentAPIDto from '../../common/DTO/post/CommentAPIDto';
 import { searchQueryDTO } from '../../common/DTO/search/searchQuerydto';
 import { JitsiMeetDataDTO } from '../../common/DTO/meet/JistimeetDTO';
 import { MeetService } from '../../common/services/meet/meet.service';
@@ -59,8 +59,8 @@ import { getSubscriptionDetailDTO } from '../../common/DTO/subscription/getSubsc
 export class TutorController {
   private readonly s3: AWS.S3;
   constructor(
-    private subscriptionService:Subscription_service,
-    private paymentService:PaymentService,
+    private subscriptionService: Subscription_service,
+    private paymentService: PaymentService,
     private uploadService: upload_Service,
     private courseService: CourseService,
     private s3Service: S3Service,
@@ -184,7 +184,7 @@ export class TutorController {
       const response = await this.postService.uploadArticle(ArticleData);
       res.json({ success: response.success });
     } catch (err) {
-      res.json({ success: false });
+      res.json({ success: false, message: 'Server Error' });
     }
   }
   @Post('/create/course')
@@ -205,7 +205,7 @@ export class TutorController {
       };
 
       const response = await this.courseService.createCourse(CourseData);
-      res.json({ success: true, data: response });
+      res.json({ success: true, CourseData: response });
     } catch (err) {
       res.json({ success: false, message: 'Server Error' });
     }
@@ -228,7 +228,6 @@ export class TutorController {
     @Res() res: Response,
   ) {
     try {
-    
       const { ThumbnailURL } = await this.uploadService.uploadThumbnail(
         files.thumbnail[0],
       );
@@ -298,6 +297,11 @@ export class TutorController {
   @Get('/fetchFeedPost')
   async fetchFeedPost(@Query('userId') userId: string, @Res() res: Response) {
     try {
+      if (!userId) {
+        console.log('nononio');
+      }
+
+      console.log('called', userId);
       const follwingUsers =
         await this.relationShipService.fetchAllFollowingUsers(userId);
 
@@ -358,49 +362,52 @@ export class TutorController {
 
     res.json({ success: true, Tutorsdata: response });
   }
-  
+
   @Post('/userdata')
   async getUser(@Body() userId: TutorIdDto, @Res() res: Response) {
     const response = await this.studentHomePageService.getTutor(userId);
     res.json({ success: true, Tutorsdata: response });
   }
   @Post('/Subscription/Payment')
-  async SubscriptionPayment(@Body() PaymentDetails: PaymentDTO, @Res() res: Response) {
+  async SubscriptionPayment(
+    @Body() PaymentDetails: PaymentDTO,
+    @Res() res: Response,
+  ) {
     try {
-
-      const isAlreadySubscribed = await this.subscriptionService.isAlreadySubscribed(PaymentDetails)
+      const isAlreadySubscribed =
+        await this.subscriptionService.isAlreadySubscribed(PaymentDetails);
       if (!isAlreadySubscribed) {
-        
-        const response = await this.paymentService.executepayment(PaymentDetails)
-        res.json({ success: response.success, client_secret: response.client_secret });
+        const response = await this.paymentService.executepayment(
+          PaymentDetails,
+        );
+        res.json({
+          success: response.success,
+          client_secret: response.client_secret,
+        });
       } else {
-        
         res.json({ success: false, message: 'Already Subscribed' });
       }
-      
-      
     } catch (err) {
-      console.log(err)
+      console.log(err);
       res.json({ success: false, message: 'Server Error' });
-      
     }
   }
   @Post('/addSubscription')
-  async AddSubscription(@Body() SubscriptionDetails: SubscriptionDTO, @Res() res: Response) {
+  async AddSubscription(
+    @Body() SubscriptionDetails: SubscriptionDTO,
+    @Res() res: Response,
+  ) {
     try {
-     
-     const  response = await this.subscriptionService.createSubscription(SubscriptionDetails)
-      
-      
-      res.json({success:response.success})
-      
+      const response = await this.subscriptionService.createSubscription(
+        SubscriptionDetails,
+      );
+
+      res.json({ success: response.success });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       res.json({ success: false, message: 'Server Error' });
-      
     }
   }
-
 
   @Post('/follow')
   async handleFollow(@Body() UsersId: FollowDTO, @Res() res: Response) {
@@ -446,12 +453,13 @@ export class TutorController {
         TutorId,
         StudentId,
       };
-      console.log(SubscriptionDetail,"subb tutor" )
+      console.log(SubscriptionDetail, 'subb tutor');
 
-     const response= await this.subscriptionService.getSubscriptionDetail(SubscriptionDetail)
+      const response = await this.subscriptionService.getSubscriptionDetail(
+        SubscriptionDetail,
+      );
 
       res.json({ success: response.success, plan: response.plan });
-
     } catch (err) {
       res.json({ success: false, message: 'Server Error' });
     }
@@ -468,17 +476,14 @@ export class TutorController {
     }
   }
   @Delete('/post/deletecomment')
-  async handleDeleteComment(
-    @Res() res: Response,
-    @Body() data: DeleteCommentDto,
-  ) {
+  async handleDeleteComment(@Res() res: Response, @Body() data: CommentAPIDto) {
     try {
       const response = await this.postService.deleteComment(data);
 
       res.json({
         success: response.success,
         message: response.message,
-        data: response.data,
+        Postdata: response.data,
       });
     } catch (err) {
       console.log(err);
@@ -491,7 +496,7 @@ export class TutorController {
     try {
       const response = await this.postService.likePost(Postlikedata);
 
-      res.json({ success: response.success, data: response.data });
+      res.json({ success: response.success, Postdata: response.data });
     } catch (err) {
       res.json({ success: false, message: 'Server Error' });
     }
@@ -514,13 +519,13 @@ export class TutorController {
 
   @Post('/post/likecomment')
   async likeComment(
-    @Body() Commentlikedata: DeleteCommentDto,
+    @Body() Commentlikedata: CommentAPIDto,
     @Res() res: Response,
   ) {
     try {
       const response = await this.postService.likeComment(Commentlikedata);
 
-      res.json({ success: response.success, data: response.data });
+      res.json({ success: response.success, Postdata: response.data });
     } catch (err) {
       res.json({ success: false, message: 'Server Error' });
     }
@@ -531,7 +536,7 @@ export class TutorController {
     try {
       const response = await this.postService.addComment(commentData);
 
-      res.json({ success: response.success, data: response.data });
+      res.json({ success: response.success, Postdata: response.data });
     } catch (err) {
       res.json({ success: false, message: 'Server Error' });
     }
@@ -561,7 +566,7 @@ export class TutorController {
       const response = await this.postService.editMedia(MediaData);
       res.json({
         success: response.success,
-        data: response.data,
+        Postdata: response.data,
         message: response.messgae,
       });
     } catch (err) {
@@ -583,7 +588,7 @@ export class TutorController {
 
       const response = await this._Search_Services.Search(searchQuery);
 
-      res.json({ success: true, data: response });
+      res.json({ success: true, Data: response });
     } catch (err) {
       res.json({ success: false, message: 'Internal Error' });
     }
@@ -597,7 +602,6 @@ export class TutorController {
     try {
       const CourseData = await this.courseService.findCourseById(CourseId);
       res.json({ success: true, CourseData });
-      
     } catch (err) {
       console.log(err);
       res.json({ success: false, message: 'Internal Error' });

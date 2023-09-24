@@ -28,8 +28,9 @@ export const UserSchema = new mongoose.Schema(
       default:
         'https://res.cloudinary.com/dan9hatpk/image/upload/v1691999680/defaultavatar.png.png',
     },
-    subscription:[{type:mongoose.Schema.Types.ObjectId,ref:'Subscription'}]
-    
+    subscription: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'Subscription' },
+    ],
   },
   {
     timestamps: true,

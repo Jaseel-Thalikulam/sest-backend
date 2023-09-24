@@ -25,6 +25,7 @@ export class StudentVerifyMiddleware implements NestMiddleware {
     const token = req.headers['token'];
 
     try {
+      console.log(token, 'token');
       const decoded = jwt.verify(token, SECRECT_KEY);
 
       const isAuthorized = await this._MiddlewareRepository.isStudent(
@@ -44,7 +45,7 @@ export class StudentVerifyMiddleware implements NestMiddleware {
         res.json({ success: false, message: 'Authorization Failed' });
       }
     } catch (err) {
-      res.json({ success: false, message: 'Authentication Failed' });
+      res.json({ success: false, message: 'Authentication Failed student' });
     }
   }
 }

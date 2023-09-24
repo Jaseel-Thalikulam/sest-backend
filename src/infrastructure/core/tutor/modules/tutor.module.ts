@@ -97,7 +97,9 @@ import { subscriptionSchema } from 'src/infrastructure/database/schema/Subscript
       },
     ]),
     MongooseModule.forFeature([{ name: 'Course', schema: courseSchema }]),
-    MongooseModule.forFeature([{ name: 'Subscription', schema: subscriptionSchema }]),
+    MongooseModule.forFeature([
+      { name: 'Subscription', schema: subscriptionSchema },
+    ]),
   ],
   controllers: [TutorController],
   providers: [

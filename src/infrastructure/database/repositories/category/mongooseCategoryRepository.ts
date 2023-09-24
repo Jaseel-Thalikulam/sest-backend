@@ -39,10 +39,9 @@ export class mongooseCategoryRepository implements ICategoryRepository {
 
   public async getCategory(Name: string) {
     const response = await this.CategoryModel.findOne({ Name: Name });
-    
+
     return response !== null;
   }
-
 
   public async unlistCategory(id: string) {
     const categoryObjectId = new ObjectId(id);

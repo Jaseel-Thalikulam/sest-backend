@@ -1,5 +1,4 @@
 import { mongooseMiddlewareRepository } from '../../../database/repositories/middleware/mongooseMiddlewareRepository';
-import { mongooseUserRepository } from 'src/infrastructure/database/repositories/common/mongooseUserRepository';
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
@@ -12,10 +11,7 @@ const SECRECT_KEY = process.env.SECRECT_KEY;
 @Injectable()
 export class TutorVerifyMiddleware implements NestMiddleware {
   private readonly _MiddlewareRepository: mongooseMiddlewareRepository;
-  constructor(
-    middlewareRepository: mongooseMiddlewareRepository,
-    UserRepository: mongooseUserRepository,
-  ) {
+  constructor(middlewareRepository: mongooseMiddlewareRepository) {
     this._MiddlewareRepository = middlewareRepository;
   }
   use(req: Request, res: Response, next: NextFunction) {
@@ -24,7 +20,7 @@ export class TutorVerifyMiddleware implements NestMiddleware {
     new Promise((resolve) => {
       jwt.verify(token, SECRECT_KEY, (err, decoded) => {
         if (err) {
-          res.json({ success: false, message: 'Authentication Failed' });
+          res.json({ success: false, message: 'Authentication Failed Tutor' });
         } else {
           resolve(decoded);
 

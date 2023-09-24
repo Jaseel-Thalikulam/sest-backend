@@ -41,8 +41,6 @@ export class mongooseCourseRepository implements ICourse {
   }
 
   async findCourseByPublisherId(tutorId: string) {
-    console.log(tutorId, 'helo');
-
     return await this.courseModel.find({ publisherId: tutorId });
   }
 

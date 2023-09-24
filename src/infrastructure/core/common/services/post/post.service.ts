@@ -8,7 +8,7 @@ import { MediaDataDto } from '../../DTO/post/mediaDataDto';
 import IDeletePostDto from '../../DTO/post/deletePostDto';
 import { LikePostDTO } from '../../DTO/post/likePostDto';
 import CommentDataDTO from '../../DTO/post/commentDataDto';
-import DeleteCommentDto from '../../DTO/post/deleteCommentDto';
+import DeleteCommentDto from '../../DTO/post/CommentAPIDto';
 @Injectable()
 export class PostService {
   private readonly _cloudinaryUploaduseCase: cloudinaryUploaduseCase;
@@ -137,11 +137,8 @@ export class PostService {
   public async likeComment(data: DeleteCommentDto) {
     const isLiked = await this._mongoosePostRepository.isCommentLiked(data);
     if (!isLiked) {
-      console.log('like');
-
       return await this._mongoosePostRepository.likeComment(data);
     } else if (isLiked) {
-      console.log('unlike');
       return await this._mongoosePostRepository.unlikeComment(data);
     }
   }

@@ -72,14 +72,17 @@ import S3GenerateSignedURLuseCase from 'src/Domain/usecase/tutor/S3GenerateSigne
         name: 'Post',
         schema: PostSchema,
       },
-    ]),MongooseModule.forFeature([
+    ]),
+    MongooseModule.forFeature([
       {
         name: 'Video',
         schema: videoSchema,
       },
     ]),
     MongooseModule.forFeature([{ name: 'Course', schema: courseSchema }]),
-    MongooseModule.forFeature([{ name: 'Subscription', schema: subscriptionSchema }]),
+    MongooseModule.forFeature([
+      { name: 'Subscription', schema: subscriptionSchema },
+    ]),
   ],
   controllers: [StudentController],
   providers: [

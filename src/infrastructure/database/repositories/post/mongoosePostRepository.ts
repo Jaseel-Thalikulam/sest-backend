@@ -8,7 +8,7 @@ import { PollDataDto } from 'src/infrastructure/core/common/DTO/post/pollDataDto
 import { MediaDataDto } from 'src/infrastructure/core/common/DTO/post/mediaDataDto';
 import { LikePostDTO } from 'src/infrastructure/core/common/DTO/post/likePostDto';
 import CommentDataDTO from 'src/infrastructure/core/common/DTO/post/commentDataDto';
-import DeleteCommentDto from 'src/infrastructure/core/common/DTO/post/deleteCommentDto';
+import DeleteCommentDto from 'src/infrastructure/core/common/DTO/post/CommentAPIDto';
 export class mongoosePostRepository implements IPost {
   constructor(@InjectModel('Post') private readonly postModel: Model<Post>) {}
 

@@ -27,7 +27,7 @@ import { ArticleDataDto } from '../../common/DTO/post/articleDataDto';
 import IDeletePostDto from '../../common/DTO/post/deletePostDto';
 import { LikePostDTO } from '../../common/DTO/post/likePostDto';
 import CommentDataDTO from '../../common/DTO/post/commentDataDto';
-import DeleteCommentDto from '../../common/DTO/post/deleteCommentDto';
+import CommentAPIDto from '../../common/DTO/post/CommentAPIDto';
 import { searchQueryDTO } from '../../common/DTO/search/searchQuerydto';
 import { MeetService } from '../../common/services/meet/meet.service';
 import { JitsiMeetDataDTO } from '../../common/DTO/meet/JistimeetDTO';
@@ -38,11 +38,12 @@ import { PaymentDTO } from '../../common/DTO/payment/paymentDTO';
 import { PaymentService } from '../../common/services/paymnet/payment.service';
 import { SubscriptionDTO } from '../../common/DTO/subscription/subscriptionDto';
 import { S3Service } from '../../tutor/modules/services/S3.service';
+
 @Controller('learn')
 export default class StudentController {
   constructor(
     private s3Service: S3Service,
-    private subscriptionService:Subscription_service,
+    private subscriptionService: Subscription_service,
     private courseService: CourseService,
     private chatService: ChatService,
     private meetService: MeetService,
@@ -51,45 +52,48 @@ export default class StudentController {
     private _Edit_ProfileService: Edit_ProfileService,
     private _Post_Services: PostService,
     private _Search_Services: search_Service,
-    private paymentService:PaymentService,
+    private paymentService: PaymentService,
   ) {}
 
-
   @Post('/Subscription/Payment')
-  async SubscriptionPayment(@Body() PaymentDetails: PaymentDTO, @Res() res: Response) {
+  async SubscriptionPayment(
+    @Body() PaymentDetails: PaymentDTO,
+    @Res() res: Response,
+  ) {
     try {
-
-      const isAlreadySubscribed = await this.subscriptionService.isAlreadySubscribed(PaymentDetails)
+      const isAlreadySubscribed =
+        await this.subscriptionService.isAlreadySubscribed(PaymentDetails);
       if (!isAlreadySubscribed) {
-        
-        const response = await this.paymentService.executepayment(PaymentDetails)
-        res.json({ success: response.success, client_secret: response.client_secret });
+        const response = await this.paymentService.executepayment(
+          PaymentDetails,
+        );
+        res.json({
+          success: response.success,
+          client_secret: response.client_secret,
+        });
       } else {
-        
         res.json({ success: false, message: 'Already Subscribed' });
       }
-      
-      
     } catch (err) {
-      console.log(err)
+      console.log(err);
       res.json({ success: false, message: 'Server Error' });
-      
     }
   }
 
   @Post('/addSubscription')
-  async AddSubscription(@Body() SubscriptionDetails: SubscriptionDTO, @Res() res: Response) {
+  async AddSubscription(
+    @Body() SubscriptionDetails: SubscriptionDTO,
+    @Res() res: Response,
+  ) {
     try {
-     
-      
-     const  response = await this.subscriptionService.createSubscription(SubscriptionDetails)
-      
-      res.json({success:response.success})
-      
+      const response = await this.subscriptionService.createSubscription(
+        SubscriptionDetails,
+      );
+
+      res.json({ success: response.success });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       res.json({ success: false, message: 'Server Error' });
-      
     }
   }
 
@@ -116,10 +120,8 @@ export default class StudentController {
     @Res() res: Response,
   ) {
     try {
-
       const CourseData = await this.courseService.findCourseById(CourseId);
       res.json({ success: true, CourseData });
-     
     } catch (err) {
       console.log(err);
       res.json({ success: false, message: 'Internal Error' });
@@ -179,14 +181,13 @@ export default class StudentController {
         StudentId,
       };
 
-
-     const response= await this.subscriptionService.getSubscriptionDetail(SubscriptionDetail)
+      const response = await this.subscriptionService.getSubscriptionDetail(
+        SubscriptionDetail,
+      );
 
       res.json({ success: response.success, plan: response.plan });
-
     } catch (err) {
-
-      console.log(err,"error from sub")
+      console.log(err, 'error from sub');
       res.json({ success: false, message: 'Server Error' });
     }
   }
@@ -249,7 +250,7 @@ export default class StudentController {
 
       const response = await this._Search_Services.Search(searchQuery);
 
-      res.json({ success: true, data: response });
+      res.json({ success: true, Data: response });
     } catch (err) {
       console.log(err);
       res.json({ success: false, message: 'Internal Error' });
@@ -288,7 +289,7 @@ export default class StudentController {
     try {
       const response = await this._Post_Services.likePost(Postlikedata);
 
-      res.json({ success: response.success, data: response.data });
+      res.json({ success: response.success, Postdata: response.data });
     } catch (err) {
       res.json({ success: false, message: 'Server Error' });
     }
@@ -303,16 +304,31 @@ export default class StudentController {
       res.json({ success: false, messsage: 'Server Error' });
     }
   }
+  //unconfirmed
+  @Delete('/post/deletecomment')
+  async handleDeleteComment(@Res() res: Response, @Body() data: CommentAPIDto) {
+    try {
+      const response = await this._Post_Services.deleteComment(data);
 
+      res.json({
+        success: response.success,
+        message: response.message,
+        Postdata: response.data,
+      });
+    } catch (err) {
+      console.log(err);
+      res.json({ success: false, messsage: 'Server Error' });
+    }
+  }
   @Post('/post/likecomment')
   async likeComment(
-    @Body() Commentlikedata: DeleteCommentDto,
+    @Body() Commentlikedata: CommentAPIDto,
     @Res() res: Response,
   ) {
     try {
       const response = await this._Post_Services.likeComment(Commentlikedata);
 
-      res.json({ success: response.success, data: response.data });
+      res.json({ success: response.success, Postdata: response.data });
     } catch (err) {
       res.json({ success: false, message: 'Server Error' });
     }
@@ -323,7 +339,7 @@ export default class StudentController {
     try {
       const response = await this._Post_Services.addComment(commentData);
 
-      res.json({ success: response.success, data: response.data });
+      res.json({ success: response.success, Postdata: response.data });
     } catch (err) {
       res.json({ success: false, message: 'Server Error' });
     }

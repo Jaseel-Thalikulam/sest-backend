@@ -52,11 +52,11 @@ export class mongooseRelationshipRepository {
       source: userId,
     };
 
-    const folloingUsers = await this.relationshipModel
+    const followingUsers = await this.relationshipModel
       .find(query)
       .populate('target');
 
-    return folloingUsers.map((relationship) => relationship.target);
+    return followingUsers.map((relationship) => relationship.target);
   }
   async fetchAllFollowers(userId: string) {
     const query = {

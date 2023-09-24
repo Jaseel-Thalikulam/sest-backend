@@ -1,6 +1,5 @@
 import { ObjectId } from 'mongoose';
 
-
 class Subscription {
   public _id!: ObjectId;
   public Name: string;

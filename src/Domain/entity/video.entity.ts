@@ -1,9 +1,8 @@
 import { ObjectId } from 'mongoose';
 
-
 class Video {
   public _id!: ObjectId;
-  public Title: string; 
+  public Title: string;
   public URL: string;
   public CourseId: string;
   public PublisherId: string;
