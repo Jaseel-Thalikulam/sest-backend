@@ -42,7 +42,7 @@ export class StudentVerifyMiddleware implements NestMiddleware {
           next();
         }
       } else {
-        res.json({ success: false, message: 'Authorization Failed' });
+        res.json({ success: false, message: 'Authorization Failed stud' });
       }
     } catch (err) {
       res.json({ success: false, message: 'Authentication Failed student' });

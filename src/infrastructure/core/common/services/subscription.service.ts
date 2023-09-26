@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { SubscriptionDTO } from '../../DTO/subscription/subscriptionDto';
+import { SubscriptionDTO } from '../DTO/subscription/subscriptionDto';
 import createSubscription_useCase from 'src/Domain/usecase/common/subscription/createSubscriptionuseCase';
 import { mongooseSubscriptionRepository } from 'src/infrastructure/database/repositories/subscription/mongooseSubscriptionRepository';
 import Subscription from 'src/Domain/entity/subscription.entity';
-import { PaymentDTO } from '../../DTO/payment/paymentDTO';
-import { getSubscriptionDetailDTO } from '../../DTO/subscription/getSubscriptionDetailDTO';
+import { PaymentDTO } from '../DTO/payment/paymentDTO';
+import { getSubscriptionDetailDTO } from '../DTO/subscription/getSubscriptionDetailDTO';
 @Injectable()
 export class Subscription_service {
   private readonly createsubscrption_useCase: createSubscription_useCase;

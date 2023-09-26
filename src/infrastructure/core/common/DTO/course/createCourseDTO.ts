@@ -4,4 +4,5 @@ export class createCourseDTO {
   tutorId: string;
   description: string;
   coverUrl?: string;
+  category?: string;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import createJitsiMeetToken from 'src/Domain/usecase/common/meet/createJitsiMeetToken';
-import { JitsiMeetDataDTO } from '../../DTO/meet/JistimeetDTO';
+import { JitsiMeetDataDTO } from '../DTO/meet/JistimeetDTO';
 
 @Injectable()
 export class MeetService {

@@ -31,7 +31,10 @@ export class TutorVerifyMiddleware implements NestMiddleware {
           if (Isauthorized) {
             next();
           } else {
-            res.json({ success: false, message: 'Authorization Failed' });
+            res.json({
+              success: false,
+              message: 'Authorization Failed ergrtgr',
+            });
           }
         }
       });

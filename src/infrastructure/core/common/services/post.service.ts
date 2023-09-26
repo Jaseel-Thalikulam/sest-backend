@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import cloudinaryUploaduseCase from 'src/Domain/usecase/upload/cloudinary.uploaduseCase';
-import { ArticleDataDto } from '../../DTO/post/articleDataDto';
+import { ArticleDataDto } from '../DTO/post/articleDataDto';
 import { IUploadResponse } from 'src/Domain/interfaces/uploadresponse.interface';
 import { mongoosePostRepository } from 'src/infrastructure/database/repositories/post/mongoosePostRepository';
-import { PollDataDto } from '../../DTO/post/pollDataDto';
-import { MediaDataDto } from '../../DTO/post/mediaDataDto';
-import IDeletePostDto from '../../DTO/post/deletePostDto';
-import { LikePostDTO } from '../../DTO/post/likePostDto';
-import CommentDataDTO from '../../DTO/post/commentDataDto';
-import DeleteCommentDto from '../../DTO/post/CommentAPIDto';
+import { PollDataDto } from '../DTO/post/pollDataDto';
+import { MediaDataDto } from '../DTO/post/mediaDataDto';
+import IDeletePostDto from '../DTO/post/deletePostDto';
+import { LikePostDTO } from '../DTO/post/likePostDto';
+import CommentDataDTO from '../DTO/post/commentDataDto';
+import DeleteCommentDto from '../DTO/post/CommentAPIDto';
 @Injectable()
 export class PostService {
   private readonly _cloudinaryUploaduseCase: cloudinaryUploaduseCase;

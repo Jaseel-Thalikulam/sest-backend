@@ -7,7 +7,7 @@ import {
 import { Server } from 'socket.io';
 import { OnModuleInit } from '@nestjs/common';
 import { chatGateWayDto } from '../DTO/chatGateWayDto';
-import { ChatService } from 'src/infrastructure/core/common/services/chat/chat.service';
+import { ChatService } from 'src/infrastructure/core/common/services/chat.service';
 import { SendMessageDTO } from 'src/infrastructure/core/student/DTO/sendMessageDTO';
 const FRONTENT_BASEURL = process.env.FRONTENT_BASEURL;
 @WebSocketGateway({

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { createCourseDTO } from '../../DTO/course/createCourseDTO';
+import { createCourseDTO } from '../DTO/course/createCourseDTO';
 import cloudinaryUploaduseCase from 'src/Domain/usecase/upload/cloudinary.uploaduseCase';
 import createCourseUseCase from 'src/Domain/usecase/common/course/createCourseuseCase';
-import { uploadVideoDTO } from '../../DTO/video/uploadvideoDTO';
+import { uploadVideoDTO } from '../DTO/video/uploadvideoDTO';
 import { mongoosevideoRepository } from 'src/infrastructure/database/repositories/video/mongoosevideorepository';
 import { mongooseCourseRepository } from 'src/infrastructure/database/repositories/course/mongoosecourserepository';
 import Video from 'src/Domain/entity/video.entity';
@@ -65,5 +65,8 @@ export class CourseService {
 
   async findCourseById(CourseId: string) {
     return await this.mongoosecourseRepository.findCourseById(CourseId);
+  }
+  async getAllCourse() {
+    return await this.mongoosecourseRepository.findAllCourse();
   }
 }

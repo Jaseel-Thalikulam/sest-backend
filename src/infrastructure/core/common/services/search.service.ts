@@ -1,5 +1,5 @@
 import search_Query_useCase from 'src/Domain/usecase/common/search/searchUser';
-import { searchQueryDTO } from '../../DTO/search/searchQuerydto';
+import { searchQueryDTO } from '../DTO/search/searchQuerydto';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

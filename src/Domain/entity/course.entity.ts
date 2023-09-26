@@ -7,6 +7,7 @@ class Course {
   public videos: ObjectId[];
   public publisherId: ObjectId;
   public CoverImage: string;
+  public Category: string;
 
   constructor(
     Title: string,
@@ -14,12 +15,14 @@ class Course {
     videos: ObjectId[],
     publisherId: ObjectId,
     CoverImage: string,
+    Category: string,
   ) {
     this.Title = Title;
     this.Descripton = Descripton;
     this.videos = videos;
     this.publisherId = publisherId;
     this.CoverImage = CoverImage;
+    this.Category = Category;
   }
 }
 

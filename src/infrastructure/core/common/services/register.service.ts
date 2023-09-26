@@ -1,14 +1,14 @@
-import { mongooseUserRepository } from '../../../../database/repositories/common/mongooseUserRepository';
-import updateUserPasswordUseCase from '../../../../../Domain/usecase/common/updateUserPassword';
-import createUserUseCase from '../../../../../Domain/usecase/common/createUser';
-import verifyUserUseCase from '../../../../../Domain/usecase/common/verifyUser';
-import { verifyOTPandUpdateDTO } from '../../DTO/verifyOTPandUpdatePassword';
-import { EmailService } from '../../../../utilities/email/email.service';
-import { ForgetPasswordDto } from '../../DTO/forgetPassword.dto';
-import { resendOTPDto } from '../../DTO/resendOTPdto';
-import { RegisterDto } from '../../DTO/register.dto';
-import { VerifyDto } from '../../DTO/verifyotpdto';
-import { LoginDto } from '../../DTO/login.dto';
+import { mongooseUserRepository } from '../../../database/repositories/common/mongooseUserRepository';
+import updateUserPasswordUseCase from '../../../../Domain/usecase/common/updateUserPassword';
+import createUserUseCase from '../../../../Domain/usecase/common/createUser';
+import verifyUserUseCase from '../../../../Domain/usecase/common/verifyUser';
+import { verifyOTPandUpdateDTO } from '../DTO/verifyOTPandUpdatePassword';
+import { EmailService } from '../../../utilities/email/email.service';
+import { ForgetPasswordDto } from '../DTO/forgetPassword.dto';
+import { resendOTPDto } from '../DTO/resendOTPdto';
+import { RegisterDto } from '../DTO/register.dto';
+import { VerifyDto } from '../DTO/verifyotpdto';
+import { LoginDto } from '../DTO/login.dto';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

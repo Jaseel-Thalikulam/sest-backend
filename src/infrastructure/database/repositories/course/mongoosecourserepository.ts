@@ -16,6 +16,7 @@ export class mongooseCourseRepository implements ICourse {
       Descripton: courseData.description,
       publisherId: courseData.tutorId,
       Title: courseData.title,
+      Category: courseData.category,
     });
 
     return newCourse.save();
@@ -49,5 +50,9 @@ export class mongooseCourseRepository implements ICourse {
       .findById(CourseId)
       .populate('videos')
       .populate('publisherId');
+  }
+
+  async findAllCourse() {
+    return await this.courseModel.find().sort({ Rating: -1 }).limit(8);
   }
 }

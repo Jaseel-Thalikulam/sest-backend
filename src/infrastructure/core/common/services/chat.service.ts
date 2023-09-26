@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import createChatuseCase from 'src/Domain/usecase/common/chat/createChatuseCase';
-import { accessChatDto } from '../../DTO/chat/creatChatDTO';
+import { accessChatDto } from '../DTO/chat/creatChatDTO';
 import { mongooseChatRepository } from 'src/infrastructure/database/repositories/chat/mongooseChatRepository';
-import { fetchChatsDto } from '../../DTO/chat/fetchChatsDto';
+import { fetchChatsDto } from '../DTO/chat/fetchChatsDto';
 import { SendMessageDTO } from 'src/infrastructure/core/student/DTO/sendMessageDTO';
 import sendMessageuseCase from 'src/Domain/usecase/common/chat/sendMessageuseCase';
 import { mongooseMessageRepository } from 'src/infrastructure/database/repositories/messages/mongooseMessageRespository';

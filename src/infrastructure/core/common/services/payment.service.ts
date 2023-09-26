@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PaymentDTO } from '../../DTO/payment/paymentDTO';
+import { PaymentDTO } from '../DTO/payment/paymentDTO';
 import Stripe from 'stripe';
 import { ConfigService } from '@nestjs/config';
 @Injectable()

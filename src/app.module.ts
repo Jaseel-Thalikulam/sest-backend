@@ -2,10 +2,9 @@ import { mongooseMiddlewareRepository } from './infrastructure/database/reposito
 import { mongooseUserRepository } from './infrastructure/database/repositories/common/mongooseUserRepository';
 import { SuperAdminVerifyMiddleware } from './infrastructure/core/Superadmin/middlewares/Superadmin.middleware';
 import { TutorVerifyMiddleware } from './infrastructure/core/tutor/middlewares/Tutor.middleware';
-import { RegisterModule } from './infrastructure/core/common/modules/register/register.module';
+import { CommonModule } from './infrastructure/core/common/modules/common.module';
 import { SuperAdminModule } from './infrastructure/core/Superadmin/modules/SuperAdmin.module';
 import { tutorModule } from './infrastructure/core/tutor/modules/tutor.module';
-import { LoginModule } from './infrastructure/core/common/modules/login/login.module';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { UserSchema } from './infrastructure/database/schema/User';
 import { MailerModule } from '@nestjs-modules/mailer';
@@ -19,7 +18,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import { chatSchema } from './infrastructure/database/schema/Chat';
 import { messageSchema } from './infrastructure/database/schema/Message';
 import { ChatGateway } from './Domain/utilities/chat/gateway/chat.gateway';
-import { ChatService } from './infrastructure/core/common/services/chat/chat.service';
+import { ChatService } from './infrastructure/core/common/services/chat.service';
 import { ChatModule } from './Domain/utilities/chat/chat.module';
 
 cloudinary.config({
@@ -46,9 +45,8 @@ const MONGO_SECRET_KEY = process.env.MONGO_SECRET_KEY;
       isGlobal: true,
     }),
     MongooseModule.forRoot(MONGO_SECRET_KEY),
-    RegisterModule,
+    CommonModule,
     tutorModule,
-    LoginModule,
     uploadModule,
     SuperAdminModule,
     studentModule,

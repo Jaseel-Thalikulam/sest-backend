@@ -15,23 +15,23 @@ import AWS from 'aws-sdk';
 import * as sharp from 'sharp';
 import { ProfileDto } from '../../common/DTO/tutorProfileDTO';
 import Busboy from 'busboy';
-import { search_Service } from '../../common/services/search/search.service';
-import { Edit_ProfileService } from '../../common/services/profile/profile.service';
+import { search_Service } from '../../common/services/search.service';
+import { Edit_ProfileService } from '../../common/services/profile.service';
 import { Request, Response } from 'express';
-import { CategoryService } from 'src/infrastructure/core/common/services/category/category.service';
+import { CategoryService } from 'src/infrastructure/core/common/services/category.service';
 import { TutorCategoryDTO } from '../dto/insertCategoryDTO';
 import { tutor_CategoryService } from './services/tutor_Category.service';
 import { fetchChatsDto } from '../../common/DTO/chat/fetchChatsDto';
 import { accessChatDto } from '../../common/DTO/chat/creatChatDTO';
-import { ChatService } from '../../common/services/chat/chat.service';
-import { PaymentService } from '../../common/services/paymnet/payment.service';
+import { ChatService } from '../../common/services/chat.service';
+import { PaymentService } from '../../common/services/payment.service';
 import {
   FileFieldsInterceptor,
   FileInterceptor,
 } from '@nestjs/platform-express';
-import { PostService } from '../../common/services/post/post.service';
+import { PostService } from '../../common/services/post.service';
 import { ArticleDataDto } from '../../common/DTO/post/articleDataDto';
-import { relationship_Service } from '../../common/services/relationship/relationship.service';
+import { relationship_Service } from '../../common/services/relationship.service';
 import { StudentHomePageService } from '../../student/modules/services/homepage.service';
 import { FollowDTO } from '../../student/DTO/UserIdDTO';
 import { TutorIdDto } from '../../student/DTO/tutorIdDTO';
@@ -44,16 +44,16 @@ import CommentDataDTO from '../../common/DTO/post/commentDataDto';
 import CommentAPIDto from '../../common/DTO/post/CommentAPIDto';
 import { searchQueryDTO } from '../../common/DTO/search/searchQuerydto';
 import { JitsiMeetDataDTO } from '../../common/DTO/meet/JistimeetDTO';
-import { MeetService } from '../../common/services/meet/meet.service';
+import { MeetService } from '../../common/services/meet.service';
 import { S3Service } from './services/S3.service';
-import { CourseService } from '../../common/services/course/course.service';
+import { CourseService } from '../../common/services/course.service';
 import { createCourseDTO } from '../../common/DTO/course/createCourseDTO';
 import { stringList } from 'aws-sdk/clients/datapipeline';
 import { uploadVideoDTO } from '../../common/DTO/video/uploadvideoDTO';
 import { upload_Service } from '../../upload/upload.service';
 import { PaymentDTO } from '../../common/DTO/payment/paymentDTO';
 import { SubscriptionDTO } from '../../common/DTO/subscription/subscriptionDto';
-import { Subscription_service } from '../../common/services/subscription/subscription.service';
+import { Subscription_service } from '../../common/services/subscription.service';
 import { getSubscriptionDetailDTO } from '../../common/DTO/subscription/getSubscriptionDetailDTO';
 @Controller('/lead')
 export class TutorController {
@@ -194,6 +194,7 @@ export class TutorController {
     @Body('tutorId') tutorId: string,
     @Body('title') title: string,
     @Body('description') description: string,
+    @Body('category') category: string,
     @Res() res: Response,
   ) {
     try {
@@ -202,7 +203,10 @@ export class TutorController {
         tutorId,
         title,
         description,
+        category,
       };
+
+      console.log(CourseData);
 
       const response = await this.courseService.createCourse(CourseData);
       res.json({ success: true, CourseData: response });
@@ -218,7 +222,7 @@ export class TutorController {
       { name: 'thumbnail', maxCount: 1 },
     ]),
   )
-  async UploadCourse(
+  async UploadVideo(
     @UploadedFiles()
     files: { video?: Express.Multer.File[]; thumbnail?: Express.Multer.File[] },
     @Body('title') title: string,

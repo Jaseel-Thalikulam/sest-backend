@@ -11,8 +11,6 @@ class createCourseUseCase {
   }
 
   async execute(createCourse: createCourseDTO) {
-    const { description, title, tutorId, coverUrl } = createCourse;
-
     return await this.CourseRepository.createCourse(createCourse);
   }
 }

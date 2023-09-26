@@ -1,15 +1,70 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
-import { RegisterService } from './register.service';
-import { RegisterDto } from '../../DTO/register.dto';
+import { Body, Controller, Post, Res, Get } from '@nestjs/common';
+import { RegisterService } from '../services/register.service';
+import { RegisterDto } from '../DTO/register.dto';
 import { Response } from 'express';
-import { VerifyDto } from '../../DTO/verifyotpdto';
-import { resendOTPDto } from '../../DTO/resendOTPdto';
-import { ForgetPasswordDto } from '../../DTO/forgetPassword.dto';
-import { verifyOTPandUpdateDTO } from '../../DTO/verifyOTPandUpdatePassword';
+import { VerifyDto } from '../DTO/verifyotpdto';
+import { resendOTPDto } from '../DTO/resendOTPdto';
+import { ForgetPasswordDto } from '../DTO/forgetPassword.dto';
+import { verifyOTPandUpdateDTO } from '../DTO/verifyOTPandUpdatePassword';
+import { LoginDto } from '../DTO/login.dto';
+import { LoginService } from '../services/login.service';
+import { CourseService } from '../services/course.service';
 
 @Controller()
-export class RegisterController {
-  constructor(private registerService: RegisterService) {}
+export class CommonController {
+  constructor(
+    private registerService: RegisterService,
+    private loginService: LoginService,
+    private courseService: CourseService,
+  ) {}
+
+  @Post('login')
+  async verifyUser(@Body() user: LoginDto, @Res() res: Response) {
+    const response = await this.loginService.verifyUser(user);
+
+    if (response.success) {
+      const data = response.data;
+
+      if (data.role == 'Learn') {
+        res.cookie('jwt-learn', response.token, {
+          httpOnly: true,
+          maxAge: 24 * 60 * 60 * 1000,
+          sameSite: 'none',
+          secure: true,
+        });
+      } else if (data.role == 'Lead') {
+        res.cookie('jwt-lead', response.token, {
+          httpOnly: true,
+          maxAge: 24 * 60 * 60 * 1000,
+          sameSite: 'none',
+          secure: true,
+        });
+      } else if (data.role == 'Admin') {
+        res.cookie('jwt-admin', response.token, {
+          httpOnly: true,
+          maxAge: 24 * 60 * 60 * 1000,
+          sameSite: 'none',
+          secure: true,
+        });
+      } else if (data.role == 'SuperAdmin') {
+        res.cookie('jwt-super_admin', response.token, {
+          httpOnly: true,
+          maxAge: 24 * 60 * 60 * 1000,
+          sameSite: 'none',
+          secure: true,
+        });
+      }
+
+      return res.json({
+        success: response.success,
+        message: response.message,
+        userData: response.data,
+        token: response.token,
+      });
+    } else {
+      return res.json({ success: response.success, message: response.message });
+    }
+  }
 
   @Post('register')
   async postUser(@Body() user: RegisterDto, @Res() res: Response) {
@@ -113,5 +168,13 @@ export class RegisterController {
     } else {
       return res.json({ success: response.success, message: response.message });
     }
+  }
+
+  @Get('getallcourses')
+  async getAllCourse(@Res() res: Response) {
+    const response = await this.courseService.getAllCourse();
+    console.log(response);
+
+    res.json({ success: true, Corusedata: response });
   }
 }
