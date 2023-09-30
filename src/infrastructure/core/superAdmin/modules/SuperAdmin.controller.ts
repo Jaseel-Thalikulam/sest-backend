@@ -1,4 +1,4 @@
-import { CategoryDto } from '../DTO/category.dto';
+import { CategoryDto } from '../DTO/Category.dto';
 import { CategoryService } from '../../common/services/category.service';
 import { UserListService } from './services/userList/usersList.service';
 import { Body, Controller, Get, Post, Res } from '@nestjs/common';

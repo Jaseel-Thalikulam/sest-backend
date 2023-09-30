@@ -4,7 +4,8 @@ import { SendMessageDTO } from 'src/infrastructure/core/student/DTO/sendMessageD
 import Message from 'src/Domain/entity/message.entity';
 import { fetchChatsDto } from 'src/infrastructure/core/common/DTO/chat/fetchChatsDto';
 import { FetchAllMessageDTO } from 'src/infrastructure/core/student/DTO/FetchAllMessageDTO';
-export class mongooseMessageRepository {
+import { IMessage } from 'src/Domain/interfaces/Imessage';
+export class mongooseMessageRepository implements IMessage {
   constructor(
     @InjectModel('Message') private readonly messageModel: Model<Message>,
   ) {}

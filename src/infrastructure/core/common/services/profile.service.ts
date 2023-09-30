@@ -1,5 +1,5 @@
 import edit_Profile_useCase from '../../../../Domain/usecase/common/editProfile';
-import { ProfileDto } from '../dto/tutorProfileDTO';
+import { ProfileDto } from '../DTO/tutorProfileDTO';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

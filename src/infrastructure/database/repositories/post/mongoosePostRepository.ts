@@ -65,7 +65,7 @@ export class mongoosePostRepository implements IPost {
         : { mediaCaption: mediaCaption };
 
     // Use Mongoose to update the document
-    const updatedPost = await this.postModel.findByIdAndUpdate(
+    const updatedPost: Post = await this.postModel.findByIdAndUpdate(
       mediaData.postId, // Replace 'postId' with the actual ID of the post you want to update
       updateObject,
       { new: true }, // Return the updated document
@@ -84,7 +84,7 @@ export class mongoosePostRepository implements IPost {
   }
 
   async fetchFeedPosts(followingUsers: string[]) {
-    const feedPosts = await this.postModel
+    const feedPosts: Post[] = await this.postModel
       .find({ userId: { $in: followingUsers } })
       .sort({ timeStamp: -1 })
       .populate('userId')
@@ -109,7 +109,7 @@ export class mongoosePostRepository implements IPost {
   }
 
   async fetchUserPost(userId: string) {
-    const userPosts = await this.postModel
+    const userPosts: Post[] = await this.postModel
       .find({ userId: userId })
       .sort({ timeStamp: -1 })
       .populate('userId')
@@ -119,7 +119,8 @@ export class mongoosePostRepository implements IPost {
   }
 
   async findPostById(postId: string) {
-    return await this.postModel.findById(postId);
+    const post: Post = await this.postModel.findById(postId);
+    return post;
   }
 
   async deletePost(postId: string) {
@@ -165,7 +166,7 @@ export class mongoosePostRepository implements IPost {
   async isCommentLiked(data: DeleteCommentDto) {
     const { commentId, postId, userId } = data;
 
-    const post = await this.postModel.findOne({
+    const post: Post = await this.postModel.findOne({
       _id: postId,
       'comments._id': commentId,
       'comments.likes.userId': userId,
@@ -177,7 +178,7 @@ export class mongoosePostRepository implements IPost {
   async likePost(Postlikedata: LikePostDTO) {
     const { postId, userId } = Postlikedata;
     console.log(postId, userId);
-    const updatedPost = await this.postModel.findOneAndUpdate(
+    const updatedPost: Post = await this.postModel.findOneAndUpdate(
       { _id: postId },
       {
         $push: {
@@ -192,7 +193,7 @@ export class mongoosePostRepository implements IPost {
   async likeComment(data: DeleteCommentDto) {
     const { postId, userId, commentId } = data;
 
-    const updatedPost = await this.postModel
+    const updatedPost: Post = await this.postModel
       .findOneAndUpdate(
         {
           _id: postId,
@@ -216,7 +217,7 @@ export class mongoosePostRepository implements IPost {
   async unlikeComment(data: DeleteCommentDto) {
     const { postId, userId, commentId } = data;
 
-    const updatedPost = await this.postModel
+    const updatedPost: Post = await this.postModel
       .findOneAndUpdate(
         {
           _id: postId,
@@ -238,7 +239,7 @@ export class mongoosePostRepository implements IPost {
 
   async unlikePost(Postlikedata: LikePostDTO) {
     const { postId, userId } = Postlikedata;
-    const updatedPost = await this.postModel
+    const updatedPost: Post = await this.postModel
       .findOneAndUpdate(
         { _id: postId },
         {
@@ -253,7 +254,6 @@ export class mongoosePostRepository implements IPost {
   async addComment(commentData: CommentDataDTO) {
     const { content, postId, timeStamp, userId } = commentData;
 
-    console.log(content, postId, timeStamp, userId);
     const newComment = {
       userId,
       content,
@@ -261,7 +261,7 @@ export class mongoosePostRepository implements IPost {
     };
 
     // Use the MongoDB $push operator to add the new comment to the comments array
-    const updatedDocument = await this.postModel
+    const updatedDocument: Post = await this.postModel
       .findOneAndUpdate(
         { _id: postId }, // Find the post by its ID
         { $push: { comments: newComment } },

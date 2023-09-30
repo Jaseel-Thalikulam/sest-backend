@@ -69,8 +69,6 @@ export class mongooseUserRepository implements IUserRepository {
 
   async removeUser(id: ObjectId) {
     const result = await this.userModel.deleteOne({ _id: id });
-
-    console.log(result);
   }
 
   async UpdatePassword(userDetails: LoginDto) {

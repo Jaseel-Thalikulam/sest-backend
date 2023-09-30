@@ -4,7 +4,7 @@ import Category from '../../../../Domain/entity/category.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
 import mongoose from 'mongoose';
-import { EditCategoryDto } from 'src/infrastructure/core/Superadmin/DTO/EditCategoryDto';
+import { EditCategoryDto } from 'src/infrastructure/core/superAdmin/DTO/EditCategoryDto';
 const ObjectId = mongoose.Types.ObjectId;
 
 export class mongooseCategoryRepository implements ICategoryRepository {

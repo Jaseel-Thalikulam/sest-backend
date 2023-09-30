@@ -2,7 +2,7 @@ import { mongooseCategoryRepository } from 'src/infrastructure/database/reposito
 import { CategoryDto } from '../../superAdmin/DTO/Category.dto';
 import { Injectable } from '@nestjs/common';
 import add_Category_UseCase from 'src/Domain/usecase/superadmin/addCategoryuseCase';
-import { EditCategoryDto } from 'src/infrastructure/core/Superadmin/DTO/EditCategoryDto';
+import { EditCategoryDto } from 'src/infrastructure/core/superAdmin/DTO/EditCategoryDto';
 
 @Injectable()
 export class CategoryService {

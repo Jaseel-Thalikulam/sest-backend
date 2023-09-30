@@ -3,10 +3,11 @@ import Relationship from 'src/Domain/entity/relationship.entity';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { FollowDTO } from 'src/infrastructure/core/student/DTO/UserIdDTO';
+import { IRelationship } from 'src/Domain/interfaces/IRelationship';
 
 // import IRelationshipRepository from 'src/Domain/interfaces/IRelationshipRepository';
 
-export class mongooseRelationshipRepository {
+export class mongooseRelationshipRepository implements IRelationship {
   constructor(
     @InjectModel('User')
     private readonly userModel: Model<User>,

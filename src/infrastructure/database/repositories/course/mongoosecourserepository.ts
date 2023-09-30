@@ -23,7 +23,7 @@ export class mongooseCourseRepository implements ICourse {
   }
 
   async addVideo(videoDBdata: Video) {
-    const updatedCourse = await this.courseModel
+    await this.courseModel
       .findByIdAndUpdate(
         videoDBdata.CourseId,
         { $push: { videos: videoDBdata._id } },
