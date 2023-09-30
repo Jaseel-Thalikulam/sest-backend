@@ -1,7 +1,5 @@
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-
-import mongoose from 'mongoose';
 import { IVideo } from 'src/Domain/interfaces/IVideo';
 import { uploadVideoDTO } from 'src/infrastructure/core/common/DTO/video/uploadvideoDTO';
 import Video from 'src/Domain/entity/video.entity';
