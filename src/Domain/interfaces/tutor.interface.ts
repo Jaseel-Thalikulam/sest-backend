@@ -1,12 +1,12 @@
 import { TutorCategoryDTO } from 'src/infrastructure/core/tutor/dto/insertCategoryDTO';
 import IUserSlice from './updatedUrl.interface';
 
-interface ITutorRepository {
+export default interface ITutorRepository {
   addCategory(category: TutorCategoryDTO): Promise<IResponseaddCategory>;
-  removeCategory(category: TutorCategoryDTO);
+  removeCategory(category: TutorCategoryDTO): Promise<IResponseaddCategory>;
 }
 
-export default ITutorRepository;
+
 
 export interface IResponseaddCategory {
   success: boolean;
