@@ -3,7 +3,7 @@ import User from '../entity/user.entity';
 
 interface IStudentRepository {
   getAlltutors(): Promise<User[]>;
-  getTutor(userId:TutorIdDto):Promise<User>
+  getTutor(userId: TutorIdDto): Promise<User>;
 }
 
 export default IStudentRepository;

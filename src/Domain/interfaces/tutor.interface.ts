@@ -6,8 +6,6 @@ export default interface ITutorRepository {
   removeCategory(category: TutorCategoryDTO): Promise<IResponseaddCategory>;
 }
 
-
-
 export interface IResponseaddCategory {
   success: boolean;
   message: string;
