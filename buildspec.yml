@@ -12,12 +12,11 @@ phases:
       - echo Log in to Amazon ECR...
       - aws --version
       - echo $AWS_DEFAULT_REGION
-      - DOCKER_LOGIN_CMD=$(aws ecr get-login-password --region us-east-1)
-      - export DOCKER_LOGIN_CMD
-      - $DOCKER_LOGIN_CMD
-      - REPOSITORY_URI=192487072921.dkr.ecr.us-east-1.amazonaws.com/sest-backend
+      - DOCKER_CONFIG_JSON="{\"credHelpers\":{\"192487072921.dkr.ecr.us-east-1.amazonaws.com\":\"ecr-login\"}}"
+      - echo $DOCKER_CONFIG_JSON > /root/.docker/config.json
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
+
 
   build:
     commands:
