@@ -1,0 +1,1 @@
+{"version":3,"file":"relationship.entity.js","sourceRoot":"","sources":["../../../src/Domain/entity/relationship.entity.ts"],"names":[],"mappings":";;AAIA,MAAM,YAAY;IAIhB,YAAY,MAAc,EAAE,MAAc;QACxC,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;QACrB,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;IACvB,CAAC;CACF;AAED,kBAAe,YAAY,CAAC"}

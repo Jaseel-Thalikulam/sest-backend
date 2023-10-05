@@ -352,9 +352,9 @@ export class TutorController {
   @Get('/userPost')
   async fetchUserPost(@Query('userId') userId: string, @Res() res: Response) {
     try {
-      const UserPost = await this.postService.fetchUserPost(userId);
+      const FeedPost = await this.postService.fetchUserPost(userId);
 
-      res.json({ success: true, UserPost });
+      res.json({ success: true, FeedPost });
     } catch (err) {
       res.json({ success: false, message: 'Server Error' });
     }

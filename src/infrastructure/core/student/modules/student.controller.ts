@@ -347,9 +347,9 @@ export default class StudentController {
   @Get('/userPost')
   async fetchUserPost(@Query('userId') userId: string, @Res() res: Response) {
     try {
-      const UserPost = await this._Post_Services.fetchUserPost(userId);
+      const FeedPost = await this._Post_Services.fetchUserPost(userId);
 
-      res.json({ success: true, UserPost });
+      res.json({ success: true, FeedPost });
     } catch (err) {
       res.json({ success: false, message: 'Server Error' });
     }

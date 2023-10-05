@@ -1,0 +1,8 @@
+import { FollowDTO } from 'src/infrastructure/core/student/DTO/UserIdDTO';
+import { mongooseRelationshipRepository } from 'src/infrastructure/database/repositories/relationship/mongooseRelationshipRepository';
+declare class followUser_UseCase {
+    private _relationshipRepository;
+    constructor(relationshipRepository: mongooseRelationshipRepository);
+    execute(UsersId: FollowDTO): Promise<void>;
+}
+export default followUser_UseCase;
