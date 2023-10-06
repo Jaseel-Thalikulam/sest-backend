@@ -20,4 +20,5 @@ export declare class CommonController {
     forgetPassword(data: ForgetPasswordDto, res: Response): Promise<Response<any, Record<string, any>>>;
     VerifyOtpAndUpdatePassword(data: verifyOTPandUpdateDTO, res: Response): Promise<Response<any, Record<string, any>>>;
     getAllCourse(res: Response): Promise<void>;
+    getcourseDetail(CourseId: string, res: Response): Promise<void>;
 }

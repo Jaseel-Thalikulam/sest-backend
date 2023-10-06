@@ -173,6 +173,16 @@ let CommonController = exports.CommonController = class CommonController {
         console.log(response);
         res.json({ success: true, Corusedata: response });
     }
+    async getcourseDetail(CourseId, res) {
+        try {
+            const CourseData = await this.courseService.findCourseById(CourseId);
+            res.json({ success: true, CourseData });
+        }
+        catch (err) {
+            console.log(err);
+            res.json({ success: false, message: 'Internal Error' });
+        }
+    }
 };
 __decorate([
     (0, common_1.Post)('login'),
@@ -228,6 +238,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], CommonController.prototype, "getAllCourse", null);
+__decorate([
+    (0, common_1.Get)('/getCourseDetail'),
+    __param(0, (0, common_1.Query)('CourseId')),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], CommonController.prototype, "getcourseDetail", null);
 exports.CommonController = CommonController = __decorate([
     (0, common_1.Controller)(),
     __metadata("design:paramtypes", [register_service_1.RegisterService,

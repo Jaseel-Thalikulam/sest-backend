@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res, Get } from '@nestjs/common';
+import { Body, Controller, Post, Res, Get, Query } from '@nestjs/common';
 import { RegisterService } from '../services/register.service';
 import { RegisterDto } from '../DTO/register.dto';
 import { Response } from 'express';
@@ -176,5 +176,19 @@ export class CommonController {
     console.log(response);
 
     res.json({ success: true, Corusedata: response });
+  }
+
+  @Get('/getCourseDetail')
+  async getcourseDetail(
+    @Query('CourseId') CourseId: string,
+    @Res() res: Response,
+  ) {
+    try {
+      const CourseData = await this.courseService.findCourseById(CourseId);
+      res.json({ success: true, CourseData });
+    } catch (err) {
+      console.log(err);
+      res.json({ success: false, message: 'Internal Error' });
+    }
   }
 }
