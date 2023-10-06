@@ -12,7 +12,7 @@ const FRONTENT_BASEURL = process.env.FRONTENT_BASEURL;
 @WebSocketGateway({
   cors: {
     origin: FRONTENT_BASEURL,
-     methods:["GET","POST"]
+    methods: ['GET', 'POST'],
   },
 })
 export class ChatGateway implements OnModuleInit {
@@ -30,13 +30,16 @@ export class ChatGateway implements OnModuleInit {
 
   @SubscribeMessage('message')
   async handleMessage(@MessageBody() data: SendMessageDTO) {
-    console.log(data);
+    console.log(data, 'is that me');
+
     const response = await this.chatService.sendMessage(data);
+
     console.log(response);
+
     this.server.emit(data.ChatId, {
       msg: 'New Message',
       content: data.Content,
-      senderId: data.SenderId,
+      sender: [data.SenderId], // Set SenderId as the 0th value in an array
       timeStamp: data.timeStamp,
     });
   }
