@@ -6,13 +6,13 @@ import {
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 import { OnModuleInit } from '@nestjs/common';
-import { chatGateWayDto } from '../DTO/chatGateWayDto';
 import { ChatService } from 'src/infrastructure/core/common/services/chat.service';
 import { SendMessageDTO } from 'src/infrastructure/core/student/DTO/sendMessageDTO';
 const FRONTENT_BASEURL = process.env.FRONTENT_BASEURL;
 @WebSocketGateway({
   cors: {
-    origin: [FRONTENT_BASEURL],
+    origin: FRONTENT_BASEURL,
+     methods:["GET","POST"]
   },
 })
 export class ChatGateway implements OnModuleInit {
