@@ -187,7 +187,6 @@ export default class StudentController {
 
       res.json({ success: response.success, plan: response.plan });
     } catch (err) {
-      console.log(err, 'error from sub');
       res.json({ success: false, message: 'Server Error' });
     }
   }

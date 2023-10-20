@@ -24,7 +24,6 @@ let StudentVerifyMiddleware = exports.StudentVerifyMiddleware = class StudentVer
     async use(req, res, next) {
         const token = req.headers['token'];
         try {
-            console.log(token, 'token');
             const decoded = jwt.verify(token, SECRECT_KEY);
             const isAuthorized = await this._MiddlewareRepository.isStudent(decoded.userId);
             const isBanned = await this._MiddlewareRepository.isBanned(decoded.userId);

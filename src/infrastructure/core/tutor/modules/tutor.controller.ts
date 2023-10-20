@@ -446,6 +446,7 @@ export class TutorController {
       res.json({ success: false, message: 'Server Error' });
     }
   }
+
   @Get('/getSubscriptionDetails')
   async getSubscriptionDetails(
     @Query('TutorId') TutorId: string,
@@ -457,12 +458,13 @@ export class TutorController {
         TutorId,
         StudentId,
       };
-      console.log(SubscriptionDetail, 'subb tutor');
+      console.log(SubscriptionDetail, 'subb rr');
 
       const response = await this.subscriptionService.getSubscriptionDetail(
         SubscriptionDetail,
       );
 
+      console.log(response);
       res.json({ success: response.success, plan: response.plan });
     } catch (err) {
       res.json({ success: false, message: 'Server Error' });

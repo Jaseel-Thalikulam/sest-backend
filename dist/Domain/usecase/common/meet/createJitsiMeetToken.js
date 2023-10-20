@@ -13,8 +13,6 @@ const mongooseUserRepository_1 = require("../../../../infrastructure/database/re
 const common_1 = require("@nestjs/common");
 const jwt = require("jsonwebtoken");
 const config_1 = require("@nestjs/config");
-const fs = require("fs");
-const privatekey = fs.readFileSync('src/private/Key 9_12_2023, 9_33_42 AM.pk');
 let createJitsiMeetToken = class createJitsiMeetToken {
     constructor(userRepository, configService) {
         this.configService = configService;

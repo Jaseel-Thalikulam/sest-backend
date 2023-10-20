@@ -17,6 +17,7 @@ const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
 const chat_service_1 = require("../../../../infrastructure/core/common/services/chat.service");
 const sendMessageDTO_1 = require("../../../../infrastructure/core/student/DTO/sendMessageDTO");
+const typingDto_1 = require("../DTO/typingDto");
 const FRONTENT_BASEURL = process.env.FRONTENT_BASEURL;
 let ChatGateway = exports.ChatGateway = class ChatGateway {
     constructor(chatService) {
@@ -29,14 +30,17 @@ let ChatGateway = exports.ChatGateway = class ChatGateway {
         });
     }
     async handleMessage(data) {
-        console.log(data, 'is that me');
-        const response = await this.chatService.sendMessage(data);
-        console.log(response);
+        await this.chatService.sendMessage(data);
         this.server.emit(data.ChatId, {
             msg: 'New Message',
             content: data.Content,
             sender: [data.SenderId],
             timeStamp: data.timeStamp,
+        });
+    }
+    async handleTyping(data) {
+        this.server.emit(`${data.ChatId}display`, {
+            data: data,
         });
     }
 };
@@ -51,6 +55,13 @@ __decorate([
     __metadata("design:paramtypes", [sendMessageDTO_1.SendMessageDTO]),
     __metadata("design:returntype", Promise)
 ], ChatGateway.prototype, "handleMessage", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('typing'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [typingDto_1.typingDTO]),
+    __metadata("design:returntype", Promise)
+], ChatGateway.prototype, "handleTyping", null);
 exports.ChatGateway = ChatGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({
         cors: {

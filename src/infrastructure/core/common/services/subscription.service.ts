@@ -36,7 +36,7 @@ export class Subscription_service {
       await this.subscriptionRepository.getSubscriptionData(SubscriptionDetail);
 
     if (subscriptionData.IsLifeTime) {
-      return { success: true, plan: 'You are a Premium Student of' };
+      return { success: true, plan: 'Premium' };
     } else {
       const currentDate = new Date();
       if (subscriptionData.Expirytime < currentDate) {
@@ -46,7 +46,7 @@ export class Subscription_service {
       } else {
         return {
           success: true,
-          plan: 'Upgrade to Premium for Unlimited access',
+          plan: 'Standard/Base',
         };
       }
     }
