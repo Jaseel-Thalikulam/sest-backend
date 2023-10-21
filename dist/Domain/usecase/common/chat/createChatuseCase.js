@@ -18,6 +18,11 @@ let createChatuseCase = class createChatuseCase {
     async execute(data) {
         try {
             const response = await this.chatRepository.createChat(data);
+            const userIndex = response.Chat.users.findIndex((user) => user._id == data.senderId);
+            if (userIndex !== -1) {
+                response.Chat.users.splice(userIndex, 1);
+            }
+            console.log(response.Chat, 'chataa');
             return {
                 success: response.success,
                 message: response.message,

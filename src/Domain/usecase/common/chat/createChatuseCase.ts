@@ -14,6 +14,17 @@ class createChatuseCase {
     try {
       const response = await this.chatRepository.createChat(data);
 
+      const userIndex = response.Chat.users.findIndex(
+        (user) => user._id == data.senderId,
+      );
+
+      // If the user exists, remove them from the array.
+      if (userIndex !== -1) {
+        response.Chat.users.splice(userIndex, 1);
+      }
+
+      console.log(response.Chat, 'chataa');
+
       return {
         success: response.success,
         message: response.message,

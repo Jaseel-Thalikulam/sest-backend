@@ -25,8 +25,7 @@ let ChatGateway = exports.ChatGateway = class ChatGateway {
     }
     onModuleInit() {
         this.server.on('connection', (socket) => {
-            console.log(socket.id);
-            console.log('Connected');
+            console.log('Socket.io Connected with Id : ', socket.id);
         });
     }
     async handleMessage(data) {

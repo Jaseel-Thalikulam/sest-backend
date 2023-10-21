@@ -1,4 +1,5 @@
+import { ObjectId } from 'mongoose';
 export declare class accessChatDto {
-    senderId: string;
-    receiverId: string;
+    senderId: ObjectId;
+    receiverId: ObjectId;
 }

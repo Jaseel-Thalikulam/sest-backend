@@ -24,8 +24,7 @@ export class ChatGateway implements OnModuleInit {
 
   onModuleInit() {
     this.server.on('connection', (socket) => {
-      console.log(socket.id);
-      console.log('Connected');
+      console.log('Socket.io Connected with Id : ', socket.id);
     });
   }
 

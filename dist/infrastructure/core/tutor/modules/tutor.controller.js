@@ -89,6 +89,7 @@ let TutorController = exports.TutorController = class TutorController {
         });
     }
     async accessChat(data, res) {
+        console.log(data, 'data from ::)s');
         const response = await this.chatService.accessChat(data);
         res.json({
             success: response.success,
@@ -319,7 +320,6 @@ let TutorController = exports.TutorController = class TutorController {
                 TutorId,
                 StudentId,
             };
-            console.log(SubscriptionDetail, 'subb rr');
             const response = await this.subscriptionService.getSubscriptionDetail(SubscriptionDetail);
             console.log(response);
             res.json({ success: response.success, plan: response.plan });

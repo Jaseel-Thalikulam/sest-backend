@@ -122,6 +122,7 @@ export class TutorController {
 
   @Post('/chat/access')
   async accessChat(@Body() data: accessChatDto, @Res() res: Response) {
+    console.log(data, 'data from ::)s');
     const response = await this.chatService.accessChat(data);
 
     res.json({
@@ -458,7 +459,6 @@ export class TutorController {
         TutorId,
         StudentId,
       };
-      console.log(SubscriptionDetail, 'subb rr');
 
       const response = await this.subscriptionService.getSubscriptionDetail(
         SubscriptionDetail,
