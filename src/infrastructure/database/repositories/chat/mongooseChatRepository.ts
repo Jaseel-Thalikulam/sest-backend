@@ -43,15 +43,17 @@ export class mongooseChatRepository implements IChatRepository {
         path: 'users',
         model: 'User',
       });
-
-    const userIndex = response.users.findIndex(
-      (user) => user._id == data.senderId,
-    );
+    if (response) {
+  
+      const userIndex = response.users.findIndex(
+        (user) => user._id == data.senderId,
+        );
+        if (userIndex !== -1) {
+          response.users.splice(userIndex, 1);
+        }
+      }
 
     // If the user exists, remove them from the array.
-    if (userIndex !== -1) {
-      response.users.splice(userIndex, 1);
-    }
 
     return response;
   }
