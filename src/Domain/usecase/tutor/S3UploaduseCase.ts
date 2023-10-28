@@ -9,8 +9,8 @@ class S3UploaduseCase {
   constructor(private readonly configService: ConfigService) {}
 
   async execute(fileName: string, file: Buffer) {
-    console.log(file, 'helo files');
     const uniqueKey = (await this.generateRandomString(16)) + fileName;
+
     const response = await this.s3Client.send(
       new PutObjectCommand({
         Bucket: 'sest-upload',

@@ -6,7 +6,7 @@ import { StudentHomePageService } from './services/homepage.service';
 import { Edit_ProfileService } from '../../common/services/profile.service';
 import { mongooseStudentRepository } from 'src/infrastructure/database/repositories/student/mongooseStudentRepository';
 import { mongooseUserRepository } from 'src/infrastructure/database/repositories/common/mongooseUserRepository';
-import edit_Profile_useCase from 'src/Domain/usecase/common/editProfile';
+import edit_Profile_useCase from 'src/Domain/usecase/common/user/editProfile';
 import { ChatService } from '../../common/services/chat.service';
 import { mongooseChatRepository } from 'src/infrastructure/database/repositories/chat/mongooseChatRepository';
 import createChatuseCase from 'src/Domain/usecase/common/chat/createChatuseCase';

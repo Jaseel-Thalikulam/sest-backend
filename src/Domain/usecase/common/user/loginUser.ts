@@ -1,5 +1,5 @@
-import { mongooseUserRepository } from '../../../infrastructure/database/repositories/common/mongooseUserRepository';
-import { LoginDto } from '../../../infrastructure/core/common/DTO/login.dto';
+import { mongooseUserRepository } from '../../../../infrastructure/database/repositories/common/mongooseUserRepository';
+import { LoginDto } from '../../../../infrastructure/core/common/DTO/login.dto';
 import { Injectable } from '@nestjs/common';
 import * as jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';

@@ -20,7 +20,6 @@ let S3UploaduseCase = class S3UploaduseCase {
         });
     }
     async execute(fileName, file) {
-        console.log(file, 'helo files');
         const uniqueKey = (await this.generateRandomString(16)) + fileName;
         const response = await this.s3Client.send(new client_s3_1.PutObjectCommand({
             Bucket: 'sest-upload',

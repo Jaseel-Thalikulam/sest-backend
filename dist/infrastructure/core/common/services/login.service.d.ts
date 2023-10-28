@@ -1,5 +1,5 @@
 import { LoginDto } from '../DTO/login.dto';
-import verifyLoginUserUseCase from '../../../../Domain/usecase/common/loginUser';
+import verifyLoginUserUseCase from '../../../../Domain/usecase/common/user/loginUser';
 export declare class LoginService {
     private readonly _verifyLoginUserUseCase;
     constructor(verifyLoginUserUseCase: verifyLoginUserUseCase);

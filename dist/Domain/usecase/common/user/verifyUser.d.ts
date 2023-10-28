@@ -23,14 +23,14 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
-import { VerifyDto } from '../../../infrastructure/core/common/DTO/verifyotpdto';
+import { VerifyDto } from '../../../../infrastructure/core/common/DTO/verifyotpdto';
 import { mongooseUserRepository } from 'src/infrastructure/database/repositories/common/mongooseUserRepository';
 declare class verifyUserUseCase {
     private userRepository;
     constructor(userRepository: mongooseUserRepository);
     execute(data: VerifyDto): Promise<{
         success: boolean;
-        data: import("mongoose").Document<unknown, {}, import("../../entity/user.entity").default> & import("../../entity/user.entity").default & Required<{
+        data: import("mongoose").Document<unknown, {}, import("../../../entity/user.entity").default> & import("../../../entity/user.entity").default & Required<{
             _id: import("mongoose").Schema.Types.ObjectId;
         }>;
         token: any;

@@ -1,7 +1,7 @@
-import { mongooseUserRepository } from '../../../infrastructure/database/repositories/common/mongooseUserRepository';
-import { EmailService } from '../../../infrastructure/utilities/email/email.service';
-import { RegisterDto } from '../../../infrastructure/core/common/DTO/register.dto';
-import User from '../../entity/user.entity';
+import { mongooseUserRepository } from '../../../../infrastructure/database/repositories/common/mongooseUserRepository';
+import { EmailService } from '../../../../infrastructure/utilities/email/email.service';
+import { RegisterDto } from '../../../../infrastructure/core/common/DTO/register.dto';
+import User from '../../../entity/user.entity';
 import * as jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
 import * as bcrypt from 'bcrypt';

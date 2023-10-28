@@ -23,7 +23,7 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
-import edit_Profile_useCase from '../../../../Domain/usecase/common/editProfile';
+import edit_Profile_useCase from '../../../../Domain/usecase/common/user/editProfile';
 import { ProfileDto } from '../DTO/tutorProfileDTO';
 export declare class Edit_ProfileService {
     private readonly _edit_Profile_useCase;

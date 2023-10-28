@@ -11,9 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RegisterService = void 0;
 const mongooseUserRepository_1 = require("../../../database/repositories/common/mongooseUserRepository");
-const updateUserPassword_1 = require("../../../../Domain/usecase/common/updateUserPassword");
-const createUser_1 = require("../../../../Domain/usecase/common/createUser");
-const verifyUser_1 = require("../../../../Domain/usecase/common/verifyUser");
+const updateUserPassword_1 = require("../../../../Domain/usecase/common/user/updateUserPassword");
+const createUser_1 = require("../../../../Domain/usecase/common/user/createUser");
+const verifyUser_1 = require("../../../../Domain/usecase/common/user/verifyUser");
 const email_service_1 = require("../../../utilities/email/email.service");
 const common_1 = require("@nestjs/common");
 let RegisterService = exports.RegisterService = class RegisterService {

@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginService = void 0;
 const common_1 = require("@nestjs/common");
-const loginUser_1 = require("../../../../Domain/usecase/common/loginUser");
+const loginUser_1 = require("../../../../Domain/usecase/common/user/loginUser");
 let LoginService = exports.LoginService = class LoginService {
     constructor(verifyLoginUserUseCase) {
         this._verifyLoginUserUseCase = verifyLoginUserUseCase;

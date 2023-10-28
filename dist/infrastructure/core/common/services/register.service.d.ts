@@ -24,9 +24,9 @@
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
 import { mongooseUserRepository } from '../../../database/repositories/common/mongooseUserRepository';
-import updateUserPasswordUseCase from '../../../../Domain/usecase/common/updateUserPassword';
-import createUserUseCase from '../../../../Domain/usecase/common/createUser';
-import verifyUserUseCase from '../../../../Domain/usecase/common/verifyUser';
+import updateUserPasswordUseCase from '../../../../Domain/usecase/common/user/updateUserPassword';
+import createUserUseCase from '../../../../Domain/usecase/common/user/createUser';
+import verifyUserUseCase from '../../../../Domain/usecase/common/user/verifyUser';
 import { verifyOTPandUpdateDTO } from '../DTO/verifyOTPandUpdatePassword';
 import { EmailService } from '../../../utilities/email/email.service';
 import { ForgetPasswordDto } from '../DTO/forgetPassword.dto';

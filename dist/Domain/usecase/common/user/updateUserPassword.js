@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongooseUserRepository_1 = require("../../../infrastructure/database/repositories/common/mongooseUserRepository");
+const mongooseUserRepository_1 = require("../../../../infrastructure/database/repositories/common/mongooseUserRepository");
 const common_1 = require("@nestjs/common");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");

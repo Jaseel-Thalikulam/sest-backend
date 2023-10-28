@@ -23,15 +23,15 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
-import { mongooseUserRepository } from '../../../infrastructure/database/repositories/common/mongooseUserRepository';
-import { LoginDto } from '../../../infrastructure/core/common/DTO/login.dto';
+import { mongooseUserRepository } from '../../../../infrastructure/database/repositories/common/mongooseUserRepository';
+import { LoginDto } from '../../../../infrastructure/core/common/DTO/login.dto';
 declare class updateUserPasswordUseCase {
     private userRepository;
     constructor(userRepository: mongooseUserRepository);
     execute(data: LoginDto): Promise<{
         success: boolean;
         token: any;
-        user: import("mongoose").Document<unknown, {}, import("../../entity/user.entity").default> & import("../../entity/user.entity").default & Required<{
+        user: import("mongoose").Document<unknown, {}, import("../../../entity/user.entity").default> & import("../../../entity/user.entity").default & Required<{
             _id: import("mongoose").Schema.Types.ObjectId;
         }>;
     }>;

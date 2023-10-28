@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { LoginDto } from '../DTO/login.dto';
-import verifyLoginUserUseCase from '../../../../Domain/usecase/common/loginUser';
+import verifyLoginUserUseCase from '../../../../Domain/usecase/common/user/loginUser';
 
 @Injectable()
 export class LoginService {

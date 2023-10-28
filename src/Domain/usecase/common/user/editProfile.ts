@@ -1,4 +1,4 @@
-import { ProfileDto } from '../../../infrastructure/core/common/DTO/tutorProfileDTO';
+import { ProfileDto } from '../../../../infrastructure/core/common/DTO/tutorProfileDTO';
 import { mongooseUserRepository } from 'src/infrastructure/database/repositories/common/mongooseUserRepository';
 import { Injectable } from '@nestjs/common';
 

@@ -9,26 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongooseUserRepository_1 = require("../../../infrastructure/database/repositories/common/mongooseUserRepository");
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
+const mongooseUserRepository_1 = require("../../../../infrastructure/database/repositories/common/mongooseUserRepository");
 const common_1 = require("@nestjs/common");
-dotenv.config();
-const SECRECT_KEY = process.env.SECRECT_KEY;
-let verifyUserUseCase = class verifyUserUseCase {
+let edit_Profile_useCase = class edit_Profile_useCase {
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
     async execute(data) {
-        const response = await this.userRepository.SetAsVerified(data.userId);
-        console.log(response, 'reg usecase verifyuser');
-        const token = jwt.sign({ userId: response._id }, SECRECT_KEY);
-        return { success: true, data: response, token };
+        return await this.userRepository.UpdateProfile(data);
     }
 };
-verifyUserUseCase = __decorate([
+edit_Profile_useCase = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [mongooseUserRepository_1.mongooseUserRepository])
-], verifyUserUseCase);
-exports.default = verifyUserUseCase;
-//# sourceMappingURL=verifyUser.js.map
+], edit_Profile_useCase);
+exports.default = edit_Profile_useCase;
+//# sourceMappingURL=editProfile.js.map

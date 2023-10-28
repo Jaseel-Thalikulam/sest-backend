@@ -23,7 +23,7 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
-import { ProfileDto } from '../../../infrastructure/core/common/DTO/tutorProfileDTO';
+import { ProfileDto } from '../../../../infrastructure/core/common/DTO/tutorProfileDTO';
 import { mongooseUserRepository } from 'src/infrastructure/database/repositories/common/mongooseUserRepository';
 declare class edit_Profile_useCase {
     private userRepository;
@@ -31,7 +31,7 @@ declare class edit_Profile_useCase {
     execute(data: ProfileDto): Promise<{
         success: boolean;
         message: string;
-        userData: import("mongoose").Document<unknown, {}, import("../../entity/user.entity").default> & import("../../entity/user.entity").default & Required<{
+        userData: import("mongoose").Document<unknown, {}, import("../../../entity/user.entity").default> & import("../../../entity/user.entity").default & Required<{
             _id: import("mongoose").Schema.Types.ObjectId;
         }>;
     } | {

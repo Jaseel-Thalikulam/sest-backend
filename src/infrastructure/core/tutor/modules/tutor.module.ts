@@ -11,7 +11,7 @@ import { tutor_CategoryService } from './services/tutor_Category.service';
 import insertTutorCategoryuseCase from 'src/Domain/usecase/tutor/insertCategoryuseCase';
 import removeTutorCategoryuseCase from 'src/Domain/usecase/tutor/removeCategoryuseCase';
 import { Edit_ProfileService } from '../../common/services/profile.service';
-import edit_Profile_useCase from 'src/Domain/usecase/common/editProfile';
+import edit_Profile_useCase from 'src/Domain/usecase/common/user/editProfile';
 import { mongooseUserRepository } from 'src/infrastructure/database/repositories/common/mongooseUserRepository';
 import { ChatService } from '../../common/services/chat.service';
 import createChatuseCase from 'src/Domain/usecase/common/chat/createChatuseCase';
